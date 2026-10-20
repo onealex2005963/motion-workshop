@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion Workshop · 網站動畫範例</title>
+<link rel="stylesheet" href="style.css">
+<body>
+<main>
+  <header><p class="eyebrow">MOTION WORKSHOP / 28 EFFECTS</p><h1>讓靈感，有自己的節奏。</h1><p>離線運作的動畫效果庫。選擇效果、拖曳時間，將你喜歡的動作放進下一個作品。</p></header>
+  <section class="stage" aria-label="動畫預覽">
+    <canvas id="stage" width="1280" height="720" role="img" aria-label="動畫示範畫面；效果名稱與內容顯示在下方。"></canvas>
+  </section>
+  <section class="controls" aria-label="動畫控制">
+    <label>效果<select id="effect"><option value="sequence">三幕轉場示範</option></select></label>
+    <button id="play" type="button" aria-pressed="false">播放</button>
+    <button id="png" type="button">下載此影格 PNG</button>
+    <label class="seek">時間<input id="time" type="range" min="0" max="7.8" value="0" step="0.0333333333"></label>
+    <output id="clock" for="time">0.00s</output>
+  </section>
+  <p id="status" role="status">準備就緒</p><p id="alternative">畫面內容：讓靈感動起來／用數據說故事／把點子分享出去。</p>
+  <footer>三幕各 3 秒，兩段 0.6 秒轉場，合計 7.8 秒。<a href="../software-ui/index.html">查看可操作的介面動效 →</a></footer>
+</main>
+<script src="../../runtime/effects.js"></script><script src="../../runtime/effects-extra.js"></script><script src="../../runtime/engine.js"></script>
+<script src="player.js"></script><script src="demo.js"></script>
+</body></html>

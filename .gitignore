@@ -1,0 +1,10 @@
+.DS_Store
+build/
+dist/
+node_modules/
+*.log
+*.mwjob/
+.env
+.env.*
+!.env.example
+project.local.json

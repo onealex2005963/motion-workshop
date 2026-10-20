@@ -1,0 +1,13 @@
+{
+  "name": "motion-workshop",
+  "version": "1.2.0",
+  "private": true,
+  "description": "28 offline motion effects, 6 transitions, reusable Claude skill and macOS editor.",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node scripts/verify.mjs",
+    "demo": "node scripts/serve.mjs",
+    "pack": "node scripts/pack.mjs"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "version": 2,
+  "ratio": "16:9",
+  "quality": 720,
+  "fps": 30,
+  "clips": [
+    {
+      "effect": "mask-reveal",
+      "text": "讓想法\n順暢登場",
+      "subtitle": "一點靈感，無限可能。",
+      "color": "#d8f36a",
+      "secondary": "#a59bff",
+      "background": "#10171c",
+      "speed": 1,
+      "size": 1,
+      "amount": 50,
+      "duration": 3,
+      "items": [
+        "靈感",
+        "創作",
+        "分享",
+        "可能"
+      ],
+      "values": [
+        35,
+        70,
+        55,
+        90
+      ],
+      "value": 100,
+      "suffix": "",
+      "bpm": 120,
+      "transition": {
+        "type": "push",
+        "duration": 0.6
+      }
+    },
+    {
+      "effect": "chart-build",
+      "text": "把資料變成故事",
+      "subtitle": "一點靈感，無限可能。",
+      "color": "#d8f36a",
+      "secondary": "#a59bff",
+      "background": "#10171c",
+      "speed": 1,
+      "size": 1,
+      "amount": 50,
+      "duration": 3,
+      "items": [
+        "第一步",
+        "第二步",
+        "第三步",
+        "第四步"
+      ],
+      "values": [
+        20,
+        45,
+        65,
+        90
+      ],
+      "value": 100,
+      "suffix": "",
+      "bpm": 120,
+      "transition": {
+        "type": "circle",
+        "duration": 0.6
+      }
+    },
+    {
+      "effect": "card-flyin",
+      "text": "從這裡開始",
+      "subtitle": "一點靈感，無限可能。",
+      "color": "#d8f36a",
+      "secondary": "#a59bff",
+      "background": "#10171c",
+      "speed": 1,
+      "size": 1,
+      "amount": 50,
+      "duration": 3,
+      "items": [
+        "靈感",
+        "創作",
+        "分享"
+      ],
+      "values": [
+        35,
+        70,
+        55,
+        90
+      ],
+      "value": 100,
+      "suffix": "",
+      "bpm": 120,
+      "transition": {
+        "type": "cut",
+        "duration": 0.6
+      }
+    }
+  ]
+}

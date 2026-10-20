@@ -1,0 +1,14 @@
+#!/bin/zsh
+set -euo pipefail
+cd -- "${0:A:h}"
+target_dir="${1:-$PWD/build}"
+app_dir="$target_dir/動畫小工坊.app"
+mkdir -p "$app_dir/Contents/MacOS" "$app_dir/Contents/Resources" "$target_dir/module-cache"
+xcrun swiftc -swift-version 5 -target arm64-apple-macosx12.0 -O -module-cache-path "$target_dir/module-cache" -framework AppKit -framework WebKit -framework AVFoundation -framework ImageIO Main.swift -o "$app_dir/Contents/MacOS/MotionWorkshop"
+cp Info.plist "$app_dir/Contents/Info.plist"
+cp -R web "$app_dir/Contents/Resources/"
+mkdir -p "$app_dir/Contents/Resources/Claude-動畫工具包"
+cp -R .claude/skills/motion-workshop/assets/. "$app_dir/Contents/Resources/Claude-動畫工具包/"
+cp assets/AppIcon.icns "$app_dir/Contents/Resources/AppIcon.icns"
+codesign --force --deep --sign - "$app_dir"
+print -r -- "$app_dir"

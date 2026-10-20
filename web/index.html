@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'">
+  <title>動畫小工坊</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-icon">m<span>✦</span></span><div>動畫小工坊<small>MOTION WORKSHOP</small></div><span class="offline">離線使用</span></div>
+    <div class="top-actions"><span id="save-state">自動儲存已開啟</span><button id="claude-kit">Claude 工具包</button><button id="open-project">開啟專案</button><button id="save-project">儲存專案</button><button class="icon-button" id="help" aria-label="使用說明">?</button></div>
+  </header>
+  <main class="workspace">
+    <aside class="library">
+      <div class="section-heading"><h2>效果範本</h2><span id="effect-count">28</span></div>
+      <p class="muted intro">點一下，把靈感放上畫布。</p>
+      <input id="effect-search" type="search" placeholder="搜尋效果名稱…" aria-label="搜尋動畫效果">
+      <div class="filters" aria-label="範本分類"><button class="active" data-filter="全部">全部</button><button data-filter="文字">文字</button><button data-filter="幾何">幾何</button><button data-filter="質感">質感</button><button data-filter="介面">介面</button><button data-filter="資料">資料</button></div>
+      <div id="effect-list" class="effect-list"></div>
+      <div class="library-note"><span>✧</span> 從一個效果，開始你的第一支動畫。</div>
+    </aside>
+    <section class="editor">
+      <div class="canvas-toolbar"><div><span class="live-dot"></span><strong id="scene-name">彈跳小球</strong><span class="dim" id="scene-count">場景 01</span></div><div class="toolbar-right"><button id="safe-area" aria-pressed="false" title="顯示構圖參考線">安全框</button><span id="dimensions">1280 × 720</span></div></div>
+      <div class="stage-wrap"><div class="stage" id="stage"><canvas id="preview" width="960" height="540" aria-label="動畫預覽"></canvas><div class="safe-overlay" id="safe-overlay" hidden></div></div><div class="stage-caption"><span>你的想法，正在動起來。</span><span id="preview-format">16:9 橫式</span></div></div>
+      <div class="transport"><button id="restart" class="icon-button" aria-label="回到開頭">↤</button><button id="play" class="play-button" aria-label="暫停">Ⅱ</button><span class="timecode" id="timecode">00:00.0 <em>/ 00:05.0</em></span><input id="scrubber" type="range" min="0" max="5" value="0" step="0.01" aria-label="播放位置"><button class="loop active" id="loop" aria-pressed="true">↻ 循環</button></div>
+      <div class="timeline">
+        <div class="timeline-top"><div><h2>故事順序</h2><span id="total-duration">1 個場景 · 5 秒</span></div><button id="add-scene">＋ 新增場景</button></div>
+        <div id="clips" class="clips" aria-label="動畫場景順序"></div>
+        <div class="timeline-bottom"><span>點選場景，套用左邊的效果範本。</span><div><button id="move-left" aria-label="場景往前移">←</button><button id="move-right" aria-label="場景往後移">→</button><button id="duplicate">複製</button><button id="remove">刪除</button></div></div>
+      </div>
+    </section>
+    <aside class="inspector">
+      <div class="section-heading"><h2>調整你的動畫</h2><span>✦</span></div>
+      <div class="inspector-scroll">
+        <div class="effect-description" id="effect-description">壓扁、拉長，讓小球跳出節奏。</div>
+        <fieldset><legend>文字內容</legend><label for="title-text">主要文字 <span>可換行</span></label><textarea id="title-text" maxlength="60" rows="2">讓想法\n動起來</textarea><label for="subtitle-text">小字說明</label><input id="subtitle-text" maxlength="80" placeholder="加上一句你的話" value="一點靈感，無限可能。"></fieldset>
+        <fieldset><legend>畫面配色</legend><div class="color-fields"><label>主色<input id="primary-color" type="color" value="#d8f36a"></label><label>輔色<input id="secondary-color" type="color" value="#a59bff"></label><label>背景<input id="background-color" type="color" value="#10171c"></label></div><div class="palette-buttons" aria-label="配色組合"><button data-palette="0" aria-label="萊姆紫配色"><i class="lime"></i><i class="lavender"></i></button><button data-palette="1" aria-label="夕陽藍配色"><i class="coral"></i><i class="blue"></i></button><button data-palette="2" aria-label="粉紅綠配色"><i class="pink"></i><i class="mint"></i></button><button data-palette="3" aria-label="暖白金配色"><i class="cream"></i><i class="gold"></i></button></div></fieldset>
+        <fieldset id="template-data" hidden><legend>範本內容</legend><div id="labels-fields"><label for="item-labels">卡片／步驟標籤 <span>逗號分隔，最多 6 個</span></label><input id="item-labels" value="靈感,創作,分享,可能"></div><div id="chart-fields" hidden><label for="chart-values">圖表數值 <span>順序對應標籤</span></label><input id="chart-values" value="35,70,55,90"></div><div id="number-fields" class="two-fields" hidden><div><label for="target-value">目標數字</label><input id="target-value" type="number" min="0" max="1000000000" value="100"></div><div><label for="value-suffix">數字單位</label><input id="value-suffix" maxlength="12" placeholder="例如：%、人"></div></div><div id="beat-fields" hidden><label for="bpm">每分鐘節拍 BPM</label><input id="bpm" type="number" min="40" max="240" value="120"></div></fieldset>
+        <fieldset><legend>動態設定</legend><label for="speed">動畫速度 <output id="speed-value">1.0×</output></label><input id="speed" type="range" min="0.25" max="2.5" step="0.05" value="1"><label for="size">主體大小 <output id="size-value">100%</output></label><input id="size" type="range" min="0.6" max="1.5" step="0.05" value="1"><label for="amount">細節數量 <output id="amount-value">50</output></label><input id="amount" type="range" min="0" max="100" step="5" value="50"><div class="two-fields"><div><label for="duration">場景長度（秒）</label><input id="duration" type="number" min="1" max="20" step="0.5" value="5"></div><div><label for="ratio">畫面比例</label><select id="ratio"><option value="16:9">16:9 橫式</option><option value="9:16">9:16 直式</option><option value="1:1">1:1 方形</option></select></div></div></fieldset>
+        <fieldset><legend>接到下一幕</legend><div class="two-fields"><div><label for="transition-type">轉場方式</label><select id="transition-type"><option value="crossfade">柔和交疊</option><option value="push">水平推移</option><option value="wipe">側向揭幕</option><option value="circle">圓形擴散</option><option value="zoom">縮放接續</option><option value="cut">直接切換</option></select></div><div><label for="transition-duration">轉場長度</label><select id="transition-duration"><option value="0.3">0.3 秒</option><option value="0.6">0.6 秒</option><option value="1">1 秒</option><option value="1.5">1.5 秒</option></select></div></div><p class="muted export-note" id="transition-note">轉場期間兩幕同時播放，畫面不中斷。</p><button id="preview-transition">預覽這個轉場</button></fieldset>
+        <fieldset><legend>匯出設定</legend><div class="two-fields"><div><label for="quality">影片尺寸</label><select id="quality"><option value="720">720p 快速</option><option value="1080">1080p 清晰</option></select></div><div><label for="fps">每秒影格</label><select id="fps"><option value="30">30 FPS</option><option value="60">60 FPS</option></select></div></div><p class="muted export-note">匯出整段故事，影片不含音訊。</p></fieldset>
+      </div>
+      <div class="export-actions"><button class="export-primary" id="export-video">匯出 MP4 <span>↗</span></button><button id="export-png">儲存目前畫面 PNG</button><button class="cancel-export" id="cancel-export" hidden>取消匯出</button><div class="progress-track" id="export-progress" hidden><div></div></div><p id="export-status">選效果 → 調整 → 匯出</p></div>
+    </aside>
+  </main>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <dialog id="help-dialog"><button id="close-help" class="dialog-close" aria-label="關閉說明">×</button><span class="eyebrow">HELLO, CREATOR.</span><h1>做動畫，從簡單開始。</h1><p>① 從左邊挑一個效果，修改文字與配色。</p><p>② 按「新增場景」串起多種效果，拖曳播放滑桿看每一刻。</p><p>③ 在右側「接到下一幕」選轉場，點「預覽這個轉場」檢查交接。<br>④ 選比例與畫質，按「匯出 MP4」儲存整段影片。</p><p>專案會自動保留。也可以「儲存專案」備份成檔案，日後繼續編輯。</p><hr><p class="muted">這是依照 RAR 設計攻略文章中的動畫技術概念，獨立製作的簡化工具。也參考 Grenade 手榴彈的 Motion Graphics 文章。28 種範本採適合本機使用的輕量版本；未使用原站影片、圖片或原始碼。</p><button class="source-button" id="source-link">閱讀靈感來源 ↗</button></dialog>
+  <input id="project-file" type="file" accept=".json,application/json" hidden>
+  <script src="effects.js"></script><script src="effects-extra.js"></script><script src="engine.js"></script><script src="app.js"></script>
+</body></html>

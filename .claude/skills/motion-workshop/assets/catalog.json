@@ -1,0 +1,1494 @@
+{
+  "name": "動畫小工坊",
+  "version": "1.2.0",
+  "projectVersion": 2,
+  "offline": true,
+  "audio": false,
+  "engine": "Canvas 2D + WebGL + native AVFoundation H.264",
+  "sources": [
+    "https://rar.design/posts/pure-code-animation-claude-code-12-effects",
+    "https://grenade.tw/blog/claude-motion-graphics/"
+  ],
+  "effects": [
+    {
+      "id": "bounce",
+      "name": "彈跳小球",
+      "category": "幾何",
+      "description": "壓扁、拉長，讓小球跳出節奏。",
+      "icon": "●",
+      "preview": "previews/bounce.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "example": {
+        "effect": "bounce",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "type",
+      "name": "呼吸文字",
+      "category": "文字",
+      "description": "文字逐字伸展，隨節奏輕輕起伏。",
+      "icon": "Aa",
+      "preview": "previews/type.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "example": {
+        "effect": "type",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "morph",
+      "name": "形狀變奏",
+      "category": "幾何",
+      "description": "圓、方、星形，流暢變換輪廓。",
+      "icon": "✦",
+      "preview": "previews/morph.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "example": {
+        "effect": "morph",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "clay",
+      "name": "黏土立體",
+      "category": "幾何",
+      "description": "帶柔和光影的立體形狀變化。",
+      "icon": "◉",
+      "preview": "previews/clay.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "example": {
+        "effect": "clay",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "rhythm",
+      "name": "節奏拼貼",
+      "category": "幾何",
+      "description": "幾何色塊排成會跳舞的網格。",
+      "icon": "▦",
+      "preview": "previews/rhythm.png",
+      "parameters": [
+        "text",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "transition"
+      ],
+      "example": {
+        "effect": "rhythm",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "flow",
+      "name": "流動線條",
+      "category": "幾何",
+      "description": "層層曲線，像風吹過的波浪。",
+      "icon": "≋",
+      "preview": "previews/flow.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "example": {
+        "effect": "flow",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "glass",
+      "name": "玻璃透鏡",
+      "category": "質感",
+      "description": "移動的透明球，放大背後的文字。",
+      "icon": "◌",
+      "preview": "previews/glass.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "transition"
+      ],
+      "example": {
+        "effect": "glass",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "tunnel",
+      "name": "光影隧道",
+      "category": "質感",
+      "description": "穿過帶有金屬色澤的立體圓環。",
+      "icon": "◎",
+      "preview": "previews/tunnel.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "transition"
+      ],
+      "example": {
+        "effect": "tunnel",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "particles",
+      "name": "星塵粒子",
+      "category": "質感",
+      "description": "粒子聚成圓環，再向外散開。",
+      "icon": "⁙",
+      "preview": "previews/particles.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "amount"
+      ],
+      "example": {
+        "effect": "particles",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "reaction",
+      "name": "有機生長",
+      "category": "質感",
+      "description": "反應擴散模擬生成有機紋理。",
+      "icon": "❋",
+      "preview": "previews/reaction.png",
+      "parameters": [
+        "text",
+        "color",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "amount"
+      ],
+      "example": {
+        "effect": "reaction",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "halftone",
+      "name": "網點印刷",
+      "category": "質感",
+      "description": "用大小網點畫出流動的印刷質感。",
+      "icon": "⠿",
+      "preview": "previews/halftone.png",
+      "parameters": [
+        "text",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "amount"
+      ],
+      "example": {
+        "effect": "halftone",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "physics",
+      "name": "物理遊樂場",
+      "category": "文字",
+      "description": "有碰撞與重力的字母小球。",
+      "icon": "◒",
+      "preview": "previews/physics.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "amount"
+      ],
+      "example": {
+        "effect": "physics",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "mask-reveal",
+      "name": "逐字揭幕",
+      "category": "文字",
+      "description": "每個字從遮罩中依序升起。",
+      "icon": "Aa",
+      "preview": "previews/mask-reveal.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "example": {
+        "effect": "mask-reveal",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "kinetic-zoom",
+      "name": "大字聚焦",
+      "category": "文字",
+      "description": "大字由遠近收斂，強調一句重點。",
+      "icon": "↗",
+      "preview": "previews/kinetic-zoom.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "example": {
+        "effect": "kinetic-zoom",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "text-morph",
+      "name": "關鍵字輪替",
+      "category": "文字",
+      "description": "在膠囊中輪替你的重點詞。",
+      "icon": "↔",
+      "preview": "previews/text-morph.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "example": {
+        "effect": "text-morph",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "number-roll",
+      "name": "數字計數",
+      "category": "資料",
+      "description": "數字從零滾動到指定目標。",
+      "icon": "99",
+      "preview": "previews/number-roll.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "value",
+        "suffix"
+      ],
+      "example": {
+        "effect": "number-roll",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "typewriter",
+      "name": "打字機",
+      "category": "文字",
+      "description": "逐字輸入與閃動游標。",
+      "icon": "▍",
+      "preview": "previews/typewriter.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "example": {
+        "effect": "typewriter",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "card-flyin",
+      "name": "卡片飛入",
+      "category": "介面",
+      "description": "多張標籤卡片依序飛入舞台。",
+      "icon": "▱",
+      "preview": "previews/card-flyin.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "example": {
+        "effect": "card-flyin",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "card-flip",
+      "name": "卡片翻轉",
+      "category": "介面",
+      "description": "用翻面動作切換卡片內容。",
+      "icon": "◧",
+      "preview": "previews/card-flip.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "example": {
+        "effect": "card-flip",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "orbit-cards",
+      "name": "卡片環繞",
+      "category": "介面",
+      "description": "卡片沿立體感軌道環繞。",
+      "icon": "◎",
+      "preview": "previews/orbit-cards.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "example": {
+        "effect": "orbit-cards",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "bento-grid",
+      "name": "便當格展開",
+      "category": "介面",
+      "description": "六個功能區塊從中央展開。",
+      "icon": "▦",
+      "preview": "previews/bento-grid.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "example": {
+        "effect": "bento-grid",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "chart-build",
+      "name": "長條圖生長",
+      "category": "資料",
+      "description": "依照你輸入的數值繪製動態長條圖。",
+      "icon": "▥",
+      "preview": "previews/chart-build.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items",
+        "values"
+      ],
+      "example": {
+        "effect": "chart-build",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "path-draw",
+      "name": "流程連線",
+      "category": "資料",
+      "description": "步驟與連線依序完成。",
+      "icon": "→",
+      "preview": "previews/path-draw.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "example": {
+        "effect": "path-draw",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "phone-scroll",
+      "name": "手機展示",
+      "category": "介面",
+      "description": "模擬手機中的內容捲動。",
+      "icon": "▯",
+      "preview": "previews/phone-scroll.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "example": {
+        "effect": "phone-scroll",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "tab-indicator",
+      "name": "標籤滑塊",
+      "category": "介面",
+      "description": "滑塊移動並切換標籤。",
+      "icon": "▬",
+      "preview": "previews/tab-indicator.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "example": {
+        "effect": "tab-indicator",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "cursor-click",
+      "name": "游標點擊",
+      "category": "介面",
+      "description": "游標移入按鈕並觸發漣漪。",
+      "icon": "➤",
+      "preview": "previews/cursor-click.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "example": {
+        "effect": "cursor-click",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "glass-card",
+      "name": "光感玻璃卡",
+      "category": "質感",
+      "description": "柔和光斑後方浮起透明卡片。",
+      "icon": "▢",
+      "preview": "previews/glass-card.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "example": {
+        "effect": "glass-card",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "beat-sync",
+      "name": "節拍換卡",
+      "category": "幾何",
+      "description": "依設定 BPM 切換色塊與文字。",
+      "icon": "♪",
+      "preview": "previews/beat-sync.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items",
+        "bpm"
+      ],
+      "example": {
+        "effect": "beat-sync",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "id": "cut",
+      "name": "直接切換",
+      "duration": {
+        "min": 0.1,
+        "max": 1.5,
+        "default": 0.6
+      },
+      "preview": "previews/transition-cut.png"
+    },
+    {
+      "id": "crossfade",
+      "name": "柔和交疊",
+      "duration": {
+        "min": 0.1,
+        "max": 1.5,
+        "default": 0.6
+      },
+      "preview": "previews/transition-crossfade.png"
+    },
+    {
+      "id": "push",
+      "name": "水平推移",
+      "duration": {
+        "min": 0.1,
+        "max": 1.5,
+        "default": 0.6
+      },
+      "preview": "previews/transition-push.png"
+    },
+    {
+      "id": "wipe",
+      "name": "側向揭幕",
+      "duration": {
+        "min": 0.1,
+        "max": 1.5,
+        "default": 0.6
+      },
+      "preview": "previews/transition-wipe.png"
+    },
+    {
+      "id": "circle",
+      "name": "圓形擴散",
+      "duration": {
+        "min": 0.1,
+        "max": 1.5,
+        "default": 0.6
+      },
+      "preview": "previews/transition-circle.png"
+    },
+    {
+      "id": "zoom",
+      "name": "縮放接續",
+      "duration": {
+        "min": 0.1,
+        "max": 1.5,
+        "default": 0.6
+      },
+      "preview": "previews/transition-zoom.png"
+    }
+  ],
+  "automation": {
+    "script": "render.mjs",
+    "requires": "Running Motion Workshop app on macOS",
+    "transport": "Local job queue; native process fallback",
+    "queue": "~/Library/Application Support/動畫小工坊/jobs"
+  }
+}

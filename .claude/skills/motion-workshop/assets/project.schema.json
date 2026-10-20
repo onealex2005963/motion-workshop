@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Motion Workshop project v2",
+  "type": "object",
+  "required": [
+    "version",
+    "clips"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "const": 2
+    },
+    "ratio": {
+      "enum": [
+        "16:9",
+        "9:16",
+        "1:1"
+      ],
+      "default": "16:9"
+    },
+    "quality": {
+      "enum": [
+        720,
+        1080
+      ],
+      "default": 720
+    },
+    "fps": {
+      "enum": [
+        30,
+        60
+      ],
+      "default": 30
+    },
+    "clips": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 24,
+      "items": {
+        "type": "object",
+        "required": [
+          "effect"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "effect": {
+            "enum": [
+              "bounce",
+              "type",
+              "morph",
+              "clay",
+              "rhythm",
+              "flow",
+              "glass",
+              "tunnel",
+              "particles",
+              "reaction",
+              "halftone",
+              "physics",
+              "mask-reveal",
+              "kinetic-zoom",
+              "text-morph",
+              "number-roll",
+              "typewriter",
+              "card-flyin",
+              "card-flip",
+              "orbit-cards",
+              "bento-grid",
+              "chart-build",
+              "path-draw",
+              "phone-scroll",
+              "tab-indicator",
+              "cursor-click",
+              "glass-card",
+              "beat-sync"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "subtitle": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "color": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "secondary": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "background": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          },
+          "speed": {
+            "type": "number",
+            "minimum": 0.25,
+            "maximum": 2.5
+          },
+          "size": {
+            "type": "number",
+            "minimum": 0.6,
+            "maximum": 1.5
+          },
+          "amount": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "duration": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 6,
+            "items": {
+              "type": "string",
+              "maxLength": 24
+            }
+          },
+          "values": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 6,
+            "items": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1000000000
+            }
+          },
+          "value": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000000000
+          },
+          "suffix": {
+            "type": "string",
+            "maxLength": 12
+          },
+          "bpm": {
+            "type": "number",
+            "minimum": 40,
+            "maximum": 240
+          },
+          "transition": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "enum": [
+                  "cut",
+                  "crossfade",
+                  "push",
+                  "wipe",
+                  "circle",
+                  "zoom"
+                ]
+              },
+              "duration": {
+                "type": "number",
+                "minimum": 0.1,
+                "maximum": 1.5
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
