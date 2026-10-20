@@ -24,7 +24,7 @@ node assets/render.mjs --project /absolute/project.motion.json --validate
 
 ## 轉場時間
 
-`transition` 定義本幕接到下一幕。6 種 ID：cut、crossfade、push、wipe、circle、zoom。最後一幕忽略轉場。每個重疊長度是指定秒數、相鄰較短場景 45% 兩者較小值，再對齊影格。
+`transition` 定義本幕接到下一幕。10 種 ID：cut、crossfade、push、wipe、circle、zoom、slide-up、diagonal、blur、flash。最後一幕忽略轉場。每個重疊長度是指定秒數、相鄰較短場景 45% 兩者較小值，再對齊影格。
 
 上面兩幕合計 5.4 秒、162 影格。3 幕各 3 秒，兩段 0.6 秒轉場，合計 7.8 秒、234 影格。輸出影格編號為 0 到 frames−1；最後影格時間是 `(frames−1)/fps`。
 

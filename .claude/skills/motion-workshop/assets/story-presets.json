@@ -1,0 +1,106 @@
+[
+  {
+    "id": "product-launch",
+    "name": "產品發表",
+    "description": "從品牌開場、功能總覽到產品價值。",
+    "category": "產品",
+    "ratio": "16:9",
+    "effects": [
+      "logo-reveal",
+      "bento-grid",
+      "isometric-stack",
+      "mask-reveal"
+    ]
+  },
+  {
+    "id": "app-demo",
+    "name": "App 介紹",
+    "description": "手機畫面、操作回饋與功能卡片。",
+    "category": "介面",
+    "ratio": "9:16",
+    "effects": [
+      "split-title",
+      "phone-scroll",
+      "notification-stack",
+      "card-flyin"
+    ]
+  },
+  {
+    "id": "data-report",
+    "name": "數據報告",
+    "description": "計數、趨勢、比例與一段重點結論。",
+    "category": "資料",
+    "ratio": "16:9",
+    "effects": [
+      "number-roll",
+      "line-chart",
+      "donut-chart",
+      "quote-card"
+    ]
+  },
+  {
+    "id": "explainer",
+    "name": "概念解說",
+    "description": "以資料網絡、時間軸與步驟說清楚想法。",
+    "category": "解說",
+    "ratio": "16:9",
+    "effects": [
+      "mask-reveal",
+      "network-flow",
+      "timeline-story",
+      "path-draw"
+    ]
+  },
+  {
+    "id": "type-showreel",
+    "name": "文字動態集錦",
+    "description": "用大字、分割標題與關鍵字建立節奏。",
+    "category": "文字",
+    "ratio": "16:9",
+    "effects": [
+      "kinetic-zoom",
+      "split-title",
+      "type",
+      "text-morph"
+    ]
+  },
+  {
+    "id": "brand-intro",
+    "name": "品牌形象",
+    "description": "漸層開場、幾何標誌、引言與粒子收尾。",
+    "category": "品牌",
+    "ratio": "16:9",
+    "effects": [
+      "gradient-mesh",
+      "logo-reveal",
+      "quote-card",
+      "particles"
+    ]
+  },
+  {
+    "id": "developer-release",
+    "name": "軟體更新",
+    "description": "程式視窗、指令演示與資料連結。",
+    "category": "開發",
+    "ratio": "16:9",
+    "effects": [
+      "code-window",
+      "terminal-run",
+      "network-flow",
+      "mask-reveal"
+    ]
+  },
+  {
+    "id": "social-reel",
+    "name": "直式短影音",
+    "description": "四個短段落帶出重點，適合社群格式。",
+    "category": "社群",
+    "ratio": "9:16",
+    "effects": [
+      "split-title",
+      "notification-stack",
+      "beat-sync",
+      "logo-reveal"
+    ]
+  }
+]

@@ -10,13 +10,13 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const skill=path.join(root,'.claude/skills/motion-workshop'),assets=path.join(skill,'assets');
 const read=p=>fs.readFile(p,'utf8'), parse=async p=>JSON.parse(await read(p));
 const context=vm.createContext({window:{}});
-for(const file of ['effects.js','effects-extra.js','engine.js']){
+for(const file of ["effects.js","effects-extra.js","effects-pro.js","engine.js","library.js"]){
   const code=await read(path.join(assets,'runtime',file));
   assert.equal(code,await read(path.join(root,'web',file)),file+' runtime mismatch');
   vm.runInContext(code,context,{filename:file});
 }
 const E=context.window.MotionEffects,P=context.window.MotionProject,catalog=await parse(path.join(assets,'catalog.json'));
-const ids=catalog.effects.map(e=>e.id);assert.equal(ids.length,28);assert.equal(new Set(ids).size,28);
+const ids=catalog.effects.map(e=>e.id);assert.equal(ids.length,40);assert.equal(new Set(ids).size,40);
 assert.deepEqual([...E.definitions.map(e=>e.id)],ids);
 const schema=await parse(path.join(assets,'project.schema.json'));
 assert.deepEqual(schema.properties.clips.items.properties.effect.enum,ids);
@@ -53,6 +53,25 @@ const clamped=P.validate({version:1,fps:5,clips:[{effect:'bounce',duration:100,s
 assert.equal(clamped.version,2);assert.equal(clamped.fps,30);assert.equal(clamped.clips[0].duration,20);assert.equal(clamped.clips[0].speed,2.5);assert.equal(clamped.clips[0].color,'#d8f36a');
 const example=await parse(path.join(assets,'examples/三幕轉場.motion.json'));
 assert.equal(Math.round(P.duration(P.validate(example))*30),234);
+const Library=context.window.MotionLibrary;
+assert.equal(Library.stories.length,8);assert.equal(catalog.transitions.length,10);
+for(const story of Library.stories){
+  await fs.access(path.join(assets,'examples/stories/'+story.id+'.motion.json'));
+  for(const duration of [12,15,20,30])for(const fps of [30,60])for(const ratio of ['16:9','9:16','1:1']){
+    const project=Library.createStory(story.id,{duration,fps,ratio,brand:'Example Studio',headline:'Keep this exact message',items:['One','Two','Three']});
+    assert.equal(project.clips.length,4);assert.equal(project.ratio,ratio);assert.equal(project.fps,fps);
+    assert.equal(Math.round(P.duration(project)*fps),duration*fps);
+    assert.ok(project.clips.some(c=>c.text==='Keep this exact message'));
+    for(const mode of ['video','website','software']){
+      const prompt=Library.createPrompt(project,{mode,brief:'Build this example'});
+      assert.ok(prompt.includes('Build this example'));assert.ok(prompt.includes('Keep this exact message'));
+      assert.ok(prompt.includes('assets/runtime/'));assert.ok(prompt.includes('SKILL.md'));
+    }
+  }
+}
+assert.throws(()=>Library.createStory('missing'));
+assert.throws(()=>Library.createStory('product-launch',{duration:0}));
+assert.throws(()=>Library.createStory('product-launch',{duration:NaN}));
 const skillText=await read(path.join(skill,'SKILL.md'));
 assert.match(skillText,/^---\nname: motion-workshop\ndescription: .+\nlicense: MIT\n---/);
 async function walk(dir){const out=[];for(const entry of await fs.readdir(dir,{withFileTypes:true})){if(['.git','build','dist','downloads','node_modules'].includes(entry.name))continue;const p=path.join(dir,entry.name);assert.ok(!entry.isSymbolicLink(),'No symlinks in portable package');out.push(...(entry.isDirectory()?await walk(p):[p]));}return out;}
@@ -77,5 +96,10 @@ try{
   const portable=path.join(temp,'.claude/skills/motion-workshop/assets');
   const check=spawnSync(process.execPath,[path.join(portable,'render.mjs'),'--project',path.join(portable,'examples/三幕轉場.motion.json'),'--validate'],{encoding:'utf8'});
   assert.equal(check.status,0,check.stderr);assert.equal(JSON.parse(check.stdout).frames,234);
+  const storyFile=path.join(temp,'generated.motion.json');
+  const generate=spawnSync(process.execPath,[path.join(portable,'create-project.mjs'),'--story','developer-release','--brand','Example Studio','--duration','20','--fps','60','--output',storyFile],{encoding:'utf8'});
+  assert.equal(generate.status,0,generate.stderr);assert.equal(JSON.parse(generate.stdout).frames,1200);
+  const duplicate=spawnSync(process.execPath,[path.join(portable,'create-project.mjs'),'--story','product-launch','--output',storyFile],{encoding:'utf8'});
+  assert.notEqual(duplicate.status,0,'Generated project must not overwrite an existing file');
 }finally{await fs.rm(temp,{recursive:true,force:true});}
-console.log(JSON.stringify({ok:true,effects:ids.length,transitions:P.transitionTypes.length,files:files.length,checks:['runtime parity','catalog/schema/previews','30/60 FPS timelines','normalization','portable skill install','overwrite refusal','standalone CLI','local links','privacy scan']},null,2));
+console.log(JSON.stringify({ok:true,effects:ids.length,transitions:P.transitionTypes.length,stories:Library.stories.length,storyConfigurations:192,files:files.length,checks:['runtime parity','catalog/schema/previews','30/60 FPS timelines','exact story duration at all ratios','prompt composition','normalization','portable skill install','overwrite refusal','standalone CLI generation','local links','privacy scan']},null,2));

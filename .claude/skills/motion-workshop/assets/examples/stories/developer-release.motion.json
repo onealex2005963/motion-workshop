@@ -1,0 +1,124 @@
+{
+  "version": 2,
+  "ratio": "16:9",
+  "quality": 720,
+  "fps": 30,
+  "clips": [
+    {
+      "effect": "code-window",
+      "text": "你的品牌",
+      "subtitle": "讓每個想法，清楚被看見",
+      "color": "#d8f36a",
+      "secondary": "#a59bff",
+      "background": "#10171c",
+      "speed": 1,
+      "size": 1,
+      "amount": 50,
+      "duration": 4.2,
+      "items": [
+        "const idea = \"create\";",
+        "const motion = build(ide",
+        "render(motion);"
+      ],
+      "values": [
+        35,
+        70,
+        55
+      ],
+      "value": 100,
+      "suffix": "",
+      "bpm": 120,
+      "transition": {
+        "type": "push",
+        "duration": 0.6
+      }
+    },
+    {
+      "effect": "terminal-run",
+      "text": "從想法到成品",
+      "subtitle": "",
+      "color": "#d8f36a",
+      "secondary": "#a59bff",
+      "background": "#10171c",
+      "speed": 1,
+      "size": 1,
+      "amount": 50,
+      "duration": 4.2,
+      "items": [
+        "build project",
+        "verify frames",
+        "ready to share"
+      ],
+      "values": [
+        35,
+        70,
+        55
+      ],
+      "value": 100,
+      "suffix": "",
+      "bpm": 120,
+      "transition": {
+        "type": "blur",
+        "duration": 0.6
+      }
+    },
+    {
+      "effect": "network-flow",
+      "text": "清楚呈現",
+      "subtitle": "",
+      "color": "#d8f36a",
+      "secondary": "#a59bff",
+      "background": "#10171c",
+      "speed": 1,
+      "size": 1,
+      "amount": 50,
+      "duration": 4.2,
+      "items": [
+        "簡單上手",
+        "清楚呈現",
+        "流暢體驗"
+      ],
+      "values": [
+        35,
+        70,
+        55
+      ],
+      "value": 100,
+      "suffix": "",
+      "bpm": 120,
+      "transition": {
+        "type": "circle",
+        "duration": 0.6
+      }
+    },
+    {
+      "effect": "mask-reveal",
+      "text": "讓每個想法，清楚被看見",
+      "subtitle": "你的品牌",
+      "color": "#d8f36a",
+      "secondary": "#a59bff",
+      "background": "#10171c",
+      "speed": 1,
+      "size": 1,
+      "amount": 50,
+      "duration": 4.2,
+      "items": [
+        "簡單上手",
+        "清楚呈現",
+        "流暢體驗"
+      ],
+      "values": [
+        35,
+        70,
+        55
+      ],
+      "value": 100,
+      "suffix": "",
+      "bpm": 120,
+      "transition": {
+        "type": "cut",
+        "duration": 0.6
+      }
+    }
+  ]
+}

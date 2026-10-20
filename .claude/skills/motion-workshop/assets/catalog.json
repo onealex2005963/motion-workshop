@@ -1,13 +1,14 @@
 {
   "name": "動畫小工坊",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "projectVersion": 2,
   "offline": true,
   "audio": false,
   "engine": "Canvas 2D + WebGL + native AVFoundation H.264",
   "sources": [
     "https://rar.design/posts/pure-code-animation-claude-code-12-effects",
-    "https://grenade.tw/blog/claude-motion-graphics/"
+    "https://grenade.tw/blog/claude-motion-graphics/",
+    "https://prompt-motion.com/"
   ],
   "effects": [
     {
@@ -28,6 +29,10 @@
         "size",
         "transition"
       ],
+      "tags": [
+        "幾何"
+      ],
+      "source": "runtime/effects.js",
       "example": {
         "effect": "bounce",
         "text": "讓想法\n動起來",
@@ -78,6 +83,10 @@
         "size",
         "transition"
       ],
+      "tags": [
+        "文字"
+      ],
+      "source": "runtime/effects.js",
       "example": {
         "effect": "type",
         "text": "讓想法\n動起來",
@@ -128,6 +137,10 @@
         "size",
         "transition"
       ],
+      "tags": [
+        "幾何"
+      ],
+      "source": "runtime/effects.js",
       "example": {
         "effect": "morph",
         "text": "讓想法\n動起來",
@@ -178,6 +191,10 @@
         "size",
         "transition"
       ],
+      "tags": [
+        "幾何"
+      ],
+      "source": "runtime/effects.js",
       "example": {
         "effect": "clay",
         "text": "讓想法\n動起來",
@@ -219,13 +236,19 @@
       "preview": "previews/rhythm.png",
       "parameters": [
         "text",
+        "subtitle",
         "color",
         "secondary",
         "background",
         "duration",
         "speed",
+        "size",
         "transition"
       ],
+      "tags": [
+        "幾何"
+      ],
+      "source": "runtime/effects.js",
       "example": {
         "effect": "rhythm",
         "text": "讓想法\n動起來",
@@ -276,6 +299,10 @@
         "size",
         "transition"
       ],
+      "tags": [
+        "幾何"
+      ],
+      "source": "runtime/effects.js",
       "example": {
         "effect": "flow",
         "text": "讓想法\n動起來",
@@ -323,8 +350,13 @@
         "background",
         "duration",
         "speed",
+        "size",
         "transition"
       ],
+      "tags": [
+        "質感"
+      ],
+      "source": "runtime/effects.js",
       "example": {
         "effect": "glass",
         "text": "讓想法\n動起來",
@@ -372,8 +404,13 @@
         "background",
         "duration",
         "speed",
+        "size",
         "transition"
       ],
+      "tags": [
+        "質感"
+      ],
+      "source": "runtime/effects.js",
       "example": {
         "effect": "tunnel",
         "text": "讓想法\n動起來",
@@ -425,6 +462,10 @@
         "transition",
         "amount"
       ],
+      "tags": [
+        "質感"
+      ],
+      "source": "runtime/effects.js",
       "example": {
         "effect": "particles",
         "text": "讓想法\n動起來",
@@ -466,7 +507,9 @@
       "preview": "previews/reaction.png",
       "parameters": [
         "text",
+        "subtitle",
         "color",
+        "secondary",
         "background",
         "duration",
         "speed",
@@ -474,6 +517,10 @@
         "transition",
         "amount"
       ],
+      "tags": [
+        "質感"
+      ],
+      "source": "runtime/effects.js",
       "example": {
         "effect": "reaction",
         "text": "讓想法\n動起來",
@@ -515,6 +562,7 @@
       "preview": "previews/halftone.png",
       "parameters": [
         "text",
+        "subtitle",
         "color",
         "secondary",
         "background",
@@ -524,6 +572,10 @@
         "transition",
         "amount"
       ],
+      "tags": [
+        "質感"
+      ],
+      "source": "runtime/effects.js",
       "example": {
         "effect": "halftone",
         "text": "讓想法\n動起來",
@@ -575,6 +627,10 @@
         "transition",
         "amount"
       ],
+      "tags": [
+        "文字"
+      ],
+      "source": "runtime/effects.js",
       "example": {
         "effect": "physics",
         "text": "讓想法\n動起來",
@@ -625,6 +681,10 @@
         "size",
         "transition"
       ],
+      "tags": [
+        "文字"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "mask-reveal",
         "text": "讓想法\n動起來",
@@ -675,6 +735,10 @@
         "size",
         "transition"
       ],
+      "tags": [
+        "文字"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "kinetic-zoom",
         "text": "讓想法\n動起來",
@@ -726,6 +790,11 @@
         "transition",
         "items"
       ],
+      "tags": [
+        "文字",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "text-morph",
         "text": "讓想法\n動起來",
@@ -778,6 +847,10 @@
         "value",
         "suffix"
       ],
+      "tags": [
+        "資料"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "number-roll",
         "text": "讓想法\n動起來",
@@ -828,6 +901,10 @@
         "size",
         "transition"
       ],
+      "tags": [
+        "文字"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "typewriter",
         "text": "讓想法\n動起來",
@@ -879,6 +956,11 @@
         "transition",
         "items"
       ],
+      "tags": [
+        "介面",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "card-flyin",
         "text": "讓想法\n動起來",
@@ -930,6 +1012,11 @@
         "transition",
         "items"
       ],
+      "tags": [
+        "介面",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "card-flip",
         "text": "讓想法\n動起來",
@@ -981,6 +1068,11 @@
         "transition",
         "items"
       ],
+      "tags": [
+        "介面",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "orbit-cards",
         "text": "讓想法\n動起來",
@@ -1032,6 +1124,11 @@
         "transition",
         "items"
       ],
+      "tags": [
+        "介面",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "bento-grid",
         "text": "讓想法\n動起來",
@@ -1084,6 +1181,12 @@
         "items",
         "values"
       ],
+      "tags": [
+        "資料",
+        "可換標籤",
+        "真實數值"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "chart-build",
         "text": "讓想法\n動起來",
@@ -1135,6 +1238,11 @@
         "transition",
         "items"
       ],
+      "tags": [
+        "資料",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "path-draw",
         "text": "讓想法\n動起來",
@@ -1186,6 +1294,11 @@
         "transition",
         "items"
       ],
+      "tags": [
+        "介面",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "phone-scroll",
         "text": "讓想法\n動起來",
@@ -1237,6 +1350,11 @@
         "transition",
         "items"
       ],
+      "tags": [
+        "介面",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "tab-indicator",
         "text": "讓想法\n動起來",
@@ -1288,6 +1406,11 @@
         "transition",
         "items"
       ],
+      "tags": [
+        "介面",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "cursor-click",
         "text": "讓想法\n動起來",
@@ -1338,6 +1461,10 @@
         "size",
         "transition"
       ],
+      "tags": [
+        "質感"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "glass-card",
         "text": "讓想法\n動起來",
@@ -1390,8 +1517,681 @@
         "items",
         "bpm"
       ],
+      "tags": [
+        "幾何",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-extra.js",
       "example": {
         "effect": "beat-sync",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "line-chart",
+      "name": "折線趨勢",
+      "category": "資料",
+      "description": "折線逐段繪出，搭配原始數值與標籤。",
+      "icon": "↗",
+      "preview": "previews/line-chart.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items",
+        "values"
+      ],
+      "tags": [
+        "資料",
+        "可換標籤",
+        "真實數值"
+      ],
+      "source": "runtime/effects-pro.js",
+      "example": {
+        "effect": "line-chart",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "donut-chart",
+      "name": "環形比例",
+      "category": "資料",
+      "description": "依數據比例展開環形圖與圖例。",
+      "icon": "◔",
+      "preview": "previews/donut-chart.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items",
+        "values"
+      ],
+      "tags": [
+        "資料",
+        "可換標籤",
+        "真實數值"
+      ],
+      "source": "runtime/effects-pro.js",
+      "example": {
+        "effect": "donut-chart",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "network-flow",
+      "name": "資料網絡",
+      "category": "資料",
+      "description": "節點間的光點流動，呈現連結關係。",
+      "icon": "⌘",
+      "preview": "previews/network-flow.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "tags": [
+        "資料",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-pro.js",
+      "example": {
+        "effect": "network-flow",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "timeline-story",
+      "name": "里程碑時間軸",
+      "category": "資料",
+      "description": "沿著時間線逐步展開事件。",
+      "icon": "↦",
+      "preview": "previews/timeline-story.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "tags": [
+        "資料",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-pro.js",
+      "example": {
+        "effect": "timeline-story",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "code-window",
+      "name": "程式碼視窗",
+      "category": "開發",
+      "description": "程式碼逐行出現的產品展示視窗。",
+      "icon": "{}",
+      "preview": "previews/code-window.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "tags": [
+        "開發",
+        "可換標籤",
+        "程式展示"
+      ],
+      "source": "runtime/effects-pro.js",
+      "example": {
+        "effect": "code-window",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "const idea = \"create\";",
+          "const motion = build(idea);",
+          "render(motion);"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "terminal-run",
+      "name": "終端機演示",
+      "category": "開發",
+      "description": "指令與完成訊息依序出現。",
+      "icon": ">_",
+      "preview": "previews/terminal-run.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "tags": [
+        "開發",
+        "可換標籤",
+        "程式展示"
+      ],
+      "source": "runtime/effects-pro.js",
+      "example": {
+        "effect": "terminal-run",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "build project",
+          "verify frames",
+          "ready to share"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "logo-reveal",
+      "name": "幾何標誌揭幕",
+      "category": "幾何",
+      "description": "四個幾何部件組合成抽象標誌。",
+      "icon": "✣",
+      "preview": "previews/logo-reveal.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "tags": [
+        "幾何"
+      ],
+      "source": "runtime/effects-pro.js",
+      "example": {
+        "effect": "logo-reveal",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "split-title",
+      "name": "分割標題",
+      "category": "文字",
+      "description": "兩段文字從左右收合，帶出主題。",
+      "icon": "Aa",
+      "preview": "previews/split-title.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "tags": [
+        "文字"
+      ],
+      "source": "runtime/effects-pro.js",
+      "example": {
+        "effect": "split-title",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "quote-card",
+      "name": "引言卡片",
+      "category": "文字",
+      "description": "讓一句話與署名成為畫面的焦點。",
+      "icon": "“",
+      "preview": "previews/quote-card.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "tags": [
+        "文字"
+      ],
+      "source": "runtime/effects-pro.js",
+      "example": {
+        "effect": "quote-card",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "gradient-mesh",
+      "name": "流光漸層",
+      "category": "質感",
+      "description": "柔和漸層緩慢流動，托住主標題。",
+      "icon": "◉",
+      "preview": "previews/gradient-mesh.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition"
+      ],
+      "tags": [
+        "質感"
+      ],
+      "source": "runtime/effects-pro.js",
+      "example": {
+        "effect": "gradient-mesh",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "isometric-stack",
+      "name": "斜角堆疊",
+      "category": "介面",
+      "description": "多層卡片以等角感的方式組合。",
+      "icon": "▱",
+      "preview": "previews/isometric-stack.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "tags": [
+        "介面",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-pro.js",
+      "example": {
+        "effect": "isometric-stack",
+        "text": "讓想法\n動起來",
+        "subtitle": "一點靈感，無限可能。",
+        "color": "#d8f36a",
+        "secondary": "#a59bff",
+        "background": "#10171c",
+        "speed": 1,
+        "size": 1,
+        "amount": 50,
+        "duration": 5,
+        "items": [
+          "靈感",
+          "創作",
+          "分享",
+          "可能"
+        ],
+        "values": [
+          35,
+          70,
+          55,
+          90
+        ],
+        "value": 100,
+        "suffix": "",
+        "bpm": 120,
+        "transition": {
+          "type": "crossfade",
+          "duration": 0.6
+        }
+      }
+    },
+    {
+      "id": "notification-stack",
+      "name": "通知堆疊",
+      "category": "介面",
+      "description": "訊息依序滑入，呈現產品回饋。",
+      "icon": "☷",
+      "preview": "previews/notification-stack.png",
+      "parameters": [
+        "text",
+        "subtitle",
+        "color",
+        "secondary",
+        "background",
+        "duration",
+        "speed",
+        "size",
+        "transition",
+        "items"
+      ],
+      "tags": [
+        "介面",
+        "可換標籤"
+      ],
+      "source": "runtime/effects-pro.js",
+      "example": {
+        "effect": "notification-stack",
         "text": "讓想法\n動起來",
         "subtitle": "一點靈感，無限可能。",
         "color": "#d8f36a",
@@ -1483,6 +2283,46 @@
         "default": 0.6
       },
       "preview": "previews/transition-zoom.png"
+    },
+    {
+      "id": "slide-up",
+      "name": "垂直推移",
+      "duration": {
+        "min": 0.1,
+        "max": 1.5,
+        "default": 0.6
+      },
+      "preview": "previews/transition-slide-up.png"
+    },
+    {
+      "id": "diagonal",
+      "name": "斜角揭幕",
+      "duration": {
+        "min": 0.1,
+        "max": 1.5,
+        "default": 0.6
+      },
+      "preview": "previews/transition-diagonal.png"
+    },
+    {
+      "id": "blur",
+      "name": "失焦交疊",
+      "duration": {
+        "min": 0.1,
+        "max": 1.5,
+        "default": 0.6
+      },
+      "preview": "previews/transition-blur.png"
+    },
+    {
+      "id": "flash",
+      "name": "閃光接續",
+      "duration": {
+        "min": 0.1,
+        "max": 1.5,
+        "default": 0.6
+      },
+      "preview": "previews/transition-flash.png"
     }
   ],
   "automation": {
@@ -1490,5 +2330,126 @@
     "requires": "Running Motion Workshop app on macOS",
     "transport": "Local job queue; native process fallback",
     "queue": "~/Library/Application Support/動畫小工坊/jobs"
-  }
+  },
+  "stories": [
+    {
+      "id": "product-launch",
+      "name": "產品發表",
+      "description": "從品牌開場、功能總覽到產品價值。",
+      "category": "產品",
+      "ratio": "16:9",
+      "effects": [
+        "logo-reveal",
+        "bento-grid",
+        "isometric-stack",
+        "mask-reveal"
+      ],
+      "example": "examples/stories/product-launch.motion.json"
+    },
+    {
+      "id": "app-demo",
+      "name": "App 介紹",
+      "description": "手機畫面、操作回饋與功能卡片。",
+      "category": "介面",
+      "ratio": "9:16",
+      "effects": [
+        "split-title",
+        "phone-scroll",
+        "notification-stack",
+        "card-flyin"
+      ],
+      "example": "examples/stories/app-demo.motion.json"
+    },
+    {
+      "id": "data-report",
+      "name": "數據報告",
+      "description": "計數、趨勢、比例與一段重點結論。",
+      "category": "資料",
+      "ratio": "16:9",
+      "effects": [
+        "number-roll",
+        "line-chart",
+        "donut-chart",
+        "quote-card"
+      ],
+      "example": "examples/stories/data-report.motion.json"
+    },
+    {
+      "id": "explainer",
+      "name": "概念解說",
+      "description": "以資料網絡、時間軸與步驟說清楚想法。",
+      "category": "解說",
+      "ratio": "16:9",
+      "effects": [
+        "mask-reveal",
+        "network-flow",
+        "timeline-story",
+        "path-draw"
+      ],
+      "example": "examples/stories/explainer.motion.json"
+    },
+    {
+      "id": "type-showreel",
+      "name": "文字動態集錦",
+      "description": "用大字、分割標題與關鍵字建立節奏。",
+      "category": "文字",
+      "ratio": "16:9",
+      "effects": [
+        "kinetic-zoom",
+        "split-title",
+        "type",
+        "text-morph"
+      ],
+      "example": "examples/stories/type-showreel.motion.json"
+    },
+    {
+      "id": "brand-intro",
+      "name": "品牌形象",
+      "description": "漸層開場、幾何標誌、引言與粒子收尾。",
+      "category": "品牌",
+      "ratio": "16:9",
+      "effects": [
+        "gradient-mesh",
+        "logo-reveal",
+        "quote-card",
+        "particles"
+      ],
+      "example": "examples/stories/brand-intro.motion.json"
+    },
+    {
+      "id": "developer-release",
+      "name": "軟體更新",
+      "description": "程式視窗、指令演示與資料連結。",
+      "category": "開發",
+      "ratio": "16:9",
+      "effects": [
+        "code-window",
+        "terminal-run",
+        "network-flow",
+        "mask-reveal"
+      ],
+      "example": "examples/stories/developer-release.motion.json"
+    },
+    {
+      "id": "social-reel",
+      "name": "直式短影音",
+      "description": "四個短段落帶出重點，適合社群格式。",
+      "category": "社群",
+      "ratio": "9:16",
+      "effects": [
+        "split-title",
+        "notification-stack",
+        "beat-sync",
+        "logo-reveal"
+      ],
+      "example": "examples/stories/social-reel.motion.json"
+    }
+  ],
+  "runtimeOrder": [
+    "effects.js",
+    "effects-extra.js",
+    "effects-pro.js",
+    "engine.js",
+    "library.js"
+  ]
 }

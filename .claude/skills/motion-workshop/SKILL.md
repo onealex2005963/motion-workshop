@@ -1,6 +1,6 @@
 ---
 name: motion-workshop
-description: Reuse Motion Workshop's 28 Canvas/WebGL effects and 6 scene transitions when the user asks for animated websites, software UI motion, motion graphics, editable video scenes, or adaptations of this library. Includes an effect catalog, visual previews, runnable website and interactive UI examples, effect breakdowns, and deterministic frame rendering. 適用於網站動畫、軟體介面動效、影片分鏡、動畫效果選型與改寫。
+description: Reuse Motion Workshop's 40 Canvas/WebGL effects and 10 scene transitions when the user asks for animated websites, software UI motion, motion graphics, editable video scenes, or adaptations of this library. Includes an effect catalog, visual previews, runnable website and interactive UI examples, effect breakdowns, and deterministic frame rendering. 適用於網站動畫、軟體介面動效、影片分鏡、動畫效果選型與改寫。
 license: MIT
 ---
 
@@ -14,14 +14,20 @@ Use the user's language. Prefer existing effects before introducing dependencies
 1. Read `assets/catalog.json`; select by actual ID, description and supported parameters. Open only the relevant `assets/previews/<id>.png` when visual comparison helps.
 2. Read `references/effect-breakdown.md` for the chosen technique. Its code pointers identify the original implementation; examples are patterns to adapt to the user's product, not finished product content.
 3. Choose the appropriate route:
-   - **Website:** `references/web-ui.md` and `assets/examples/website/index.html`. Copy the three runtime scripts and the player controller; retain a readable HTML text alternative.
+   - **Website:** `references/web-ui.md` and `assets/examples/website/index.html`. Copy the five runtime scripts and the player controller; retain a readable HTML text alternative.
    - **Interactive software UI:** `assets/examples/software-ui/index.html` and `references/web-ui.md`. Use real DOM controls, focus states and user actions. Canvas phone/cursor/tab templates are illustrative graphics, not functioning application controls.
    - **Video/editing:** `references/video.md`, `assets/project.schema.json` and `assets/examples/三幕轉場.motion.json`. Generate editable scene JSON and render using a supported local environment.
 4. Preserve user-provided labels and numerical values. The built-in numbers, phone and cards are illustrative placeholders. Use only supported parameters, or explicitly implement and test a runtime extension.
 
+## Start with a complete story
+
+For product launches, software demos, reports, explainers, brand films or short social videos, read [stories-and-prompts.md](references/stories-and-prompts.md). There are 8 original four-scene recipes in assets/story-presets.json, with runnable projects in assets/examples/stories/.
+
+Use assets/create-project.mjs to list or generate them without dependencies. The output duration includes transition overlap; 12/15/20/30 seconds and 30/60 FPS are supported. Preserve supplied data; generated chart values are placeholders. Use MotionLibrary.createPrompt(project, {mode, brief}) for a handoff that contains the actual project, source files and frame-aligned timing. It does not call a model or grant execution access.
+
 ## Runtime contract
 
-Load `assets/runtime/effects.js`, `effects-extra.js`, then `engine.js` in a DOM + Canvas browser. Globals are `MotionEffects` and `MotionProject`.
+Load `assets/runtime/effects.js`, `effects-extra.js`, `effects-pro.js`, `engine.js`, then `library.js` in a DOM + Canvas browser. Globals are `MotionEffects` and `MotionProject`.
 
 ```js
 const project = MotionProject.validate({

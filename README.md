@@ -2,11 +2,21 @@
 
 **讓 Claude 在做網站、軟體介面與影片時，直接參考可執行的動畫效果。**
 
-28 種 Canvas / WebGL 效果、6 種場景轉場、Claude skill、技法拆解、可操作的網站範例，以及可選用的繁體中文 macOS 編輯器。離線運作，沒有 API 金鑰、CDN 或 npm 套件依賴。MIT 授權，可修改與商用，散布程式碼時保留授權。
+40 種 Canvas / WebGL 效果、10 種場景轉場、Claude skill、技法拆解、可操作的網站範例，以及可選用的繁體中文 macOS 編輯器。離線運作，沒有 API 金鑰、CDN 或 npm 套件依賴。MIT 授權，可修改與商用，散布程式碼時保留授權。
 
 ![動畫效果預覽](.claude/skills/motion-workshop/assets/previews/card-flyin.png)
 
-[English](README.en.md) · [28 種效果預覽](docs/GALLERY.md) · [技法拆解](.claude/skills/motion-workshop/references/effect-breakdown.md) · [Claude skill](.claude/skills/motion-workshop/SKILL.md)
+[English](README.en.md) · [40 種效果預覽](docs/GALLERY.md) · [技法拆解](.claude/skills/motion-workshop/references/effect-breakdown.md) · [Claude skill](.claude/skills/motion-workshop/SKILL.md)
+
+## 1.3 版：從效果到完整故事
+
+- **8 套故事範本**：產品發表、App 介紹、數據報告、概念解說、文字集錦、品牌形象、軟體更新、直式短影音。客製品牌、標題、重點、配色、比例及 12／15／20／30 秒精確總長。
+- **效果探索**：搜尋分類與標籤、收藏、排序、懸停／鍵盤聚焦的動態預覽；支援暫停與減少動態效果。
+- **Claude 指令**：從整份作品或目前場景，產生網站／軟體／影片用途的指令，包含實際分鏡、效果 ID、配色與專案 JSON。可複製或存成 Markdown。
+- **直接匯出 Skill ZIP**：Mac App 內含完整工具包，無須尋找本機路徑；效果拆解可查實際程式檔與參數。
+- **復原／重做**：編輯與套用故事後可返回先前作品。
+
+12 個新增 ID：line-chart、donut-chart、network-flow、timeline-story、code-window、terminal-run、logo-reveal、split-title、quote-card、gradient-mesh、isometric-stack、notification-stack。
 
 ## 30 秒開始
 
@@ -38,14 +48,16 @@ node scripts/install-skill.mjs --project /absolute/path/to/your-project
 
 ## 直接試玩
 
-雙擊 `.claude/skills/motion-workshop/assets/examples/website/index.html`。可以選擇 28 種效果、播放／暫停、逐格拖曳與下載 PNG。右下連結是實際 DOM 介面示範，包含鍵盤可操作的標籤、卡片進場與點擊回饋。
+雙擊 `.claude/skills/motion-workshop/assets/examples/website/index.html`。可以選擇 40 種效果、播放／暫停、逐格拖曳與下載 PNG。右下連結是實際 DOM 介面示範，包含鍵盤可操作的標籤、卡片進場與點擊回饋。
 
 若瀏覽器限制本機檔案，從儲存庫根目錄執行：
 
 ```sh
 npm run demo
-# 瀏覽器開啟 http://127.0.0.1:4173
+# 瀏覽器開啟 http://127.0.0.1:4173，進入完整編輯器
 ```
+
+完整編輯器可試用故事、收藏、Claude 指令與 PNG／JSON／Skill ZIP 匯出；瀏覽器版的 MP4 按鈕會提示使用 Mac App。獨立播放器位於 `/examples/website/index.html`。
 
 不用 `npm install`。按 Ctrl+C 停止示範伺服器。若 4173 已被使用，設 `MOTION_DEMO_PORT=4174` 再執行。
 
@@ -59,7 +71,7 @@ npm run demo
 | 幾何／節奏 | bounce、morph、rhythm、beat-sync、physics |
 | 質感／背景 | clay、flow、glass、tunnel、particles、reaction、halftone、glass-card |
 
-轉場：`cut`、`crossfade`、`push`、`wipe`、`circle`、`zoom`。轉場期間前後兩幕都繼續運動；總長會扣除重疊時間。例：3 幕各 3 秒、兩次 0.6 秒轉場，合計 **7.8 秒**。
+轉場：`cut`、`crossfade`、`push`、`wipe`、`circle`、`zoom`、`slide-up`、`diagonal`、`blur`、`flash`。轉場期間前後兩幕都繼續運動；總長會扣除重疊時間。例：3 幕各 3 秒、兩次 0.6 秒轉場，合計 **7.8 秒**。
 
 每個效果的參數、完整範例及預覽路徑都在 [catalog.json](.claude/skills/motion-workshop/assets/catalog.json)。[技法拆解](.claude/skills/motion-workshop/references/effect-breakdown.md) 說明算法、可調項目與應用方向。
 
@@ -67,11 +79,22 @@ npm run demo
 
 | 用途 | 入口 | 可直接拿來用的內容 |
 |---|---|---|
-| 網站動畫 | [網站整合說明](.claude/skills/motion-workshop/references/web-ui.md) | 三個 runtime script、播放器、HTML / CSS 範例 |
+| 網站動畫 | [網站整合說明](.claude/skills/motion-workshop/references/web-ui.md) | 五個 runtime script、播放器、HTML / CSS 範例 |
 | 真實介面動效 | [DOM 範例](.claude/skills/motion-workshop/assets/examples/software-ui/index.html) | 標籤切換、鍵盤行為、依序進場、點擊回饋 |
 | 影片分鏡／剪輯 | [影片說明](.claude/skills/motion-workshop/references/video.md) | 可編輯 JSON、場景時間軸、同步逐格 API、macOS MP4 CLI |
 
 不要把 Canvas 裡的示意手機、游標與標籤當作產品的真正互動控制項。程式碼可依技法改寫為產品介面；原生 SwiftUI / Flutter / React Native 需要相應移植。
+
+## 讓 Claude 直接建立故事
+
+```sh
+node .claude/skills/motion-workshop/assets/create-project.mjs --list
+node .claude/skills/motion-workshop/assets/create-project.mjs \
+  --story product-launch --brand "你的品牌" --headline "讓想法被看見" \
+  --items "簡單,清楚,流暢" --duration 15 --ratio 16:9 --output project.motion.json
+```
+
+跨平台、離線執行；已存在的檔案預設不覆寫。完整 [故事與指令說明](.claude/skills/motion-workshop/references/stories-and-prompts.md)。
 
 ## macOS 編輯器與 MP4
 
@@ -102,10 +125,10 @@ npm test       # 目錄、範例、參數正規化、轉場時間軸與 runtime 
 npm run pack   # 重建獨立 skill ZIP 與完整原始碼 ZIP
 ```
 
-已在本機驗證 28 效果的固定時間重現與動畫變化、6 種轉場、WebGL 及原生 MP4 匯出。新版套件另測試獨立複製安裝與兩個瀏覽器範例。詳細記錄見 [驗證說明](docs/VERIFICATION.md)。
+已在本機驗證 40 效果的固定時間重現與動畫變化、10 種轉場、WebGL 及原生 MP4 匯出。新版套件另測試獨立複製安裝與兩個瀏覽器範例。詳細記錄見 [驗證說明](docs/VERIFICATION.md)。
 
 ## 靈感與授權
 
-概念參考 [RAR 設計攻略](https://rar.design/posts/pure-code-animation-claude-code-12-effects) 與 [Grenade 手榴彈](https://grenade.tw/blog/claude-motion-graphics/)。本專案的效果、範例與圖示皆為獨立實作，沒有打包來源文章中的圖片、影片或程式碼，也不宣稱與它們的完整展示規格相同。數值與產品畫面都是示意。
+概念參考 [RAR 設計攻略](https://rar.design/posts/pure-code-animation-claude-code-12-effects) 、[Grenade 手榴彈](https://grenade.tw/blog/claude-motion-graphics/) 與 [Prompt Motion](https://prompt-motion.com/)。本專案的效果、範例與圖示皆為獨立實作，沒有打包來源文章中的圖片、影片或程式碼，也不宣稱與它們的完整展示規格相同。數值與產品畫面都是示意。
 
 MIT 授權涵蓋本倉庫程式碼與自行生成的預覽素材；文章、第三方工具與使用者加入的素材各有自己的權利與條款。

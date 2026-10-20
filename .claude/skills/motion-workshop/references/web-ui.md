@@ -2,15 +2,15 @@
 
 ## 可直接執行的範例
 
-從本 skill 資料夾開啟 `assets/examples/website/index.html`，不需要伺服器。它載入相對路徑的三個 runtime script，沒有 CDN 或網路請求。
+從本 skill 資料夾開啟 `assets/examples/website/index.html`，不需要伺服器。它載入相對路徑的五個 runtime script，沒有 CDN 或網路請求。
 `assets/examples/software-ui/index.html` 是可操作的 DOM 範例，可用左右方向鍵、Home、End 切換標籤。
 
 ## 嵌入你的網站
 
-複製 `assets/runtime/`、`assets/examples/website/player.js` 與 MIT 授權到專案的公開資產目錄。依序載入 effects.js、effects-extra.js、engine.js、player.js。
+複製 `assets/runtime/`、`assets/examples/website/player.js` 與 MIT 授權到專案的公開資產目錄。依序載入 effects.js、effects-extra.js、effects-pro.js、engine.js、library.js、player.js。
 
 ```html
-<canvas id="motion" width="1280" height="720" aria-label="產品動畫"></canvas>
+<canvas id="motion" width="1400" height="720" aria-label="產品動畫"></canvas>
 <p>產品的文字說明。動畫不取代主要資訊。</p>
 <button id="toggle" type="button">播放</button>
 ```
@@ -28,11 +28,11 @@ document.querySelector('#toggle').onclick = () =>
 // SPA 頁面卸載時：player.dispose();
 ```
 
-Canvas CSS 尺寸和繪圖解析度是兩件事。範例以固定 1280×720 繪製，再用 `width:100%;height:auto` 等比縮放。不要只改 CSS 高寬而讓比例失真；大量高解析度 Canvas 同時播放也會佔用 GPU。主內容留在 DOM，Canvas 作為附加視覺，手機可改用單一效果或靜態海報。
+Canvas CSS 尺寸和繪圖解析度是兩件事。範例以固定 1400×720 繪製，再用 `width:100%;height:auto` 等比縮放。不要只改 CSS 高寬而讓比例失真；大量高解析度 Canvas 同時播放也會佔用 GPU。主內容留在 DOM，Canvas 作為附加視覺，手機可改用單一效果或靜態海報。
 
 ## React / Vue / Electron / WebView
 
-這是瀏覽器全域腳本，沒有框架套件。SSR 環境只在 client mount 後載入。讓三個腳本在整個頁面生命週期只載入一次；先等載入完成，再建立 player。元件卸載呼叫 `dispose()`，專案改變時先 dispose 舊 player。不要在 render 函式中重建播放循環。
+這是瀏覽器全域腳本，沒有框架套件。SSR 環境只在 client mount 後載入。讓五個 runtime 腳本在整個頁面生命週期只載入一次；先等載入完成，再建立 player。元件卸載呼叫 `dispose()`，專案改變時先 dispose 舊 player。不要在 render 函式中重建播放循環。
 
 Electron、Tauri 或其他桌面 WebView 可以重用 Canvas；**不能直接當成原生 SwiftUI、React Native 或 Flutter 控制項**。原生介面可依效果拆解改寫對應動畫；播放器與原生 MP4 輸出是分開的能力。
 

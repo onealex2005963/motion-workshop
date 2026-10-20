@@ -1,6 +1,6 @@
 # 動畫小工坊：給 Claude 的效果工具包
 
-這個資料夾提供已實作的 28 種效果、6 種轉場、可編輯專案格式及離線繪圖程式。不需要 API 金鑰。請優先重用現有的效果 ID 與 renderer。
+這個資料夾提供已實作的 40 種效果、10 種轉場、可編輯專案格式及離線繪圖程式。不需要 API 金鑰。請優先重用現有的效果 ID 與 renderer。
 
 ## 先讀什麼
 
@@ -17,7 +17,7 @@
 
 卡片、關鍵字與流程使用 `items` 陣列（最多 6 個）；圖表使用 `items` 與 `values`，數字計數使用 `value` 與 `suffix`；節拍換卡使用 `bpm`。每個效果實際使用的欄位以 catalog 的 `parameters` 為準。
 
-每幕的 `transition: {"type":"push","duration":0.6}` 定義「接到下一幕」的轉場。最後一幕忽略轉場。可用 `cut`、`crossfade`、`push`、`wipe`、`circle`、`zoom`。轉場期間前後兩幕都繼續運動；總長度 = 場景長度總和 − 相鄰轉場重疊。重疊會限制在相鄰較短一幕的 45% 內，再對齊影格。
+每幕的 `transition: {"type":"push","duration":0.6}` 定義「接到下一幕」的轉場。最後一幕忽略轉場。可用 `cut`、`crossfade`、`push`、`wipe`、`circle`、`zoom`、`slide-up`、`diagonal`、`blur`、`flash`。轉場期間前後兩幕都繼續運動；總長度 = 場景長度總和 − 相鄰轉場重疊。重疊會限制在相鄰較短一幕的 45% 內，再對齊影格。
 
 ## 檢查與輸出
 
@@ -44,7 +44,7 @@ open -n "$HOME/Applications/動畫小工坊.app" --args --render /絕對路徑/�
 
 ## 在其他影片專案重用
 
-`runtime/effects.js`、`runtime/effects-extra.js` 與 `runtime/engine.js` 都是本工具的獨立原始碼。依此順序載入，就能在 Canvas 環境使用：
+`runtime/effects.js`、`runtime/effects-extra.js`、`runtime/effects-pro.js`、`runtime/engine.js` 與 `runtime/library.js` 都是本工具的獨立原始碼。依此順序載入，就能在 Canvas 環境使用：
 
 ```js
 const project = MotionProject.validate(projectJSON);

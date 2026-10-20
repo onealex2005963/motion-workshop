@@ -73,7 +73,19 @@
               "tab-indicator",
               "cursor-click",
               "glass-card",
-              "beat-sync"
+              "beat-sync",
+              "line-chart",
+              "donut-chart",
+              "network-flow",
+              "timeline-story",
+              "code-window",
+              "terminal-run",
+              "logo-reveal",
+              "split-title",
+              "quote-card",
+              "gradient-mesh",
+              "isometric-stack",
+              "notification-stack"
             ]
           },
           "text": {
@@ -160,7 +172,11 @@
                   "push",
                   "wipe",
                   "circle",
-                  "zoom"
+                  "zoom",
+                  "slide-up",
+                  "diagonal",
+                  "blur",
+                  "flash"
                 ]
               },
               "duration": {

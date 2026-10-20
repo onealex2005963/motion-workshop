@@ -1,4 +1,4 @@
-# 28 種效果：技法拆解與改寫方向
+# 40 種效果：技法拆解與改寫方向
 
 這些是本專案的獨立實作。每個條目對應實際 renderer；可調參數以 catalog 為準。
 
@@ -236,6 +236,102 @@ const y = targetY + (1 - progress) * 120;
 - 應用：按固定 BPM 剪接；不是對音樂做自動節拍偵測。
 - [查看預覽](../assets/previews/beat-sync.png)。
 
+## 折線趨勢 · `line-chart`
+
+- 實作：[effects-pro.js](../assets/runtime/effects-pro.js) 中的 `renderers['line-chart']`。
+- 核心：依原始 values 正規化座標，用線性路徑與左到右裁切揭露折線；半透明面積建立層次。
+- 可調欄位：`text`、`subtitle`、`color`、`secondary`、`background`、`duration`、`speed`、`size`、`transition`、`items`、`values`。
+- 應用：統計報告、指標趨勢；保留資料順序與標籤。
+- [查看預覽](../assets/previews/line-chart.png)。
+
+## 環形比例 · `donut-chart`
+
+- 實作：[effects-pro.js](../assets/runtime/effects-pro.js) 中的 `renderers['donut-chart']`。
+- 核心：各值除以總和決定圓弧角度，以固定時間進度展開；零總和顯示破折號。
+- 可調欄位：`text`、`subtitle`、`color`、`secondary`、`background`、`duration`、`speed`、`size`、`transition`、`items`、`values`。
+- 應用：佔比與組成；圖例百分比四捨五入可能不精確加總到 100%。
+- [查看預覽](../assets/previews/donut-chart.png)。
+
+## 資料網絡 · `network-flow`
+
+- 實作：[effects-pro.js](../assets/runtime/effects-pro.js) 中的 `renderers['network-flow']`。
+- 核心：節點排列於橢圓周圍，固定相位光點在中心與節點間插值。
+- 可調欄位：`text`、`subtitle`、`color`、`secondary`、`background`、`duration`、`speed`、`size`、`transition`、`items`。
+- 應用：系統關係與資料流；不是即時資料連線圖。
+- [查看預覽](../assets/previews/network-flow.png)。
+
+## 里程碑時間軸 · `timeline-story`
+
+- 實作：[effects-pro.js](../assets/runtime/effects-pro.js) 中的 `renderers['timeline-story']`。
+- 核心：進度控制水平線長度，節點依索引錯開浮現並交替上下位置。
+- 可調欄位：`text`、`subtitle`、`color`、`secondary`、`background`、`duration`、`speed`、`size`、`transition`、`items`。
+- 應用：產品歷程與步驟時間線；事件內容來自 items。
+- [查看預覽](../assets/previews/timeline-story.png)。
+
+## 程式碼視窗 · `code-window`
+
+- 實作：[effects-pro.js](../assets/runtime/effects-pro.js) 中的 `renderers['code-window']`。
+- 核心：繪製程序化視窗、行號與逐行錯開的文字揭露。
+- 可調欄位：`text`、`subtitle`、`color`、`secondary`、`background`、`duration`、`speed`、`size`、`transition`、`items`。
+- 應用：開發工具介紹；顯示文字，不會執行字串中的程式碼。
+- [查看預覽](../assets/previews/code-window.png)。
+
+## 終端機演示 · `terminal-run`
+
+- 實作：[effects-pro.js](../assets/runtime/effects-pro.js) 中的 `renderers['terminal-run']`。
+- 核心：以時間決定各行的字數與透明度，指令前加提示符號，完成項目使用勾號。
+- 可調欄位：`text`、`subtitle`、`color`、`secondary`、`background`、`duration`、`speed`、`size`、`transition`、`items`。
+- 應用：指令操作分鏡；不是真正的命令執行環境。
+- [查看預覽](../assets/previews/terminal-run.png)。
+
+## 幾何標誌揭幕 · `logo-reveal`
+
+- 實作：[effects-pro.js](../assets/runtime/effects-pro.js) 中的 `renderers['logo-reveal']`。
+- 核心：四個圓角部件在同一局部座標中縮放旋轉，緩出後形成抽象標誌。
+- 可調欄位：`text`、`subtitle`、`color`、`secondary`、`background`、`duration`、`speed`、`size`、`transition`。
+- 應用：原創幾何品牌開場；不是匯入使用者 Logo。
+- [查看預覽](../assets/previews/logo-reveal.png)。
+
+## 分割標題 · `split-title`
+
+- 實作：[effects-pro.js](../assets/runtime/effects-pro.js) 中的 `renderers['split-title']`。
+- 核心：將 Unicode 字元切成兩段，分別從相反水平方向進入裁切區。
+- 可調欄位：`text`、`subtitle`、`color`、`secondary`、`background`、`duration`、`speed`、`size`、`transition`。
+- 應用：標題與節奏切換；不是自動語意斷詞。
+- [查看預覽](../assets/previews/split-title.png)。
+
+## 引言卡片 · `quote-card`
+
+- 實作：[effects-pro.js](../assets/runtime/effects-pro.js) 中的 `renderers['quote-card']`。
+- 核心：引言、色條與署名放在半透明卡片上，時間同時控制位移與透明度。
+- 可調欄位：`text`、`subtitle`、`color`、`secondary`、`background`、`duration`、`speed`、`size`、`transition`。
+- 應用：重點結論、署名與評語；文字需有來源或由使用者提供。
+- [查看預覽](../assets/previews/quote-card.png)。
+
+## 流光漸層 · `gradient-mesh`
+
+- 實作：[effects-pro.js](../assets/runtime/effects-pro.js) 中的 `renderers['gradient-mesh']`。
+- 核心：三個移動徑向漸層疊在固定背景上，以不同正弦相位緩慢移動。
+- 可調欄位：`text`、`subtitle`、`color`、`secondary`、`background`、`duration`、`speed`、`size`、`transition`。
+- 應用：品牌氛圍背景；並非 Three.js 材質或完整 3D。
+- [查看預覽](../assets/previews/gradient-mesh.png)。
+
+## 斜角堆疊 · `isometric-stack`
+
+- 實作：[effects-pro.js](../assets/runtime/effects-pro.js) 中的 `renderers['isometric-stack']`。
+- 核心：用二維仿射矩陣建立等角感卡片，按順序調整高度與透明度。
+- 可調欄位：`text`、`subtitle`、`color`、`secondary`、`background`、`duration`、`speed`、`size`、`transition`、`items`。
+- 應用：功能層級與系統堆疊；是程序化 2D 畫面。
+- [查看預覽](../assets/previews/isometric-stack.png)。
+
+## 通知堆疊 · `notification-stack`
+
+- 實作：[effects-pro.js](../assets/runtime/effects-pro.js) 中的 `renderers['notification-stack']`。
+- 核心：每張通知使用不同起始延遲，緩出插值水平位置與透明度。
+- 可調欄位：`text`、`subtitle`、`color`、`secondary`、`background`、`duration`、`speed`、`size`、`transition`、`items`。
+- 應用：產品回饋分鏡；真實介面應接實際事件。
+- [查看預覽](../assets/previews/notification-stack.png)。
+
 ## 轉場拆解
 
 共用實作：[engine.js](../assets/runtime/engine.js)。先將前後兩幕各繪到離屏 Canvas，再以平滑進度 `u = p*p*(3-2*p)` 合成。
@@ -248,5 +344,7 @@ const y = targetY + (1 - progress) * 120;
 | wipe | 後幕由左側矩形裁切區揭露 |
 | circle | 以中心向外擴大的圓形 clip 揭露後幕 |
 | zoom | 前幕微放大，後幕由 0.86 倍放大到 1 倍並淡入 |
+
+新增轉場：slide-up 垂直推移兩幕；diagonal 使用斜角三角形裁切；blur 在交疊中加入正弦模糊半徑；flash 在交疊中加入一次白光脈衝。首尾回到未變形的原始影格。
 
 每種轉場都有對應預覽 `assets/previews/transition-<id>.png`。時間軸先以整數影格分配重疊；詳見 [影片說明](video.md)。

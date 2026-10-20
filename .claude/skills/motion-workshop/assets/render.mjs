@@ -11,7 +11,7 @@ const exists=path=>access(path).then(()=>true,()=>false);
 if(args.includes('--list')){process.stdout.write(await readFile(join(root,'catalog.json'),'utf8'));process.exit(0);}
 if(!option('--project')){console.log('用法：node render.mjs --list\n      node render.mjs --project 專案.json --validate\n      node render.mjs --project 專案.json --output 影片.mp4 [--app /路徑/動畫小工坊.app] [--overwrite]');process.exit(0);}
 const projectPath=resolve(option('--project')),raw=await readFile(projectPath,'utf8');
-const sandbox={window:{}};vm.createContext(sandbox);for(const file of ['effects.js','effects-extra.js','engine.js'])vm.runInContext(await readFile(join(root,'runtime',file),'utf8'),sandbox,{filename:file});
+const sandbox={window:{}};vm.createContext(sandbox);for(const file of ["effects.js","effects-extra.js","effects-pro.js","engine.js","library.js"])vm.runInContext(await readFile(join(root,'runtime',file),'utf8'),sandbox,{filename:file});
 const Engine=sandbox.window.MotionProject,project=Engine.validate(JSON.parse(raw)),timeline=Engine.timeline(project);
 if(args.includes('--validate')){console.log(JSON.stringify({ok:true,normalizedProject:project,frames:Math.round(Engine.duration(project)*project.fps),duration:Engine.duration(project),timeline},null,2));process.exit(0);}
 if(process.platform!=='darwin')throw new Error('MP4 匯出需要在有桌面登入的 macOS 執行；效果清單與專案驗證可以跨平台使用。');

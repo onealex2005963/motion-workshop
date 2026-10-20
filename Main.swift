@@ -262,13 +262,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
             guard let data = (body["data"] as? String)?.data(using:.utf8), data.count < 1_000_000 else { replyHandler(nil,"專案太大。"); return }
             do { if testDirectory == nil && batchProject == nil && message.webView !== queueWeb { try fm.createDirectory(at: autosaveURL.deletingLastPathComponent(), withIntermediateDirectories:true); try data.write(to:autosaveURL,options:.atomic) }; replyHandler(["ok":true],nil) } catch { replyHandler(nil,error.localizedDescription) }
         case "toolkit":
-            NSWorkspace.shared.open(Bundle.main.resourceURL!.appendingPathComponent("Claude-動畫工具包",isDirectory:true));replyHandler(["ok":true],nil)
+            NSWorkspace.shared.open(Bundle.main.resourceURL!.appendingPathComponent("Claude-Skill/motion-workshop",isDirectory:true));replyHandler(["ok":true],nil)
+        case "loadPreferences":
+            replyHandler(["favorites":UserDefaults.standard.stringArray(forKey:"MotionWorkshopFavoriteEffects") ?? []],nil)
+        case "savePreferences":
+            guard let favorites = body["favorites"] as? [String], favorites.count <= 40, favorites.allSatisfy({ $0.range(of:"^[a-z0-9-]{1,64}$",options:.regularExpression) != nil }) else { replyHandler(nil,"收藏資料無效。"); return }
+            UserDefaults.standard.set(favorites,forKey:"MotionWorkshopFavoriteEffects");replyHandler(["ok":true],nil)
+        case "copyText":
+            guard let text = body["text"] as? String, text.utf8.count < 180_000 else { replyHandler(nil,"文字過長。"); return }
+            NSPasteboard.general.clearContents(); NSPasteboard.general.setString(text,forType:.string);replyHandler(["ok":true],nil)
+        case "exportToolkit":
+            guard let data = try? Data(contentsOf:Bundle.main.resourceURL!.appendingPathComponent("motion-workshop-skill.zip")) else { replyHandler(nil,"找不到內建 Skill ZIP，請重新建置 App。"); return }
+            savePanel(name:"motion-workshop-skill.zip",type:.zip) { url in
+                guard let url else { replyHandler(["cancelled":true],nil); return }
+                do { try data.write(to:url,options:.atomic);replyHandler(["ok":true],nil) } catch { replyHandler(nil,error.localizedDescription) }
+            }
         case "source": NSWorkspace.shared.open(sourceURL); replyHandler(["ok":true],nil)
         case "save":
-            let kind = body["kind"] as? String ?? ""; guard ["json","png"].contains(kind), let raw = body["data"] as? String, raw.count < 32_000_000 else { replyHandler(nil,"檔案內容不正確。"); return }
+            let kind = body["kind"] as? String ?? ""; guard ["json","png","text"].contains(kind), let raw = body["data"] as? String, raw.count < 32_000_000 else { replyHandler(nil,"檔案內容不正確。"); return }
             let data = kind == "png" ? Data(base64Encoded:raw) : raw.data(using:.utf8)
             guard let data else { replyHandler(nil,"無法讀取檔案內容。"); return }
-            savePanel(name: body["name"] as? String ?? "動畫", type: kind == "png" ? .png : .json) { url in
+            let contentType: UTType = kind == "png" ? .png : kind == "text" ? (UTType(filenameExtension:"md") ?? .plainText) : .json
+            savePanel(name: body["name"] as? String ?? "動畫", type: contentType) { url in
                 guard let url else { replyHandler(["cancelled":true],nil); return }
                 do { try data.write(to:url,options:.atomic); replyHandler(["ok":true],nil) } catch { replyHandler(nil,error.localizedDescription) }
             }

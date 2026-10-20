@@ -1,7 +1,7 @@
 /* Public composition API. Shared by the editor, Claude projects and MP4 export. */
 (() => {
-  const E=window.MotionEffects,types=['cut','crossfade','push','wipe','circle','zoom'];
-  const transitionNames={cut:'直接切換',crossfade:'柔和交疊',push:'水平推移',wipe:'側向揭幕',circle:'圓形擴散',zoom:'縮放接續'};
+  const E=window.MotionEffects,types=['cut','crossfade','push','wipe','circle','zoom','slide-up','diagonal','blur','flash'];
+  const transitionNames={cut:'直接切換',crossfade:'柔和交疊',push:'水平推移',wipe:'側向揭幕',circle:'圓形擴散',zoom:'縮放接續','slide-up':'垂直推移',diagonal:'斜角揭幕',blur:'失焦交疊',flash:'閃光接續'};
   const bounded=(v,min,max,f)=>typeof v==='number'&&Number.isFinite(v)?Math.max(min,Math.min(max,v)):f;
   const color=(v,f)=>typeof v==='string'&&/^#[0-9a-f]{6}$/i.test(v)?v:f;
   const defaultClip=effect=>({effect:effect||'bounce',text:'讓想法\n動起來',subtitle:'一點靈感，無限可能。',color:'#d8f36a',secondary:'#a59bff',background:'#10171c',speed:1,size:1,amount:50,duration:5,items:['靈感','創作','分享','可能'],values:[35,70,55,90],value:100,suffix:'',bpm:120,transition:{type:'crossfade',duration:.6}});
@@ -47,6 +47,10 @@
       case 'wipe':c.drawImage(pair[0],0,0);c.beginPath();c.rect(0,0,w*u,h);c.clip();c.drawImage(pair[1],0,0);break;
       case 'circle':c.drawImage(pair[0],0,0);c.beginPath();c.arc(w/2,h/2,Math.hypot(w,h)*.5*u,0,Math.PI*2);c.clip();c.drawImage(pair[1],0,0);break;
       case 'zoom':{const a=1+u*.18,b=.86+u*.14;c.drawImage(pair[0],w*(1-a)/2,h*(1-a)/2,w*a,h*a);c.globalAlpha=u;c.drawImage(pair[1],w*(1-b)/2,h*(1-b)/2,w*b,h*b);break;}
+      case 'slide-up':c.drawImage(pair[0],0,-u*h,w,h);c.drawImage(pair[1],0,(1-u)*h,w,h);break;
+      case 'diagonal':{const d=(w+h)*u;c.drawImage(pair[0],0,0);c.beginPath();c.moveTo(0,0);c.lineTo(d,0);c.lineTo(0,d);c.closePath();c.clip();c.drawImage(pair[1],0,0);break;}
+      case 'blur':{c.fillStyle=state.clip.background;c.fillRect(0,0,w,h);const r=Math.sin(Math.PI*u)*Math.min(w,h)*.018;c.filter=r>.001?`blur(${r}px)`:'none';c.drawImage(pair[0],0,0);c.globalAlpha=u;c.drawImage(pair[1],0,0);break;}
+      case 'flash':c.drawImage(pair[0],0,0);c.globalAlpha=u;c.drawImage(pair[1],0,0);c.globalAlpha=Math.sin(Math.PI*u)**8*.6;c.fillStyle='#ffffff';c.fillRect(0,0,w,h);break;
       default:c.drawImage(pair[0],0,0);c.globalAlpha=u;c.drawImage(pair[1],0,0);
     }c.restore();return state;
   }
