@@ -46,14 +46,13 @@ jobs:
         run: npm test
       - name: Create reproducible downloads
         run: npm run pack
-      - name: Publish version 1.2.0
+      - name: Publish packaged version
         env:
           GH_TOKEN: ${{ github.token }}
-        run: >-
-          gh release create v1.2.0
-          dist/motion-workshop-skill.zip
-          dist/motion-workshop-source.zip
-          dist/SHA256SUMS
-          --target main
-          --title 'Motion Workshop 1.2.0 · Claude 動畫工具包'
-          --notes-file docs/RELEASE-1.2.0.md
+        shell: bash
+        run: |
+          version=$(node -p 'JSON.parse(require("fs").readFileSync("package.json","utf8")).version')
+          gh release create "v${version}" \
+            dist/motion-workshop-skill.zip dist/motion-workshop-source.zip dist/SHA256SUMS \
+            --target main --title "Motion Workshop ${version} · Claude 動畫工具包" \
+            --notes-file "docs/RELEASE-${version}.md"
