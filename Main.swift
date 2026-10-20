@@ -115,7 +115,7 @@ final class VideoEncoder {
 
 }
 
-final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandlerWithReply, WKNavigationDelegate, NSWindowDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandlerWithReply, WKNavigationDelegate, WKUIDelegate, NSWindowDelegate {
     var window: NSWindow!
     var web: WKWebView!
     var encoder: VideoEncoder?
@@ -179,7 +179,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
         for (title,selector,key) in [("復原","undo:","z"),("重做","redo:","Z"),("剪下","cut:","x"),("複製","copy:","c"),("貼上","paste:","v"),("全選","selectAll:","a")] { editMenu.addItem(withTitle: title, action: Selector(selector), keyEquivalent: key) }; editItem.submenu = editMenu; NSApp.mainMenu = menu
         let config = WKWebViewConfiguration(); config.websiteDataStore = .nonPersistent()
         config.userContentController.addScriptMessageHandler(self, contentWorld: .page, name: "workshop")
-        web = WKWebView(frame: .zero, configuration: config); web.navigationDelegate = self
+        web = WKWebView(frame: .zero, configuration: config); web.navigationDelegate = self; web.uiDelegate = self
         web.setValue(false, forKey: "drawsBackground")
         let visible = NSScreen.main?.visibleFrame ?? NSRect(x: 0, y: 0, width: 1440, height: 900)
         window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: min(1440, visible.width-50), height: min(900, visible.height-50)), styleMask: [.titled,.closable,.miniaturizable,.resizable], backing: .buffered, defer: false)
@@ -201,9 +201,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
         if batchProject != nil && !batchCompleted { completeBatch(["ok":false,"error":"使用者已關閉自動輸出視窗，影片匯出取消。"]); }
         encodeQueue.sync { encoder?.cancel(); encoder = nil }; return .terminateNow
     }
-    @objc func showAbout() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:appName,.applicationVersion:"1.4",.credits:NSAttributedString(string:"40 種動態範本 · 10 種場景交接 · 圖層與關鍵影格 · 16 種 CC0 音效 · 繁體中文\nClaude 效果工具包 · 離線製作\n靈感來源：RAR 設計攻略、Grenade 手榴彈\n本工具為獨立實作。")]) }
+    @objc func showAbout() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:appName,.applicationVersion:Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "1.4.1",.credits:NSAttributedString(string:"40 種動態範本 · 10 種場景交接 · 圖層與關鍵影格 · 16 種 CC0 音效 · 繁體中文\nClaude 效果工具包 · 離線製作\n靈感來源：RAR 設計攻略、Grenade 手榴彈\n本工具為獨立實作。")]) }
     func webView(_ webView: WKWebView, decidePolicyFor action: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = action.request.url, url.isFileURL, url.standardizedFileURL.path.hasPrefix(bundledWeb.path + "/") else { decisionHandler(.cancel); return }; decisionHandler(.allow)
+    }
+    func webView(_ webView: WKWebView, runOpenPanelWith parameters: WKOpenPanelParameters, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping ([URL]?) -> Void) {
+        // WKWebView disables file inputs on macOS unless its UI delegate presents the picker.
+        guard webView === web, frame.isMainFrame, let url=frame.request.url, url.isFileURL,
+              url.standardizedFileURL.path.hasPrefix(bundledWeb.path + "/") else { completionHandler(nil); return }
+        let panel=NSOpenPanel()
+        panel.title="匯入圖片／Logo";panel.prompt="匯入圖片"
+        panel.allowedContentTypes=[.png,.jpeg,.webP];panel.allowsOtherFileTypes=false
+        panel.canChooseFiles=true;panel.canChooseDirectories=false
+        panel.allowsMultipleSelection=parameters.allowsMultipleSelection
+        panel.beginSheetModal(for:window) { response in
+            completionHandler(response == .OK ? panel.urls : nil)
+        }
     }
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if webView === queueWeb, let raw=queueProject, let job=queueJob {
@@ -245,7 +258,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
     }
     func checkQueue() {
         if Date().timeIntervalSince(lastHeartbeat)>3 {
-            let heartbeat:[String:Any]=["active":true,"updatedAt":Date().timeIntervalSince1970,"version":"1.4"]
+            let heartbeat:[String:Any]=["active":true,"updatedAt":Date().timeIntervalSince1970,"version":Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "1.4.1"]
             if let data=try? JSONSerialization.data(withJSONObject:heartbeat){try? data.write(to:jobsURL.appendingPathComponent("heartbeat.json"),options:.atomic)};lastHeartbeat=Date()
         }
         guard queueJob == nil, !exportPanelOpen, encodeQueue.sync(execute:{encoder == nil}), let entries=try? fm.contentsOfDirectory(at:jobsURL,includingPropertiesForKeys:[.isSymbolicLinkKey,.isDirectoryKey]) else { return }

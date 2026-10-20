@@ -66,5 +66,5 @@
     lines.push('圖層、關鍵影格與音效設定以專案 JSON 為準，讀 references/layers-and-audio.md。若含內嵌圖片，下方指令省略圖片資料，請同時提供原始 .motion.json，保留其中的 image data URI。');
     lines.push('保留使用者提供的數字與文案；標示並替換示意資料。不要宣稱完成尚未產生的影片。檢查首尾影格、轉場中點與完整播放。','使用下列 JSON 作為可編輯起點：','','```json',JSON.stringify(project,(key,value)=>key==='image'&&value?'':value,2),'```');return lines.join('\n');
   }
-  window.MotionLibrary={version:'1.4.0',stories,palettes,itemEffects,valueEffects,metadata,createStory,createPrompt};
+  window.MotionLibrary={version:'1.4.1',stories,palettes,itemEffects,valueEffects,metadata,createStory,createPrompt};
 })();
