@@ -1,0 +1,59 @@
+name: Publish motion toolkit
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - motion-workshop-source.zip
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Import initial source archive when present
+        shell: bash
+        run: |
+          if [ -f motion-workshop-source.zip ]; then
+            python3 - <<'PY'
+          import pathlib, shutil, tempfile, zipfile
+          with tempfile.TemporaryDirectory() as folder:
+              with zipfile.ZipFile('motion-workshop-source.zip') as archive:
+                  for entry in archive.infolist():
+                      name = pathlib.PurePosixPath(entry.filename)
+                      if name.is_absolute() or '..' in name.parts or name.parts[0] != 'motion-workshop' or '.git' in name.parts:
+                          raise RuntimeError('Invalid archive member')
+                      if (entry.external_attr >> 16) & 0o170000 == 0o120000:
+                          raise RuntimeError('Symlinks are not allowed')
+                  archive.extractall(folder)
+              shutil.copytree(pathlib.Path(folder) / 'motion-workshop', '.', dirs_exist_ok=True)
+          PY
+            rm motion-workshop-source.zip
+            chmod +x build.sh
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add .
+            git commit -m 'Publish portable motion skill, reusable examples and editor source'
+            git push
+          fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify portable package
+        run: npm test
+      - name: Create reproducible downloads
+        run: npm run pack
+      - name: Publish version 1.2.0
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create v1.2.0
+          dist/motion-workshop-skill.zip
+          dist/motion-workshop-source.zip
+          dist/SHA256SUMS
+          --target main
+          --title 'Motion Workshop 1.2.0 · Claude 動畫工具包'
+          --notes-file docs/RELEASE-1.2.0.md
