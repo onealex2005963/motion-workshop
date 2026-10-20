@@ -2,12 +2,12 @@
 
 ## 可直接執行的範例
 
-從本 skill 資料夾開啟 `assets/examples/website/index.html`，不需要伺服器。它載入相對路徑的五個 runtime script，沒有 CDN 或網路請求。
+從本 skill 資料夾開啟 `assets/examples/website/index.html`，不需要伺服器。它載入相對路徑的七個 runtime script，沒有 CDN 或網路請求。
 `assets/examples/software-ui/index.html` 是可操作的 DOM 範例，可用左右方向鍵、Home、End 切換標籤。
 
 ## 嵌入你的網站
 
-複製 `assets/runtime/`、`assets/examples/website/player.js` 與 MIT 授權到專案的公開資產目錄。依序載入 effects.js、effects-extra.js、effects-pro.js、engine.js、library.js、player.js。
+複製 `assets/runtime/`、`assets/examples/website/player.js` 與 MIT 授權到專案的公開資產目錄。依序載入 effects.js、effects-extra.js、effects-pro.js、layers.js、audio.js、engine.js、library.js、player.js。
 
 ```html
 <canvas id="motion" width="1400" height="720" aria-label="產品動畫"></canvas>
@@ -32,7 +32,7 @@ Canvas CSS 尺寸和繪圖解析度是兩件事。範例以固定 1400×720 繪�
 
 ## React / Vue / Electron / WebView
 
-這是瀏覽器全域腳本，沒有框架套件。SSR 環境只在 client mount 後載入。讓五個 runtime 腳本在整個頁面生命週期只載入一次；先等載入完成，再建立 player。元件卸載呼叫 `dispose()`，專案改變時先 dispose 舊 player。不要在 render 函式中重建播放循環。
+這是瀏覽器全域腳本，沒有框架套件。SSR 環境只在 client mount 後載入。讓七個 runtime 腳本在整個頁面生命週期只載入一次；先等載入完成，再建立 player。元件卸載呼叫 `dispose()`，專案改變時先 dispose 舊 player。不要在 render 函式中重建播放循環。
 
 Electron、Tauri 或其他桌面 WebView 可以重用 Canvas；**不能直接當成原生 SwiftUI、React Native 或 Flutter 控制項**。原生介面可依效果拆解改寫對應動畫；播放器與原生 MP4 輸出是分開的能力。
 
@@ -51,3 +51,7 @@ Electron、Tauri 或其他桌面 WebView 可以重用 Canvas；**不能直接當
 ## 驗收
 
 檢查鍵盤焦點、切換後面板與標籤一致、縮放後滑塊位置、暫停與分頁隱藏。開啟系統「減少動態效果」後，介面動畫應取消，內容與按鈕仍可用。影片中的游標／手機示意不應冒充真實可操作控件。
+
+## 1.4 圖層與聲音
+
+讀 [客製化說明](layers-and-audio.md)。圖片需在擷取影格前呼叫 MotionLayers.prepare(project)。音效採使用者動作啟動，與視覺播放器分開管理；呼叫 MotionAudio.createPlayer(project)，在播放／暫停／定位時同步，卸載時 dispose()。保留 runtime/sounds/ 的 WAV 和 CC0 授權；音效經 HTTP 或本機 App loader 載入，直接 file:// 開頁時瀏覽器可能拒絕讀取。

@@ -8,7 +8,16 @@
 
 [English](README.en.md) · [40 種效果預覽](docs/GALLERY.md) · [技法拆解](.claude/skills/motion-workshop/references/effect-breakdown.md) · [Claude skill](.claude/skills/motion-workshop/SKILL.md)
 
-## 1.3 版：從效果到完整故事
+## 1.4 版：自由構圖、關鍵格與聲音
+
+- **圖層編輯**：每幕 12 個文字、圓角矩形、橢圓、線條或圖片圖層；拖曳排版、顯示／隱藏、鎖定、複製與排序。
+- **精確調整**：位置、縮放、旋轉、不透明度、字型、字重、對齊、描邊、圓角、混合模式與顯示起訖。可關閉底層效果自行排版。
+- **關鍵影格**：每層 60 格、7 種緩動、5 組進出場動作；以場景時間記錄完整位置與變形，支援任意跳格重現。
+- **圖片／Logo**：匯入 PNG、JPEG、WebP，縮放後內嵌專案，保留透明 PNG。專案上限 20 MB。
+- **內建 16 種 Kenney CC0 音效**：試聽、依場景放置、音量、速率、淡入淡出、總音量與播放預覽；原生 MP4 可包含 AAC 音軌。
+- [客製化 API 與 JSON 範例](.claude/skills/motion-workshop/references/layers-and-audio.md) · [音效來源與授權](THIRD_PARTY.md)
+
+## 故事與效果庫
 
 - **8 套故事範本**：產品發表、App 介紹、數據報告、概念解說、文字集錦、品牌形象、軟體更新、直式短影音。客製品牌、標題、重點、配色、比例及 12／15／20／30 秒精確總長。
 - **效果探索**：搜尋分類與標籤、收藏、排序、懸停／鍵盤聚焦的動態預覽；支援暫停與減少動態效果。
@@ -79,7 +88,7 @@ npm run demo
 
 | 用途 | 入口 | 可直接拿來用的內容 |
 |---|---|---|
-| 網站動畫 | [網站整合說明](.claude/skills/motion-workshop/references/web-ui.md) | 五個 runtime script、播放器、HTML / CSS 範例 |
+| 網站動畫 | [網站整合說明](.claude/skills/motion-workshop/references/web-ui.md) | 七個 runtime script、播放器、HTML / CSS 範例 |
 | 真實介面動效 | [DOM 範例](.claude/skills/motion-workshop/assets/examples/software-ui/index.html) | 標籤切換、鍵盤行為、依序進場、點擊回饋 |
 | 影片分鏡／剪輯 | [影片說明](.claude/skills/motion-workshop/references/video.md) | 可編輯 JSON、場景時間軸、同步逐格 API、macOS MP4 CLI |
 
@@ -114,11 +123,11 @@ node .claude/skills/motion-workshop/assets/render.mjs \
   --output /absolute/path/to/movie.mp4
 ```
 
-MP4 是無音訊 H.264，可手動匯入剪輯軟體再加旁白／音樂。專案自動儲存在 `~/Library/Application Support/動畫小工坊/project.json`；CLI 使用專用 jobs 佇列。這些使用者檔案不包含在儲存庫中。
+MP4 使用 H.264，設定內建音效時另含 AAC 音軌；可手動匯入剪輯軟體再加旁白／音樂。專案自動儲存在 `~/Library/Application Support/動畫小工坊/project.json`；CLI 使用專用 jobs 佇列。這些使用者檔案不包含在儲存庫中。
 
 ## 限制與驗證
 
-瀏覽器繪圖支援跨平台；Node.js 只用於 CLI、測試與打包；原生 MP4 匯出需 macOS 桌面環境。不含音訊分析、外部圖片／影片匯入、透明影片輸出、Remotion 完整專案或剪輯軟體插件。字型與 WebGL 驅動可能造成跨系統像素差異。
+瀏覽器繪圖支援跨平台；Node.js 只用於 CLI、測試與打包；原生 MP4 匯出需 macOS 桌面環境。不含音訊分析、外部音樂／旁白／影片匯入、透明影片輸出、Remotion 完整專案或剪輯軟體插件。字型與 WebGL 驅動可能造成跨系統像素差異。
 
 ```sh
 npm test       # 目錄、範例、參數正規化、轉場時間軸與 runtime 一致性
@@ -132,3 +141,5 @@ npm run pack   # 重建獨立 skill ZIP 與完整原始碼 ZIP
 概念參考 [RAR 設計攻略](https://rar.design/posts/pure-code-animation-claude-code-12-effects) 、[Grenade 手榴彈](https://grenade.tw/blog/claude-motion-graphics/) 與 [Prompt Motion](https://prompt-motion.com/)。本專案的效果、範例與圖示皆為獨立實作，沒有打包來源文章中的圖片、影片或程式碼，也不宣稱與它們的完整展示規格相同。數值與產品畫面都是示意。
 
 MIT 授權涵蓋本倉庫程式碼與自行生成的預覽素材；文章、第三方工具與使用者加入的素材各有自己的權利與條款。
+
+內建 Kenney Interface Sounds 的 16 個選用音效採 CC0，原始授權及轉檔資訊隨包附上；詳見 [第三方素材](THIRD_PARTY.md)。

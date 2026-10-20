@@ -20,11 +20,11 @@
   const tc=seconds=>`${String(Math.floor(seconds/60)).padStart(2,'0')}:${(seconds%60).toFixed(1).padStart(4,'0')}`;
   function notify(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,3800);}
   function locate(t){return Engine.locate(project,t);}
-  function renderAt(t,target=canvas){return Engine.render(project,t,target);}
+  function renderAt(t,target=canvas){const result=Engine.render(project,t,target);if(target===canvas)document.dispatchEvent(new CustomEvent('workshop-frame'));return result;}
   function historyUI(){$('undo').disabled=historyIndex<1;$('redo').disabled=historyIndex>=history.length-1;}
-  function remember(){const data=JSON.stringify(project);if(history[historyIndex]===data)return;history=history.slice(0,historyIndex+1);history.push(data);if(history.length>80)history.shift();historyIndex=history.length-1;historyUI();}
+  function remember(){const data=JSON.stringify(project);if(history[historyIndex]===data)return;history=history.slice(0,historyIndex+1);history.push(data);while(history.length>2&&(history.length>80||history.reduce((sum,item)=>sum+item.length,0)>40000000))history.shift();historyIndex=history.length-1;historyUI();}
   function restoreHistory(delta){const next=historyIndex+delta;if(exporting||next<0||next>=history.length)return;historyIndex=next;project=Engine.validate(JSON.parse(history[next]));selected=Math.min(selected,project.clips.length-1);time=Math.min(time,total());setPlaying(false);updateAll();saveSoon(false);historyUI();}
-  function saveSoon(record=true){if(record)remember();dirty=true;renderAt(time);$('save-state').textContent='正在儲存…';clearTimeout(saveTimer);saveTimer=setTimeout(async()=>{try{const data=JSON.stringify(project);if(bridge)await native({type:'autosave',data});else localStorage.setItem('motion-workshop-project',data);dirty=false;$('save-state').textContent='已自動儲存';}catch(e){$('save-state').textContent='自動儲存失敗，請儲存專案';}},350);}
+  function saveSoon(record=true){project=validate(project);document.dispatchEvent(new CustomEvent('workshop-change'));if(record)remember();dirty=true;renderAt(time);$('save-state').textContent='正在儲存…';clearTimeout(saveTimer);saveTimer=setTimeout(async()=>{try{const data=JSON.stringify(project);if(bridge)await native({type:'autosave',data});else localStorage.setItem('motion-workshop-project',data);dirty=false;$('save-state').textContent='已自動儲存';}catch(e){$('save-state').textContent='自動儲存失敗，請儲存專案';}},350);}
   const validate=Engine.validate;
   function resizePreview(){
     const [w,h]=frameSize(540);canvas.width=w;canvas.height=h;
@@ -43,7 +43,7 @@
       const idx=document.createElement('span');idx.className='card-index';idx.textContent=String(E.definitions.indexOf(effect)+1).padStart(2,'0');name.append(idx,document.createTextNode(effect.name));button.append(thumb,name);
       const opt={...defaultClip(effect.id),text:['type','mask-reveal','kinetic-zoom','typewriter','glass-card'].includes(effect.id)?'動起來':'',subtitle:'',size:1,amount:25};
       E.render(thumb.getContext('2d'),176,112,1.65,opt);
-      button.addEventListener('click',()=>{if(exporting)return;current().effect=effect.id;time=startOf(selected);updateInspector();renderLibrary();renderClips();saveSoon();renderAt(time);});
+      button.addEventListener('click',()=>{if(exporting)return;current().effect=effect.id;if(current().base)current().base.visible=true;time=startOf(selected);updateInspector();renderLibrary();renderClips();saveSoon();renderAt(time);});
       const star=document.createElement('button');star.className='favorite-button';const favorite=favorites.has(effect.id);star.textContent=favorite?'★':'☆';star.setAttribute('aria-label',(favorite?'取消收藏':'收藏')+effect.name);star.setAttribute('aria-pressed',String(favorite));star.onclick=()=>{favorite?favorites.delete(effect.id):favorites.add(effect.id);if(bridge)native({type:'savePreferences',favorites:[...favorites]}).catch(()=>notify('收藏暫時無法儲存。'));else try{localStorage.setItem('motion-workshop-favorites',JSON.stringify([...favorites]));}catch{notify('收藏暫時無法儲存。');}renderLibrary();};
       const startPreview=()=>{hoverPreview={canvas:thumb,options:opt,start:performance.now()};};const stopPreview=()=>{if(hoverPreview?.canvas===thumb)hoverPreview=null;};
       button.addEventListener('mouseenter',startPreview);button.addEventListener('focus',startPreview);button.addEventListener('mouseleave',stopPreview);button.addEventListener('blur',stopPreview);tile.append(button,star);$('effect-list').append(tile);
@@ -54,13 +54,14 @@
   function renderClips(){
     $('clips').replaceChildren();project.clips.forEach((clip,i)=>{
       const b=document.createElement('button'),d=definition(clip.effect);b.className='clip'+(i===selected?' active':'');b.style.setProperty('--clip-color',clip.color);b.setAttribute('aria-label',`選取場景 ${i+1}：${d.name}`);b.setAttribute('aria-pressed',String(i===selected));
-      const icon=document.createElement('span');icon.className='clip-icon';icon.textContent=d.icon;const info=document.createElement('div'),name=document.createElement('strong'),sub=document.createElement('small');name.textContent=`${String(i+1).padStart(2,'0')} ${d.name}`;sub.textContent=`${Number(clip.duration.toFixed(2))} 秒 · ${clip.text.replace(/\n/g,' ').slice(0,10)||'無文字'}`;info.append(name,sub);if(i<project.clips.length-1){const tr=document.createElement('span');tr.className='transition-chip';const row=Engine.timeline(project)[i];tr.textContent=`↔ ${Engine.transitionNames[row.transition]}${row.overlap?' '+Number(row.overlap.toFixed(2))+'s':''}`;info.append(tr);}b.append(icon,info);
-      b.addEventListener('click',()=>{if(exporting)return;selected=i;time=startOf(i);updateInspector();renderLibrary();renderClips();renderAt(time);});$('clips').append(b);
+      const icon=document.createElement('span');icon.className='clip-icon';icon.textContent=d.icon;const info=document.createElement('div'),name=document.createElement('strong'),sub=document.createElement('small');name.textContent=`${String(i+1).padStart(2,'0')} ${clip.base?.visible===false?'自由構圖':d.name}`;sub.textContent=`${Number(clip.duration.toFixed(2))} 秒 · ${clip.text.replace(/\n/g,' ').slice(0,10)||'無文字'}`;info.append(name,sub);if(i<project.clips.length-1){const tr=document.createElement('span');tr.className='transition-chip';const row=Engine.timeline(project)[i];tr.textContent=`↔ ${Engine.transitionNames[row.transition]}${row.overlap?' '+Number(row.overlap.toFixed(2))+'s':''}`;info.append(tr);}b.append(icon,info);
+      b.addEventListener('click',()=>{if(exporting)return;selected=i;time=startOf(i);document.dispatchEvent(new CustomEvent('workshop-play'));updateInspector();renderLibrary();renderClips();renderAt(time);});$('clips').append(b);
     });
     $('total-duration').textContent=`${project.clips.length} 個場景 · ${Number(total().toFixed(2))} 秒`;$('scrubber').max=total();$('remove').disabled=project.clips.length===1;$('move-left').disabled=selected===0;$('move-right').disabled=selected===project.clips.length-1;
   }
   function updateInspector(){
-    const o=current();$('scene-name').textContent=definition(o.effect).name;$('scene-count').textContent=`場景 ${String(selected+1).padStart(2,'0')}`;$('effect-description').textContent=definition(o.effect).description;
+    document.dispatchEvent(new CustomEvent('workshop-selection'));
+    const o=current();$('scene-name').textContent=o.base?.visible===false?'自由構圖':definition(o.effect).name;$('scene-count').textContent=`場景 ${String(selected+1).padStart(2,'0')}`;$('effect-description').textContent=definition(o.effect).description;
     for(const [id,key] of [['title-text','text'],['subtitle-text','subtitle'],['primary-color','color'],['secondary-color','secondary'],['background-color','background'],['speed','speed'],['size','size'],['amount','amount'],['duration','duration']])$(id).value=key==='duration'?Number(o[key].toFixed(3)):o[key];
     $('duration').step='any';
     $('speed-value').textContent=o.speed.toFixed(1)+'×';$('size-value').textContent=Math.round(o.size*100)+'%';$('amount-value').textContent=o.amount;
@@ -74,10 +75,10 @@
     $('transition-note').textContent=last?'這是最後一幕。新增下一幕後即可設定轉場。':`兩幕會重疊 ${Number(Engine.timeline(project)[selected].overlap.toFixed(2))} 秒，動畫持續播放。`;
   }
   function updateAll(){$('effect-count').textContent=E.definitions.length;updateInspector();renderLibrary();renderClips();resizePreview();historyUI();}
-  function setPlaying(value){playing=value;$('play').textContent=playing?'Ⅱ':'▶';$('play').setAttribute('aria-label',playing?'暫停':'播放');}
+  function setPlaying(value){playing=value;$('play').textContent=playing?'Ⅱ':'▶';$('play').setAttribute('aria-label',playing?'暫停':'播放');document.dispatchEvent(new CustomEvent('workshop-play'));}
   function animate(timestamp){
     if(!lastTime)lastTime=timestamp;const dt=Math.min(.1,(timestamp-lastTime)/1000);lastTime=timestamp;
-    if(!exporting&&!document.hidden){if(playing){time+=dt;if(time>=total()){if(loop)time%=total();else{time=total();setPlaying(false);}}renderAt(time);}$('scrubber').value=time;$('timecode').innerHTML=`${tc(time)} <em>/ ${tc(total())}</em>`;
+    if(!exporting&&!document.hidden){if(playing){time+=dt;if(time>=total()){if(loop){time%=total();document.dispatchEvent(new CustomEvent('workshop-play'));}else{time=total();setPlaying(false);}}renderAt(time);}$('scrubber').value=time;$('timecode').innerHTML=`${tc(time)} <em>/ ${tc(total())}</em>`;
       if(previews&&hoverPreview&&timestamp-previewTick>120&&!document.querySelector('dialog[open]')){const p=hoverPreview;E.render(p.canvas.getContext('2d'),p.canvas.width,p.canvas.height,(performance.now()-p.start)/1000,p.options);previewTick=timestamp;}
       if($('detail-dialog').open&&previews&&timestamp-detailTick>120){const out=$('detail-preview');E.render(out.getContext('2d'),out.width,out.height,timestamp/1000,current());detailTick=timestamp;}
     }
@@ -103,10 +104,10 @@
   $('preview-transition').onclick=()=>{const row=Engine.timeline(project)[selected];time=Math.max(row.start,row.end-row.overlap-.65);setPlaying(true);};
   $('claude-kit').onclick=async()=>{if(bridge){try{await native({type:'toolkit'});notify('已開啟完整 Skill 資料夾。要交給雲端 Claude，請匯出 Skill ZIP。');}catch(e){notify(e.message);}}else notify('本專案 .claude/skills/motion-workshop 是完整 Skill，可使用 ZIP 交給 Claude。');};
   document.querySelectorAll('[data-palette]').forEach(b=>b.addEventListener('click',()=>{[current().color,current().secondary,current().background]=palettes[Number(b.dataset.palette)];updateInspector();renderLibrary();renderClips();saveSoon();}));
-  $('play').onclick=()=>setPlaying(!playing);$('restart').onclick=()=>{time=0;renderAt(time);};$('scrubber').oninput=()=>{setPlaying(false);time=Number($('scrubber').value);renderAt(time);};
+  $('play').onclick=()=>setPlaying(!playing);$('restart').onclick=()=>{time=0;renderAt(time);document.dispatchEvent(new CustomEvent('workshop-play'));};$('scrubber').oninput=()=>{setPlaying(false);time=Number($('scrubber').value);renderAt(time);};
   $('loop').onclick=()=>{loop=!loop;$('loop').classList.toggle('active',loop);$('loop').setAttribute('aria-pressed',String(loop));};
   $('safe-area').onclick=()=>{$('safe-overlay').hidden=!$('safe-overlay').hidden;$('safe-area').setAttribute('aria-pressed',String(!$('safe-overlay').hidden));};
-  function add(duplicate){if(project.clips.length>=24){notify('一個專案最多 24 個場景。');return;}project.clips.splice(selected+1,0,duplicate?{...current()}:defaultClip());selected++;time=startOf(selected);updateAll();saveSoon();}
+  function add(duplicate){if(project.clips.length>=24){notify('一個專案最多 24 個場景。');return;}project.clips.splice(selected+1,0,duplicate?JSON.parse(JSON.stringify(current())):defaultClip());selected++;time=startOf(selected);updateAll();saveSoon();}
   $('add-scene').onclick=()=>add(false);$('duplicate').onclick=()=>add(true);
   $('remove').onclick=()=>{if(project.clips.length<2)return;project.clips.splice(selected,1);selected=Math.min(selected,project.clips.length-1);time=startOf(selected);updateAll();saveSoon();};
   function move(delta){const next=selected+delta;if(next<0||next>=project.clips.length)return;[project.clips[selected],project.clips[next]]=[project.clips[next],project.clips[selected]];selected=next;time=startOf(selected);updateAll();saveSoon();}
@@ -144,31 +145,31 @@
   $('detail-prompt').onclick=()=>{$('detail-dialog').close();$('prompt-scope').value='scene';refreshPrompt();$('prompt-dialog').showModal();};
   function download(data,name,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000);}
   $('save-project').onclick=async()=>{try{const data=JSON.stringify(project,null,2);if(bridge){const result=await native({type:'save',kind:'json',name:'我的動畫.motion.json',data});if(result.cancelled)return;}else download(data,'我的動畫.motion.json','application/json');notify('專案已儲存，之後可以重新開啟編輯。');}catch(e){notify('儲存失敗：'+e.message);}};
-  async function loadData(data){const next=validate(JSON.parse(data));project=next;selected=0;time=0;updateAll();saveSoon();notify('專案已開啟。');}
+  async function loadData(data){const next=validate(JSON.parse(data));await window.MotionLayers.prepare(next);project=next;selected=0;time=0;updateAll();saveSoon();notify('專案已開啟。');}
   $('open-project').onclick=async()=>{try{if(bridge){const result=await native({type:'openProject'});if(!result.cancelled)await loadData(result.data);}else $('project-file').click();}catch(e){notify('開啟失敗：'+e.message);}};
-  $('project-file').onchange=async e=>{try{if(e.target.files[0])await loadData(await e.target.files[0].text());}catch(e){notify(e.message);}finally{e.target.value='';}};
-  $('export-png').onclick=async()=>{try{const out=document.createElement('canvas');[out.width,out.height]=frameSize(project.quality);renderAt(time,out);const data=out.toDataURL('image/png').split(',')[1];if(bridge){const r=await native({type:'save',kind:'png',name:'我的動畫.png',data});if(r.cancelled)return;}else download(Uint8Array.from(atob(data),c=>c.charCodeAt(0)),'我的動畫.png','image/png');notify('目前畫面已儲存為 PNG。');}catch(e){notify('匯出失敗：'+e.message);}};
+  $('project-file').onchange=async e=>{try{if(e.target.files[0]){if(e.target.files[0].size>=20000000)throw new Error('專案需小於 20 MB。');await loadData(await e.target.files[0].text());}}catch(e){notify(e.message);}finally{e.target.value='';}};
+  $('export-png').onclick=async()=>{try{await window.MotionLayers.prepare(project);const out=document.createElement('canvas');[out.width,out.height]=frameSize(project.quality);renderAt(time,out);const data=out.toDataURL('image/png').split(',')[1];if(bridge){const r=await native({type:'save',kind:'png',name:'我的動畫.png',data});if(r.cancelled)return;}else download(Uint8Array.from(atob(data),c=>c.charCodeAt(0)),'我的動畫.png','image/png');notify('目前畫面已儲存為 PNG。');}catch(e){notify('匯出失敗：'+e.message);}};
   function exportUI(active){
     exporting=active;document.querySelectorAll('button,input,textarea,select').forEach(el=>{if(el.id!=='cancel-export')el.disabled=active;});
     $('cancel-export').hidden=!active;$('export-progress').hidden=!active;
     if(!active){updateInspector();renderClips();historyUI();$('export-video').textContent='匯出 MP4 ↗';}
   }
-  $('cancel-export').onclick=()=>{cancelled=true;$('cancel-export').disabled=true;$('export-status').textContent='正在取消…';};
+  $('cancel-export').onclick=()=>{cancelled=true;if(bridge)native({type:'cancelVideo'}).catch(()=>{});$('cancel-export').disabled=true;$('export-status').textContent='正在取消…';};
   $('export-video').onclick=async()=>{
     if(!bridge){notify('請使用電腦上的「動畫小工坊」App 匯出 MP4。');return;}
     const wasPlaying=playing,oldTime=time;setPlaying(false);cancelled=false;
     const out=document.createElement('canvas');[out.width,out.height]=frameSize(project.quality);const frames=Math.round(total()*project.fps);
     exportUI(true);$('cancel-export').disabled=false;$('export-status').textContent='選擇影片儲存位置…';
     try{
-      const begin=await native({type:'beginVideo',width:out.width,height:out.height,fps:project.fps,frames,name:'我的動畫.mp4'});if(begin.cancelled)return;
+      await window.MotionLayers.prepare(project);const begin=await native({type:'beginVideo',width:out.width,height:out.height,fps:project.fps,frames,name:'我的動畫.mp4'});if(begin.cancelled)return;
       for(let i=0;i<frames;i++){
         if(cancelled){await native({type:'cancelVideo'});notify('已取消匯出。');return;}
         renderAt(i/project.fps,out);const data=out.toDataURL('image/png').split(',')[1];await native({type:'videoFrame',index:i,data});
         const percent=Math.round((i+1)/frames*100);$('export-progress').firstElementChild.style.width=percent+'%';$('export-video').textContent=`正在匯出 ${percent}%`;$('export-status').textContent=`${i+1} / ${frames} 格 · 請保持 App 開啟`;
         if(i%3===0){ctx.drawImage(out,0,0,canvas.width,canvas.height);await new Promise(r=>setTimeout(r,0));}
       }
-      $('export-status').textContent='正在完成 MP4…';const result=await native({type:'finishVideo'});notify('MP4 已儲存完成。');$('export-status').textContent='影片已儲存 · '+result.name;
-    }catch(e){await native({type:'cancelVideo'}).catch(()=>{});notify('匯出失敗：'+e.message);$('export-status').textContent='匯出失敗，可重新再試。';}
+      $('export-status').textContent='正在混合音效與完成 MP4…';const audio=await window.MotionAudio.exportBase64(project);if(cancelled){await native({type:'cancelVideo'});return;}const result=await native({type:'finishVideo',audio});notify('MP4 已儲存完成。');$('export-status').textContent='影片已儲存 · '+result.name;
+    }catch(e){await native({type:'cancelVideo'}).catch(()=>{});notify(cancelled?'已取消匯出。':'匯出失敗：'+e.message);$('export-status').textContent=cancelled?'已取消匯出。':'匯出失敗，可重新再試。';}
     finally{exportUI(false);time=oldTime;setPlaying(wasPlaying);renderAt(time);if($('export-status').textContent.includes('格')||$('export-status').textContent.includes('選擇')||cancelled)$('export-status').textContent='選效果 → 調整 → 匯出';}
   };
   $('help').onclick=()=>$('help-dialog').showModal();$('close-help').onclick=()=>$('help-dialog').close();
@@ -176,15 +177,24 @@
   document.addEventListener('keydown',e=>{const editing=/INPUT|TEXTAREA|SELECT/.test(e.target.tagName),dialogOpen=!!document.querySelector('dialog[open]');if(e.code==='Space'&&!editing&&!dialogOpen&&!exporting){e.preventDefault();setPlaying(!playing);}if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'&&!editing&&!dialogOpen){e.preventDefault();restoreHistory(e.shiftKey?1:-1);}if((e.metaKey||e.ctrlKey)&&e.key==='s'&&!dialogOpen){e.preventDefault();if(!exporting)$('save-project').click();}});
   window.addEventListener('resize',resizePreview);
   window.addEventListener('error',e=>{console.error(e.error||e.message);notify('畫面發生錯誤，請重新開啟 App。');});
-  async function boot(){try{let saved;if(bridge)saved=(await native({type:'loadAutosave'})).data;else saved=localStorage.getItem('motion-workshop-project');if(saved)project=validate(JSON.parse(saved));}catch(e){notify('先前專案無法載入，已建立新專案。');}if(bridge)try{const prefs=await native({type:'loadPreferences'});if(Array.isArray(prefs.favorites))favorites=new Set(prefs.favorites.filter(id=>E.definitions.some(e=>e.id===id)));}catch{notify('收藏設定暫時無法載入。');}remember();updateAll();setPlaying(playing);requestAnimationFrame(animate);}
+  async function boot(){try{let saved;if(bridge)saved=(await native({type:'loadAutosave'})).data;else saved=localStorage.getItem('motion-workshop-project');if(saved)project=validate(JSON.parse(saved));}catch(e){notify('先前專案無法載入，已建立新專案。');}if(bridge)try{const prefs=await native({type:'loadPreferences'});if(Array.isArray(prefs.favorites))favorites=new Set(prefs.favorites.filter(id=>E.definitions.some(e=>e.id===id)));}catch{notify('收藏設定暫時無法載入。');}try{await window.MotionLayers.prepare(project);}catch(e){notify(e.message);}remember();updateAll();setPlaying(playing);requestAnimationFrame(animate);}
   // A deterministic renderer check used by the native build verification mode.
   window.workshopSelfTest=async()=>{
+    await ready;
     setPlaying(false);const out=document.createElement('canvas');out.width=640;out.height=360;const results=[];
     for(const e of E.definitions){const o=defaultClip(e.id);E.render(out.getContext('2d'),640,360,.35,o);const first=out.toDataURL();E.render(out.getContext('2d'),640,360,.35,o);if(first!==out.toDataURL())throw new Error('非固定影格：'+e.id);E.render(out.getContext('2d'),640,360,1.2,o);if(first===out.toDataURL())throw new Error('效果沒有移動：'+e.id);results.push(e.id);await native({type:'testImage',name:e.id+'.png',data:out.toDataURL().split(',')[1]});}
     const gl=E.getDiagnostics();if(!gl.webgl)throw new Error('WebGL 未啟用：'+gl.error);
+    const shape=window.MotionLayers.defaultLayer('rect');shape.end=2;shape.width=20;shape.height=20;shape.keyframes=[{time:0,...shape.transform,x:20,easing:'linear'},{time:2,...shape.transform,x:80,easing:'linear'}];
+    const logo=document.createElement('canvas');logo.width=16;logo.height=16;logo.getContext('2d').fillStyle='#a59bff';logo.getContext('2d').fillRect(0,0,16,16);
+    const image=window.MotionLayers.defaultLayer('image');image.image=logo.toDataURL();image.width=10;image.height=10;image.end=2;image.transform.x=80;image.transform.y=80;
+    const advanced=validate({version:2,fps:30,clips:[{...defaultClip('bounce'),duration:2,base:{visible:false},layers:[shape,image],audio:[{sound:'confirm',time:.3,volume:.7,rate:1,fadeIn:0,fadeOut:.05},{sound:'click',time:1.3,volume:.7,rate:1,fadeIn:0,fadeOut:0}]}]});
+    await window.MotionLayers.prepare(advanced);Engine.render(advanced,1,out);const pixel=out.getContext('2d').getImageData(320,180,1,1).data;if(pixel[0]!==216||pixel[1]!==243||pixel[2]!==106)throw new Error('圖層合成畫素錯誤。');
+    const imagePixel=out.getContext('2d').getImageData(512,288,1,1).data;if(imagePixel[0]!==165||imagePixel[1]!==155||imagePixel[2]!==255)throw new Error('內嵌圖片未繪製。');
+    const advancedFrame=out.toDataURL();Engine.render(advanced,.4,out);Engine.render(advanced,1,out);if(out.toDataURL()!==advancedFrame)throw new Error('關鍵格倒退定位不穩定。');
+    await native({type:'testImage',name:'layers-and-image.png',data:advancedFrame.split(',')[1]});
     await native({type:'beginTestVideo',width:640,height:360,fps:30,frames:60});
-    for(let i=0;i<60;i++){E.render(out.getContext('2d'),640,360,i/30,defaultClip('bounce'));await native({type:'videoFrame',index:i,data:out.toDataURL('image/png').split(',')[1]});}
-    await native({type:'finishVideo'});
+    for(let i=0;i<60;i++){Engine.render(advanced,i/30,out);await native({type:'videoFrame',index:i,data:out.toDataURL('image/png').split(',')[1]});}
+    const audio=await window.MotionAudio.exportBase64(advanced);if(!audio)throw new Error('音效混音未產生。');await native({type:'finishVideo',audio});
     const transitions=[];
     for(const type of Engine.transitionTypes){
       const p=validate({version:2,ratio:'16:9',fps:30,quality:720,clips:[{...defaultClip('type'),duration:2,transition:{type,duration:.6}},{...defaultClip('card-flyin'),duration:2}]});
@@ -197,16 +207,25 @@
       if(out.toDataURL()!==ref.toDataURL())throw new Error('轉場終點不連續：'+type);
       await native({type:'testImage',name:'transition-'+type+'.png',data:image.split(',')[1]});transitions.push(type);
     }
-    return {effects:results,transitions,deterministic:true,animated:true,webgl:gl.webgl,videoFrames:60};
+    return {effects:results,transitions,deterministic:true,animated:true,webgl:gl.webgl,videoFrames:60,customLayers:true,embeddedImage:true,keyframeSeeking:true,audioCues:2};
   };
   window.workshopRenderBatch=async raw=>{
+    await ready;
     project=validate(typeof raw==='string'?JSON.parse(raw):raw);selected=0;time=0;setPlaying(false);updateAll();exportUI(true);$('cancel-export').hidden=true;$('export-status').textContent='正在自動產生影片…';
     const out=document.createElement('canvas');[out.width,out.height]=frameSize(project.quality);const frames=Math.round(total()*project.fps);
-    await native({type:'beginBatchVideo',width:out.width,height:out.height,fps:project.fps,frames});
+    await window.MotionLayers.prepare(project);await native({type:'beginBatchVideo',width:out.width,height:out.height,fps:project.fps,frames});
     for(let i=0;i<frames;i++){renderAt(i/project.fps,out);await native({type:'videoFrame',index:i,data:out.toDataURL('image/png').split(',')[1]});if(i%15===0){$('export-video').textContent=`自動匯出 ${Math.round((i+1)/frames*100)}%`;$('export-progress').firstElementChild.style.width=((i+1)/frames*100)+'%';await new Promise(r=>setTimeout(r,0));}}
-    const result=await native({type:'finishVideo'});return {name:result.name,width:out.width,height:out.height,fps:project.fps,frames,duration:frames/project.fps,effects:project.clips.map(c=>c.effect),timeline:Engine.timeline(project)};
+    const audio=await window.MotionAudio.exportBase64(project);const result=await native({type:'finishVideo',audio});return {audioCues:window.MotionAudio.events(project).length,name:result.name,width:out.width,height:out.height,fps:project.fps,frames,duration:frames/project.fps,effects:project.clips.map(c=>c.effect),timeline:Engine.timeline(project)};
   };
   window.workshopProject=()=>JSON.parse(JSON.stringify(project));
   window.workshopQueueStatus=busy=>{$('export-video').disabled=busy;if(busy)$('export-status').textContent='Claude 正在背景產片，你可以繼續編輯。';else $('export-status').textContent='Claude 影片已處理完成。';};
-  boot();
+  window.WorkshopEditor={
+    get project(){return project;},get selected(){return selected;},get time(){return time;},get playing(){return playing;},get exporting(){return exporting;},
+    notify, native:bridge?native:null,
+    pause(){setPlaying(false);},seek(t){setPlaying(false);time=Math.max(0,Math.min(total(),t));$('scrubber').value=time;renderAt(time);},
+    change(){saveSoon();renderClips();},refresh(){updateInspector();renderAt(time);},
+    insert(clip){if(project.clips.length>=24){notify('一個專案最多 24 個場景。');return false;}project.clips.splice(selected+1,0,clip);selected++;time=startOf(selected);setPlaying(false);saveSoon();updateAll();return true;}
+  };
+  if(bridge)window.MotionAudio.setLoader(async file=>{const result=await native({type:'loadSound',file});const raw=atob(result.data);return Uint8Array.from(raw,c=>c.charCodeAt(0)).buffer;});
+  const ready=boot();
 })();

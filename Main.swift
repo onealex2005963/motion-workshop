@@ -23,6 +23,9 @@ final class VideoEncoder {
     let fps: Int32
     let frameCount: Int
     var index = 0
+    var muxSession: AVAssetExportSession?
+    var extraFiles: [URL] = []
+    var cancelled = false
 
     init(destination: URL, width: Int, height: Int, fps: Int, frames: Int) throws {
         guard width >= 100, height >= 100, width <= 1920, height <= 1920, width % 2 == 0, height % 2 == 0,
@@ -69,20 +72,47 @@ final class VideoEncoder {
         index += 1
     }
 
-    func finish(completion: @escaping (Result<String, Error>) -> Void) {
+    func finish(audio: Data? = nil, completion: @escaping (Result<String, Error>) -> Void) {
         guard index == frameCount else { cancel(); completion(.failure(WorkshopError.message("影片影格尚未完成。"))); return }
         input.markAsFinished()
         writer.endSession(atSourceTime: CMTime(value: Int64(frameCount), timescale: fps))
         writer.finishWriting {
-            do {
-                guard self.writer.status == .completed else { throw self.writer.error ?? WorkshopError.message("影片未能完成。") }
-                if FileManager.default.fileExists(atPath: self.destination.path) { _ = try FileManager.default.replaceItemAt(self.destination, withItemAt: self.temporary) }
-                else { try FileManager.default.moveItem(at: self.temporary, to: self.destination) }
-                completion(.success(self.destination.lastPathComponent))
-            } catch { try? FileManager.default.removeItem(at: self.temporary); completion(.failure(error)) }
+            guard self.writer.status == .completed else { self.cleanup(); completion(.failure(self.writer.error ?? WorkshopError.message("影片未能完成。"))); return }
+            if let audio {
+                do { try self.mixAudio(audio, completion:completion) }
+                catch { self.cleanup();completion(.failure(error)) }
+            } else { self.publish(self.temporary,completion:completion) }
         }
     }
-    func cancel() { writer.cancelWriting(); try? FileManager.default.removeItem(at: temporary) }
+    private func publish(_ url:URL, completion:@escaping (Result<String,Error>)->Void) {
+        do {
+            guard !cancelled else { throw WorkshopError.message("影片匯出已取消。") }
+            if FileManager.default.fileExists(atPath:destination.path) { _ = try FileManager.default.replaceItemAt(destination, withItemAt:url) }
+            else { try FileManager.default.moveItem(at:url,to:destination) }
+            cleanup();completion(.success(destination.lastPathComponent))
+        } catch { cleanup();completion(.failure(error)) }
+    }
+    private func mixAudio(_ data:Data, completion:@escaping (Result<String,Error>)->Void) throws {
+        guard data.count >= 44, data.count <= 43_000_000, String(data: data.prefix(4),encoding:.ascii) == "RIFF",String(data:data[8..<12],encoding:.ascii) == "WAVE" else { throw WorkshopError.message("音效混音檔不正確。") }
+        let audioURL=FileManager.default.temporaryDirectory.appendingPathComponent("MotionWorkshop-\(UUID().uuidString).wav")
+        let mixedURL=FileManager.default.temporaryDirectory.appendingPathComponent("MotionWorkshop-\(UUID().uuidString).mp4")
+        extraFiles=[audioURL,mixedURL];try data.write(to:audioURL,options:.atomic)
+        let videoAsset=AVURLAsset(url:temporary),audioAsset=AVURLAsset(url:audioURL),composition=AVMutableComposition()
+        let length=CMTime(value:Int64(frameCount),timescale:fps)
+        guard let sourceVideo=videoAsset.tracks(withMediaType:.video).first,let sourceAudio=audioAsset.tracks(withMediaType:.audio).first,
+              let video=composition.addMutableTrack(withMediaType:.video,preferredTrackID:kCMPersistentTrackID_Invalid),let sound=composition.addMutableTrack(withMediaType:.audio,preferredTrackID:kCMPersistentTrackID_Invalid) else {throw WorkshopError.message("無法建立影音混合軌道。")}
+        try video.insertTimeRange(CMTimeRange(start:.zero,duration:length),of:sourceVideo,at:.zero);video.preferredTransform=sourceVideo.preferredTransform
+        try sound.insertTimeRange(CMTimeRange(start:.zero,duration:CMTimeMinimum(length,audioAsset.duration)),of:sourceAudio,at:.zero)
+        guard let session=AVAssetExportSession(asset:composition,presetName:AVAssetExportPresetHighestQuality) else {throw WorkshopError.message("無法啟動影音合成。")}
+        muxSession=session;session.outputURL=mixedURL;session.outputFileType = .mp4;session.timeRange=CMTimeRange(start:.zero,duration:length);session.shouldOptimizeForNetworkUse=true
+        session.exportAsynchronously {
+            if session.status == .completed { self.publish(mixedURL,completion:completion) }
+            else {self.cleanup();completion(.failure(session.error ?? WorkshopError.message("影音合成失敗或已取消。")))}
+        }
+    }
+    private func cleanup(){try? FileManager.default.removeItem(at:temporary);for url in extraFiles{try? FileManager.default.removeItem(at:url)}}
+    func cancel() {cancelled=true;if writer.status == .writing {writer.cancelWriting()};muxSession?.cancelExport();cleanup()}
+
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandlerWithReply, WKNavigationDelegate, NSWindowDelegate {
@@ -120,7 +150,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
             do {
                 guard let out else { throw WorkshopError.message("請提供 --output 影片路徑。") }
                 let inputURL = URL(fileURLWithPath:input).standardizedFileURL
-                guard (try fm.attributesOfItem(atPath:inputURL.path)[.size] as? Int ?? Int.max) < 1_000_000 else { throw WorkshopError.message("專案檔案過大。") }
+                guard (try fm.attributesOfItem(atPath:inputURL.path)[.size] as? Int ?? Int.max) < 20_000_000 else { throw WorkshopError.message("專案檔案過大。") }
                 batchProject = try String(contentsOf:inputURL,encoding:.utf8); batchOutput = URL(fileURLWithPath:out).standardizedFileURL
                 guard batchOutput!.pathExtension.lowercased() == "mp4" else { throw WorkshopError.message("輸出副檔名必須是 .mp4。") }
                 guard allowOverwrite || !fm.fileExists(atPath:batchOutput!.path) else { throw WorkshopError.message("輸出檔已存在；要覆蓋請加 --overwrite。") }
@@ -171,7 +201,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
         if batchProject != nil && !batchCompleted { completeBatch(["ok":false,"error":"使用者已關閉自動輸出視窗，影片匯出取消。"]); }
         encodeQueue.sync { encoder?.cancel(); encoder = nil }; return .terminateNow
     }
-    @objc func showAbout() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:appName,.applicationVersion:"1.1",.credits:NSAttributedString(string:"28 種動態範本 · 6 種場景交接 · 繁體中文\nClaude 效果工具包 · 離線製作\n靈感來源：RAR 設計攻略、Grenade 手榴彈\n本工具為獨立實作。")]) }
+    @objc func showAbout() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:appName,.applicationVersion:"1.4",.credits:NSAttributedString(string:"40 種動態範本 · 10 種場景交接 · 圖層與關鍵影格 · 16 種 CC0 音效 · 繁體中文\nClaude 效果工具包 · 離線製作\n靈感來源：RAR 設計攻略、Grenade 手榴彈\n本工具為獨立實作。")]) }
     func webView(_ webView: WKWebView, decidePolicyFor action: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = action.request.url, url.isFileURL, url.standardizedFileURL.path.hasPrefix(bundledWeb.path + "/") else { decisionHandler(.cancel); return }; decisionHandler(.allow)
     }
@@ -215,7 +245,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
     }
     func checkQueue() {
         if Date().timeIntervalSince(lastHeartbeat)>3 {
-            let heartbeat:[String:Any]=["active":true,"updatedAt":Date().timeIntervalSince1970,"version":"1.1"]
+            let heartbeat:[String:Any]=["active":true,"updatedAt":Date().timeIntervalSince1970,"version":"1.4"]
             if let data=try? JSONSerialization.data(withJSONObject:heartbeat){try? data.write(to:jobsURL.appendingPathComponent("heartbeat.json"),options:.atomic)};lastHeartbeat=Date()
         }
         guard queueJob == nil, !exportPanelOpen, encodeQueue.sync(execute:{encoder == nil}), let entries=try? fm.contentsOfDirectory(at:jobsURL,includingPropertiesForKeys:[.isSymbolicLinkKey,.isDirectoryKey]) else { return }
@@ -225,7 +255,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
             let input=job.appendingPathComponent("project.json")
             do {
                 let attrs=try fm.attributesOfItem(atPath:input.path)
-                guard attrs[.type] as? FileAttributeType == .typeRegular,(attrs[.size] as? Int ?? Int.max)<1_000_000 else {throw WorkshopError.message("任務專案無效或過大。")}
+                guard attrs[.type] as? FileAttributeType == .typeRegular,(attrs[.size] as? Int ?? Int.max)<20_000_000 else {throw WorkshopError.message("任務專案無效或過大。")}
                 guard !fm.fileExists(atPath:job.appendingPathComponent("result.mp4").path) else {throw WorkshopError.message("任務已有輸出，請重新提交新任務。")}
                 queueProject=try String(contentsOf:input,encoding:.utf8);queueJob=job
                 let config=WKWebViewConfiguration();config.websiteDataStore = .nonPersistent();config.userContentController.addScriptMessageHandler(self,contentWorld:.page,name:"workshop")
@@ -259,10 +289,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
         case "loadAutosave":
             replyHandler(["data":testDirectory == nil && batchProject == nil && message.webView !== queueWeb ? (try? String(contentsOf:autosaveURL,encoding:.utf8)) ?? "" : ""],nil)
         case "autosave":
-            guard let data = (body["data"] as? String)?.data(using:.utf8), data.count < 1_000_000 else { replyHandler(nil,"專案太大。"); return }
+            guard let data = (body["data"] as? String)?.data(using:.utf8), data.count < 20_000_000 else { replyHandler(nil,"專案太大。"); return }
             do { if testDirectory == nil && batchProject == nil && message.webView !== queueWeb { try fm.createDirectory(at: autosaveURL.deletingLastPathComponent(), withIntermediateDirectories:true); try data.write(to:autosaveURL,options:.atomic) }; replyHandler(["ok":true],nil) } catch { replyHandler(nil,error.localizedDescription) }
         case "toolkit":
             NSWorkspace.shared.open(Bundle.main.resourceURL!.appendingPathComponent("Claude-Skill/motion-workshop",isDirectory:true));replyHandler(["ok":true],nil)
+        case "loadSound":
+            guard let name=body["file"] as? String,name.range(of:"^[a-z-]{1,40}\\.wav$",options:.regularExpression) != nil,
+                  let data=try? Data(contentsOf:bundledWeb.appendingPathComponent("sounds").appendingPathComponent(name)),data.count<1_000_000 else {replyHandler(nil,"找不到內建音效。");return}
+            replyHandler(["data":data.base64EncodedString()],nil)
         case "loadPreferences":
             replyHandler(["favorites":UserDefaults.standard.stringArray(forKey:"MotionWorkshopFavoriteEffects") ?? []],nil)
         case "savePreferences":
@@ -291,7 +325,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
             let panel = NSOpenPanel(); panel.title = "開啟動畫專案"; panel.prompt = "開啟"; panel.allowedContentTypes = [.json]; panel.allowsMultipleSelection = false; panel.canChooseDirectories = false
             panel.beginSheetModal(for:window) { response in
                 guard response == .OK, let url = panel.url else { replyHandler(["cancelled":true],nil); return }
-                do { let attrs = try self.fm.attributesOfItem(atPath:url.path); guard (attrs[.size] as? Int ?? Int.max) < 1_000_000 else { throw WorkshopError.message("專案檔案過大。") }; replyHandler(["data":try String(contentsOf:url,encoding:.utf8)],nil) } catch { replyHandler(nil,error.localizedDescription) }
+                do { let attrs = try self.fm.attributesOfItem(atPath:url.path); guard (attrs[.size] as? Int ?? Int.max) < 20_000_000 else { throw WorkshopError.message("專案檔案過大。") }; replyHandler(["data":try String(contentsOf:url,encoding:.utf8)],nil) } catch { replyHandler(nil,error.localizedDescription) }
             }
         case "beginVideo":
             exportPanelOpen = true
@@ -305,8 +339,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
         case "finishVideo":
             encodeQueue.async {
                 guard let encoder = self.encoder,self.encoderOwner === caller else { self.reply(replyHandler,.failure(WorkshopError.message("沒有正在匯出的影片。"))); return }
-                encoder.finish { result in
-                    self.encodeQueue.async { self.encoder = nil;self.encoderOwner=nil }
+                encoder.finish(audio:(body["audio"] as? String).flatMap { Data(base64Encoded:$0) }) { result in
+                    self.encodeQueue.async { if self.encoder === encoder {self.encoder = nil;self.encoderOwner=nil} }
                     switch result { case .success(let name): self.reply(replyHandler,.success(["name":name])); case .failure(let error): self.reply(replyHandler,.failure(error)) }
                 }
             }

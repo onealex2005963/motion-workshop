@@ -11,7 +11,7 @@ const exists=path=>access(path).then(()=>true,()=>false);
 if(args.includes('--list')){process.stdout.write(await readFile(join(root,'catalog.json'),'utf8'));process.exit(0);}
 if(!option('--project')){console.log('用法：node render.mjs --list\n      node render.mjs --project 專案.json --validate\n      node render.mjs --project 專案.json --output 影片.mp4 [--app /路徑/動畫小工坊.app] [--overwrite]');process.exit(0);}
 const projectPath=resolve(option('--project')),raw=await readFile(projectPath,'utf8');
-const sandbox={window:{}};vm.createContext(sandbox);for(const file of ["effects.js","effects-extra.js","effects-pro.js","engine.js","library.js"])vm.runInContext(await readFile(join(root,'runtime',file),'utf8'),sandbox,{filename:file});
+const sandbox={window:{}};vm.createContext(sandbox);for(const file of ["effects.js","effects-extra.js","effects-pro.js","layers.js","audio.js","engine.js","library.js"])vm.runInContext(await readFile(join(root,'runtime',file),'utf8'),sandbox,{filename:file});
 const Engine=sandbox.window.MotionProject,project=Engine.validate(JSON.parse(raw)),timeline=Engine.timeline(project);
 if(args.includes('--validate')){console.log(JSON.stringify({ok:true,normalizedProject:project,frames:Math.round(Engine.duration(project)*project.fps),duration:Engine.duration(project),timeline},null,2));process.exit(0);}
 if(process.platform!=='darwin')throw new Error('MP4 匯出需要在有桌面登入的 macOS 執行；效果清單與專案驗證可以跨平台使用。');
@@ -19,6 +19,8 @@ const output=option('--output')&&resolve(option('--output'));if(!output||!output
 if(await exists(output)&&!args.includes('--overwrite'))throw new Error('輸出檔已存在。要覆蓋請加 --overwrite。');
 await access(dirname(output));
 const app=option('--app')?resolve(option('--app')):join(process.env.HOME,'Applications','動畫小工坊.app');await access(join(app,'Contents','MacOS','MotionWorkshop'));
+const appCatalog=JSON.parse(await readFile(join(app,'Contents','Resources','Claude-動畫工具包','catalog.json'),'utf8'));
+if(Number(String(appCatalog.version).split('.')[0])<1||(Number(String(appCatalog.version).split('.')[0])===1&&Number(String(appCatalog.version).split('.')[1])<4))throw new Error('這份工具包需要動畫小工坊 1.4 以上，請先更新 App，避免遺失圖層或音效。');
 const jobs=join(process.env.HOME,'Library','Application Support','動畫小工坊','jobs');
 async function appActive(){try{const h=JSON.parse(await readFile(join(jobs,'heartbeat.json'),'utf8'));return h.active&&Date.now()-h.updatedAt*1000<10000;}catch{return false;}}
 if(await appActive()){

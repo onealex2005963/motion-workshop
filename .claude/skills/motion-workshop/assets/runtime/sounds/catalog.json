@@ -1,0 +1,139 @@
+{
+  "source": "https://kenney.nl/assets/interface-sounds",
+  "download": "https://kenney.nl/media/pages/assets/interface-sounds/fa43c1dd4d-1677589452/kenney_interface-sounds.zip",
+  "author": "Kenney",
+  "license": "CC0-1.0",
+  "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "conversion": "Ogg Vorbis decoded to mono PCM16 WAV at 22050 Hz; linear resampling.",
+  "sourceArchiveSHA256": "f2193d072726d6758a5f7871b2dcc54dcce0d5c35c6f0a62f92549b327c81232",
+  "sounds": [
+    {
+      "id": "click",
+      "name": "輕點",
+      "file": "click.wav",
+      "duration": 0.100045,
+      "original": "Audio/click_001.ogg",
+      "originalSHA256": "ccfb7fa0cccdd9faec0eb16033c732b1e308d139d80f799161495d58f7adcdb9"
+    },
+    {
+      "id": "soft-click",
+      "name": "柔和點擊",
+      "file": "soft-click.wav",
+      "duration": 0.010023,
+      "original": "Audio/click_002.ogg",
+      "originalSHA256": "adcd1f4adc35f1b41bc1b5bbefeff7aa44f2f3f0d96d3199b544140c7c1e761c"
+    },
+    {
+      "id": "select",
+      "name": "選取",
+      "file": "select.wav",
+      "duration": 0.043265,
+      "original": "Audio/select_001.ogg",
+      "originalSHA256": "aec0c31ea934a35936ae0d2ab8fac8123c93aa5647f935853a58dbaf90278b7a"
+    },
+    {
+      "id": "confirm",
+      "name": "完成確認",
+      "file": "confirm.wav",
+      "duration": 0.289841,
+      "original": "Audio/confirmation_001.ogg",
+      "originalSHA256": "063564703b6094d70718a3e787a55cc9141611e4ecd6b6637f8828f79b4a8c3a"
+    },
+    {
+      "id": "open",
+      "name": "展開",
+      "file": "open.wav",
+      "duration": 0.147755,
+      "original": "Audio/open_001.ogg",
+      "originalSHA256": "a27c6bb0df7da1e6af5dd5937593c98bc58b6e513f42fe6a3254cd6a6949c648"
+    },
+    {
+      "id": "close",
+      "name": "收合",
+      "file": "close.wav",
+      "duration": 0.147755,
+      "original": "Audio/close_001.ogg",
+      "originalSHA256": "44af8249b933e0fd35ec957a638bb1a0b01f85b53fbe9674bf77bd3ca3168ef4"
+    },
+    {
+      "id": "expand",
+      "name": "放大",
+      "file": "expand.wav",
+      "duration": 0.258413,
+      "original": "Audio/maximize_001.ogg",
+      "originalSHA256": "fd3e75e1de2f2fda90aceeacaeb0427ac8bddd3b07a6ce2a8f9ba923df3771f9"
+    },
+    {
+      "id": "shrink",
+      "name": "縮小",
+      "file": "shrink.wav",
+      "duration": 0.258413,
+      "original": "Audio/minimize_001.ogg",
+      "originalSHA256": "8481912bc7fa5828924a00ef15b6cd613b994956e0817bd3122065c9b2896d2d"
+    },
+    {
+      "id": "drop",
+      "name": "落下",
+      "file": "drop.wav",
+      "duration": 0.109841,
+      "original": "Audio/drop_001.ogg",
+      "originalSHA256": "692ee3a6f1821402ca649ff735bee9591dc4846c8098fc7d6a90fd15fa57c1af"
+    },
+    {
+      "id": "bell",
+      "name": "清脆提示",
+      "file": "bell.wav",
+      "duration": 0.122812,
+      "original": "Audio/bong_001.ogg",
+      "originalSHA256": "d21d0f0b782445db579d11e2506b24cd1ac9d664ee33aeaf807761aa7b6fd710"
+    },
+    {
+      "id": "pluck",
+      "name": "撥弦",
+      "file": "pluck.wav",
+      "duration": 0.102404,
+      "original": "Audio/pluck_001.ogg",
+      "originalSHA256": "be97ec4893a02d6eccfb678daa76c83e34cb2583b834ec2593d2641def739fa4"
+    },
+    {
+      "id": "switch",
+      "name": "切換",
+      "file": "switch.wav",
+      "duration": 0.617687,
+      "original": "Audio/switch_001.ogg",
+      "originalSHA256": "3b74efad87f1e69dbd1d05c5ad952ab90859b5a3d11da6ec5bd79b4f03b42afa"
+    },
+    {
+      "id": "toggle",
+      "name": "開關",
+      "file": "toggle.wav",
+      "duration": 0.13932,
+      "original": "Audio/toggle_001.ogg",
+      "originalSHA256": "ca1d2dde5f0b286abac4f070e23edab8f30927c8a533665cdf2ac6492a415e49"
+    },
+    {
+      "id": "tick",
+      "name": "節拍",
+      "file": "tick.wav",
+      "duration": 0.02322,
+      "original": "Audio/tick_001.ogg",
+      "originalSHA256": "9d057b918024c787bbe6c00beed13a7ef72a3fa0c259add3cef36582792f4230"
+    },
+    {
+      "id": "error",
+      "name": "錯誤提示",
+      "file": "error.wav",
+      "duration": 0.164535,
+      "original": "Audio/error_001.ogg",
+      "originalSHA256": "46e67425d16339772e8d328fb36a49426c9467418686e11beeb71ff84b0f6433"
+    },
+    {
+      "id": "scroll",
+      "name": "滑動",
+      "file": "scroll.wav",
+      "duration": 1.0,
+      "original": "Audio/scroll_001.ogg",
+      "originalSHA256": "320c6aafb2c7a503eae508dc443b72d7f7c0a317bfd16813157ed400cd04cf16"
+    }
+  ]
+}

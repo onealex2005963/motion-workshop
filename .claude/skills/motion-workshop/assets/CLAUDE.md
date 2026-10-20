@@ -44,7 +44,7 @@ open -n "$HOME/Applications/動畫小工坊.app" --args --render /絕對路徑/�
 
 ## 在其他影片專案重用
 
-`runtime/effects.js`、`runtime/effects-extra.js`、`runtime/effects-pro.js`、`runtime/engine.js` 與 `runtime/library.js` 都是本工具的獨立原始碼。依此順序載入，就能在 Canvas 環境使用：
+`runtime/effects.js`、`runtime/effects-extra.js`、`runtime/effects-pro.js`、`runtime/layers.js`、`runtime/audio.js`、`runtime/engine.js` 與 `runtime/library.js` 都是本工具的獨立原始碼。依此順序載入，就能在 Canvas 環境使用：
 
 ```js
 const project = MotionProject.validate(projectJSON);
@@ -56,7 +56,7 @@ MotionEffects.render(ctx, width, height, seconds, MotionProject.defaultClip('car
 
 這些 API 不會讀網路、執行專案中的程式碼或採用非固定亂數。同一設定與時間應產生相同影格。接到 Remotion 等流程時，請用 `frame / fps` 作為秒數；需要 DOM／Canvas／WebGL 的瀏覽器渲染環境。
 
-影片目前不含音訊，不匯入外部圖片或真實產品素材。卡片、手機與圖表為程序化的示意範本。請不要宣稱支援未實作的能力。
+1.4 支援額外圖層、關鍵影格、內嵌 PNG/JPEG/WebP 與 16 種 CC0 音效。詳細欄位請讀 ../references/layers-and-audio.md；舊版 App 會忽略新欄位。尚不支援外部音樂、旁白或影片素材匯入。卡片、手機與圖表為程序化的示意範本。請不要宣稱支援未實作的能力。
 
 ## 靈感來源
 

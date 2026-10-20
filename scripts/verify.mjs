@@ -10,7 +10,7 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const skill=path.join(root,'.claude/skills/motion-workshop'),assets=path.join(skill,'assets');
 const read=p=>fs.readFile(p,'utf8'), parse=async p=>JSON.parse(await read(p));
 const context=vm.createContext({window:{}});
-for(const file of ["effects.js","effects-extra.js","effects-pro.js","engine.js","library.js"]){
+for(const file of ["effects.js","effects-extra.js","effects-pro.js","layers.js","audio.js","engine.js","library.js"]){
   const code=await read(path.join(assets,'runtime',file));
   assert.equal(code,await read(path.join(root,'web',file)),file+' runtime mismatch');
   vm.runInContext(code,context,{filename:file});
@@ -51,6 +51,22 @@ assert.throws(()=>P.validate({version:2,clips:[{effect:'unknown'}]}));
 assert.throws(()=>P.validate({version:2,clips:[]}));
 const clamped=P.validate({version:1,fps:5,clips:[{effect:'bounce',duration:100,speed:99,color:'bad'}]});
 assert.equal(clamped.version,2);assert.equal(clamped.fps,30);assert.equal(clamped.clips[0].duration,20);assert.equal(clamped.clips[0].speed,2.5);assert.equal(clamped.clips[0].color,'#d8f36a');
+const L=context.window.MotionLayers,A=context.window.MotionAudio;
+const custom=P.validate({version:2,fps:30,clips:[{effect:'bounce',duration:2,base:{visible:false,x:80},layers:[{type:'rect',transform:{x:20},keyframes:[{time:1,x:80,easing:'linear'},{time:0,x:20,easing:'linear'},{time:1,x:90,easing:'linear'}]}],audio:[{sound:'click',time:.5,volume:1,rate:1,fadeIn:0,fadeOut:0}]}]});
+assert.equal(custom.clips[0].base.visible,false);assert.equal(custom.clips[0].base.x,80);
+const animated=custom.clips[0].layers[0];assert.equal(animated.keyframes.length,2);assert.equal(L.sample(animated,.5).x,55);assert.equal(L.sample(animated,-1).x,20);assert.equal(L.sample(animated,5).x,90);
+for(const easing of Object.keys(L.easingNames)){assert.ok(Math.abs(L.ease(easing,0))<1e-12);assert.ok(Math.abs(L.ease(easing,1)-1)<1e-12);assert.ok(Number.isFinite(L.ease(easing,.5)));}
+assert.equal(L.hitTest(animated,1,90,50,16/9),true);assert.equal(L.hitTest(animated,1,5,5,16/9),false);
+const stripped=P.validate({version:2,clips:[{effect:'bounce',layers:[{type:'image',image:'https://example.com/a.png',transform:{scale:100,opacity:-1}}],audio:[{sound:'unknown'},{sound:'click',rate:99}]}]});
+assert.equal(stripped.clips[0].layers[0].image,'');assert.equal(stripped.clips[0].layers[0].transform.scale,5);assert.equal(stripped.clips[0].layers[0].transform.opacity,0);assert.equal(stripped.clips[0].audio.length,1);assert.equal(stripped.clips[0].audio[0].rate,2);
+const sources=new Map([['click',new Float32Array([.2,.4,.6,.8])]]),pcm=A.mix(custom,sources),start=Math.round(.5*A.sampleRate);
+assert.equal(pcm.length,44100);assert.equal(pcm[start-1],0);assert.ok(Math.abs(pcm[start+1]-.32)<1e-6);assert.equal(pcm[start+4],0);
+const bytes=Buffer.from(A.wav(pcm));assert.equal(bytes.toString('ascii',0,4),'RIFF');assert.equal(bytes.readUInt32LE(24),22050);assert.equal(bytes.length,44+pcm.length*2);
+const muted=P.validate({...custom,audio:{enabled:false,volume:1}});assert.equal(A.events(muted).length,0);assert.ok(A.mix(muted,new Map()).every(v=>v===0));
+const soundCatalog=await parse(path.join(assets,'runtime/sounds/catalog.json'));assert.equal(soundCatalog.sounds.length,16);
+for(const sound of soundCatalog.sounds){const data=await fs.readFile(path.join(assets,'runtime/sounds',sound.file));assert.equal(data.toString('ascii',0,4),'RIFF');assert.equal(data.readUInt32LE(24),22050);assert.equal(data.readUInt16LE(22),1);}
+const advancedExample=P.validate(await parse(path.join(assets,'examples/自由圖層與音效.motion.json')));assert.equal(P.duration(advancedExample),10);assert.equal(A.events(advancedExample).length,5);
+const withOverlap=P.validate({version:2,clips:[{effect:'bounce',duration:3,transition:{type:'push',duration:1}},{effect:'type',duration:3,audio:[{sound:'click',time:.5}]}]});assert.equal(A.events(withOverlap)[0].start,2.5);
 const example=await parse(path.join(assets,'examples/三幕轉場.motion.json'));
 assert.equal(Math.round(P.duration(P.validate(example))*30),234);
 const Library=context.window.MotionLibrary;
@@ -99,7 +115,10 @@ try{
   const storyFile=path.join(temp,'generated.motion.json');
   const generate=spawnSync(process.execPath,[path.join(portable,'create-project.mjs'),'--story','developer-release','--brand','Example Studio','--duration','20','--fps','60','--output',storyFile],{encoding:'utf8'});
   assert.equal(generate.status,0,generate.stderr);assert.equal(JSON.parse(generate.stdout).frames,1200);
+  const wavOutput=path.join(temp,'sound.wav');
+  const wavRender=spawnSync(process.execPath,[path.join(portable,'render-audio.mjs'),'--project',path.join(portable,'examples/自由圖層與音效.motion.json'),'--output',wavOutput],{encoding:'utf8'});assert.equal(wavRender.status,0,wavRender.stderr);assert.equal(JSON.parse(wavRender.stdout).samples,220500);assert.equal((await fs.stat(wavOutput)).size,441044);
+  const wavAgain=spawnSync(process.execPath,[path.join(portable,'render-audio.mjs'),'--project',path.join(portable,'examples/自由圖層與音效.motion.json'),'--output',wavOutput],{encoding:'utf8'});assert.notEqual(wavAgain.status,0,'WAV export must not overwrite');
   const duplicate=spawnSync(process.execPath,[path.join(portable,'create-project.mjs'),'--story','product-launch','--output',storyFile],{encoding:'utf8'});
   assert.notEqual(duplicate.status,0,'Generated project must not overwrite an existing file');
 }finally{await fs.rm(temp,{recursive:true,force:true});}
-console.log(JSON.stringify({ok:true,effects:ids.length,transitions:P.transitionTypes.length,stories:Library.stories.length,storyConfigurations:192,files:files.length,checks:['runtime parity','catalog/schema/previews','30/60 FPS timelines','exact story duration at all ratios','prompt composition','normalization','portable skill install','overwrite refusal','standalone CLI generation','local links','privacy scan']},null,2));
+console.log(JSON.stringify({ok:true,effects:ids.length,transitions:P.transitionTypes.length,stories:Library.stories.length,storyConfigurations:192,files:files.length,checks:['layers/keyframes/easing/hit testing','PCM WAV mixing and sound assets','overlap audio timing','runtime parity','catalog/schema/previews','30/60 FPS timelines','exact story duration at all ratios','prompt composition','normalization','portable skill install','overwrite refusal','standalone CLI generation','local links','privacy scan']},null,2));

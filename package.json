@@ -1,8 +1,8 @@
 {
   "name": "motion-workshop",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "private": true,
-  "description": "40 offline motion effects, 10 transitions, 8 story presets, Claude skill and macOS editor.",
+  "description": "Offline motion editor with 40 effects, editable layers, deterministic keyframes, 16 CC0 sounds, Claude skill and macOS MP4 export.",
   "license": "MIT",
   "engines": {
     "node": ">=20"

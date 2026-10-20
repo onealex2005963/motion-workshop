@@ -1,0 +1,333 @@
+{
+  "version": 2,
+  "ratio": "16:9",
+  "quality": 720,
+  "fps": 30,
+  "audio": {
+    "enabled": true,
+    "volume": 0.8
+  },
+  "clips": [
+    {
+      "effect": "gradient-mesh",
+      "text": "自由編排",
+      "subtitle": "一點靈感，無限可能。",
+      "color": "#d8f36a",
+      "secondary": "#a59bff",
+      "background": "#10171c",
+      "speed": 1,
+      "size": 1,
+      "amount": 50,
+      "duration": 5.3,
+      "items": [
+        "靈感",
+        "創作",
+        "分享",
+        "可能"
+      ],
+      "values": [
+        35,
+        70,
+        55,
+        90
+      ],
+      "value": 100,
+      "suffix": "",
+      "bpm": 120,
+      "transition": {
+        "type": "blur",
+        "duration": 0.6
+      },
+      "base": {
+        "visible": false,
+        "x": 50,
+        "y": 50,
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1
+      },
+      "layers": [
+        {
+          "id": "layer-0",
+          "name": "品牌色塊",
+          "type": "rect",
+          "visible": true,
+          "locked": false,
+          "text": "你的文字",
+          "fill": "#a59bff",
+          "stroke": "#ffffff",
+          "strokeWidth": 0,
+          "width": 72,
+          "height": 40,
+          "radius": 18,
+          "fontSize": 7,
+          "fontFamily": "sans",
+          "weight": 700,
+          "align": "center",
+          "blend": "source-over",
+          "start": 0,
+          "end": 5.3,
+          "transform": {
+            "x": 50,
+            "y": 46,
+            "scale": 1,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "keyframes": [
+            {
+              "time": 0,
+              "x": 50,
+              "y": 46,
+              "scale": 0.25,
+              "rotation": -14,
+              "opacity": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 1,
+              "x": 50,
+              "y": 46,
+              "scale": 1,
+              "rotation": 0,
+              "opacity": 1,
+              "easing": "back"
+            }
+          ],
+          "image": ""
+        },
+        {
+          "id": "layer-1",
+          "name": "自由主標",
+          "type": "text",
+          "visible": true,
+          "locked": false,
+          "text": "讓想法，自由動起來",
+          "fill": "#10171c",
+          "stroke": "#ffffff",
+          "strokeWidth": 0,
+          "width": 68,
+          "height": 20,
+          "radius": 18,
+          "fontSize": 7,
+          "fontFamily": "sans",
+          "weight": 700,
+          "align": "center",
+          "blend": "source-over",
+          "start": 0,
+          "end": 5.3,
+          "transform": {
+            "x": 50,
+            "y": 46,
+            "scale": 1,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "keyframes": [
+            {
+              "time": 0,
+              "x": 50,
+              "y": 65,
+              "scale": 1,
+              "rotation": 0,
+              "opacity": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 1.2,
+              "x": 50,
+              "y": 46,
+              "scale": 1,
+              "rotation": 0,
+              "opacity": 1,
+              "easing": "ease-out"
+            }
+          ],
+          "image": ""
+        },
+        {
+          "id": "layer-2",
+          "name": "重點說明",
+          "type": "text",
+          "visible": true,
+          "locked": false,
+          "text": "圖層 · 關鍵影格 · 效果音",
+          "fill": "#d8f36a",
+          "stroke": "#ffffff",
+          "strokeWidth": 0,
+          "width": 80,
+          "height": 20,
+          "radius": 18,
+          "fontSize": 3,
+          "fontFamily": "sans",
+          "weight": 700,
+          "align": "center",
+          "blend": "source-over",
+          "start": 0,
+          "end": 5.3,
+          "transform": {
+            "x": 50,
+            "y": 78,
+            "scale": 1,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "keyframes": [],
+          "image": ""
+        }
+      ],
+      "audio": [
+        {
+          "sound": "expand",
+          "time": 0,
+          "volume": 0.7,
+          "rate": 1,
+          "fadeIn": 0,
+          "fadeOut": 0.05
+        },
+        {
+          "sound": "confirm",
+          "time": 1.2,
+          "volume": 0.6,
+          "rate": 1,
+          "fadeIn": 0,
+          "fadeOut": 0.1
+        }
+      ]
+    },
+    {
+      "effect": "gradient-mesh",
+      "text": "每一格，都由你決定",
+      "subtitle": "Motion Workshop 1.4",
+      "color": "#d8f36a",
+      "secondary": "#a59bff",
+      "background": "#10171c",
+      "speed": 1,
+      "size": 1,
+      "amount": 50,
+      "duration": 5.3,
+      "items": [
+        "靈感",
+        "創作",
+        "分享",
+        "可能"
+      ],
+      "values": [
+        35,
+        70,
+        55,
+        90
+      ],
+      "value": 100,
+      "suffix": "",
+      "bpm": 120,
+      "transition": {
+        "type": "crossfade",
+        "duration": 0.6
+      },
+      "base": {
+        "visible": true,
+        "x": 50,
+        "y": 50,
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1
+      },
+      "layers": [
+        {
+          "id": "layer-0",
+          "name": "動態底線",
+          "type": "line",
+          "visible": true,
+          "locked": false,
+          "text": "你的文字",
+          "fill": "#d8f36a",
+          "stroke": "#ffffff",
+          "strokeWidth": 0,
+          "width": 36,
+          "height": 1,
+          "radius": 18,
+          "fontSize": 7,
+          "fontFamily": "sans",
+          "weight": 700,
+          "align": "center",
+          "blend": "source-over",
+          "start": 0,
+          "end": 5.3,
+          "transform": {
+            "x": 50,
+            "y": 72,
+            "scale": 1,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "keyframes": [
+            {
+              "time": 0,
+              "x": 50,
+              "y": 72,
+              "scale": 0.1,
+              "rotation": 0,
+              "opacity": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 1,
+              "x": 50,
+              "y": 72,
+              "scale": 1,
+              "rotation": 0,
+              "opacity": 1,
+              "easing": "ease-out"
+            },
+            {
+              "time": 4.5,
+              "x": 50,
+              "y": 72,
+              "scale": 1,
+              "rotation": 0,
+              "opacity": 1,
+              "easing": "linear"
+            },
+            {
+              "time": 5.3,
+              "x": 50,
+              "y": 72,
+              "scale": 0.1,
+              "rotation": 0,
+              "opacity": 0,
+              "easing": "ease-in"
+            }
+          ],
+          "image": ""
+        }
+      ],
+      "audio": [
+        {
+          "sound": "scroll",
+          "time": 0,
+          "volume": 0.5,
+          "rate": 1,
+          "fadeIn": 0.01,
+          "fadeOut": 0.05
+        },
+        {
+          "sound": "bell",
+          "time": 1,
+          "volume": 0.4,
+          "rate": 1,
+          "fadeIn": 0,
+          "fadeOut": 0.15
+        },
+        {
+          "sound": "close",
+          "time": 4.4,
+          "volume": 0.5,
+          "rate": 1,
+          "fadeIn": 0,
+          "fadeOut": 0.05
+        }
+      ]
+    }
+  ]
+}

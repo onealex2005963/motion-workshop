@@ -43,7 +43,7 @@ node assets/render.mjs --project /absolute/project.motion.json --output /absolut
 
 App 開啟時使用本機工作佇列；關閉時腳本嘗試透過 LaunchServices 啟動 App。執行環境若禁止啟動桌面程式，手動開啟 App 後重試。需要 `~/Library/Application Support/動畫小工坊/jobs` 的讀寫權限，只用於本工具工作。腳本不應修改原本 GUI 的自動儲存專案。成功任務會清理自己的暫存資料；失敗任務保留供檢查。輸出已存在時會停止；使用者要求覆蓋後才加 `--overwrite`。
 
-目前輸出是 **不含音訊的 H.264 MP4**。可手動匯入 Premiere、DaVinci Resolve 等剪輯軟體，再加旁白、配樂與真實影片；沒有直接控制這些剪輯軟體的插件。
+1.4 可輸出 **H.264 / AAC MP4**：啟用內建音效時會混音；沒有音效的專案保留純影片。圖層、圖片與音效請讀 [客製化說明](layers-and-audio.md)。可手動匯入 Premiere、DaVinci Resolve 等剪輯軟體，再加旁白、配樂與真實影片；沒有直接控制這些剪輯軟體的插件。
 
 ## 其他影片框架與逐格渲染
 
@@ -57,4 +57,4 @@ renderer.renderFrame(42); // 30 FPS 時是第 1.4 秒；可隨機跳回任何影
 
 在 Remotion 類型的框架中，將外部 `frame` 傳進 `renderFrame`；先等 runtime scripts、字體、Canvas 就緒，才解除該框架的 render delay。不要用 rAF 預覽播放器作為離線影片時鐘。本套件未附 Remotion 專案或 ffmpeg，不宣稱已驗證那些外部渲染器。安裝與匯出方式依所採用框架的官方文件與授權。
 
-跨作業系統的字型、WebGL 驅動可能產生像素差異；同一環境內的固定設定與時間可重現。著色器效果需要 WebGL；可用 `MotionEffects.getDiagnostics()` 檢查，無支援時會退回替代畫面。沒有音訊分析、透明影片或外部素材匯入。
+跨作業系統的字型、WebGL 驅動可能產生像素差異；同一環境內的固定設定與時間可重現。著色器效果需要 WebGL；可用 `MotionEffects.getDiagnostics()` 檢查，無支援時會退回替代畫面。不支援音訊分析、透明影片、外部音樂或影片素材匯入。使用圖片時先 await MotionLayers.prepare(project)。

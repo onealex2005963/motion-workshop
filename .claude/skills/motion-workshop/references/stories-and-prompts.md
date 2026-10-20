@@ -37,7 +37,7 @@ node assets/render.mjs --project project.motion.json --validate
 
 完整編輯器的「Claude 指令」可選整份作品／目前場景，以及網站、軟體、影片三種用途。它會帶入實際效果、程式檔名、時間軸、顏色與 JSON，而不是只有泛用文字。
 
-在已載入五個 runtime script 的環境，也可使用：
+在已載入七個 runtime script 的環境，也可使用：
 
 ```js
 const project = MotionLibrary.createStory('developer-release', {brand:'Studio',duration:20});
