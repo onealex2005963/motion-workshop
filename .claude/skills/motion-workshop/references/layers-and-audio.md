@@ -6,7 +6,7 @@
 
 每幕 `base: {visible, x, y, scale, rotation, opacity}` 控制原有整幕效果。`visible:false` 只留下 `background` 底色，可完全用圖層排版。變形會包含整個底層畫面，不會單獨修改範本內某個物件。
 
-`layers` 最多 12 個，陣列越後面越上層。支援 `text`、`rect`、`ellipse`、`line`、`image`。由 `MotionLayers.defaultLayer(type)` 建立，再修改：
+`layers` 最多 12 個，陣列越後面越上層。1.4.2 編輯器清單以最上層在前的順序顯示，拖曳 ⠿ 或名稱可排序；上移即移到畫面前方。可用 Option / Alt + ↑ ↓ 或上下按鈕操作，Esc 或放到清單外取消。一次有效放置只建立一步復原；JSON 陣列順序與既有渲染方式相容。支援 `text`、`rect`、`ellipse`、`line`、`image`。由 `MotionLayers.defaultLayer(type)` 建立，再修改：
 
 | 欄位 | 含義 |
 |---|---|

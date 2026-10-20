@@ -1,6 +1,6 @@
 {
   "name": "motion-workshop",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "private": true,
   "description": "Offline motion editor with 40 effects, editable layers, deterministic keyframes, 16 CC0 sounds, Claude skill and macOS MP4 export.",
   "license": "MIT",
