@@ -2,11 +2,11 @@
 
 **讓 Claude 在做網站、軟體介面與影片時，直接參考可執行的動畫效果。**
 
-40 種 Canvas / WebGL 效果、10 種場景轉場、Claude skill、技法拆解、可操作的網站範例，以及可選用的繁體中文 macOS 編輯器。離線運作，沒有 API 金鑰、CDN 或 npm 套件依賴。MIT 授權，可修改與商用，散布程式碼時保留授權。
+184 個場景效果（40 個原創效果＋144 個 Motion Prompt 套版）、10 種場景轉場、Claude skill、技法拆解、可操作的網站範例，以及可選用的繁體中文 macOS 編輯器。離線運作，沒有 API 金鑰、CDN 或 npm 套件依賴。MIT 授權，可修改與商用，散布程式碼時保留授權。
 
 ![動畫效果預覽](.claude/skills/motion-workshop/assets/previews/card-flyin.png)
 
-[English](README.en.md) · [40 種效果預覽](docs/GALLERY.md) · [技法拆解](.claude/skills/motion-workshop/references/effect-breakdown.md) · [Claude skill](.claude/skills/motion-workshop/SKILL.md)
+[English](README.en.md) · [184 個效果預覽](docs/GALLERY.md) · [技法拆解](.claude/skills/motion-workshop/references/effect-breakdown.md) · [Claude skill](.claude/skills/motion-workshop/SKILL.md)
 
 ## 1.4 版：自由構圖、關鍵格與聲音
 
@@ -57,7 +57,7 @@ node scripts/install-skill.mjs --project /absolute/path/to/your-project
 
 ## 直接試玩
 
-雙擊 `.claude/skills/motion-workshop/assets/examples/website/index.html`。可以選擇 40 種效果、播放／暫停、逐格拖曳與下載 PNG。右下連結是實際 DOM 介面示範，包含鍵盤可操作的標籤、卡片進場與點擊回饋。
+雙擊 `.claude/skills/motion-workshop/assets/examples/website/index.html`。可以選擇 184 個效果、播放／暫停、逐格拖曳與下載 PNG。右下連結是實際 DOM 介面示範，包含鍵盤可操作的標籤、卡片進場與點擊回饋。
 
 若瀏覽器限制本機檔案，從儲存庫根目錄執行：
 
@@ -138,8 +138,21 @@ npm run pack   # 重建獨立 skill ZIP 與完整原始碼 ZIP
 
 ## 靈感與授權
 
-概念參考 [RAR 設計攻略](https://rar.design/posts/pure-code-animation-claude-code-12-effects) 、[Grenade 手榴彈](https://grenade.tw/blog/claude-motion-graphics/) 與 [Prompt Motion](https://prompt-motion.com/)。本專案的效果、範例與圖示皆為獨立實作，沒有打包來源文章中的圖片、影片或程式碼，也不宣稱與它們的完整展示規格相同。數值與產品畫面都是示意。
+概念參考 [RAR 設計攻略](https://rar.design/posts/pure-code-animation-claude-code-12-effects) 、[Grenade 手榴彈](https://grenade.tw/blog/claude-motion-graphics/) 與 [Prompt Motion](https://prompt-motion.com/)。本專案的原創效果、範例與圖示採獨立實作；1.5 另整合下述 MIT 授權的 Motion Prompt 原始程式，沒有打包來源文章中的圖片、影片或程式碼，也不宣稱與它們的完整展示規格相同。數值與產品畫面都是示意。
 
 MIT 授權涵蓋本倉庫程式碼與自行生成的預覽素材；文章、第三方工具與使用者加入的素材各有自己的權利與條款。
 
 內建 Kenney Interface Sounds 的 16 個選用音效採 CC0，原始授權及轉檔資訊隨包附上；詳見 [第三方素材](THIRD_PARTY.md)。
+
+
+## 1.5：144 個可直接使用的 Motion Prompt 套版
+
+左側「144 動效套版」可將任一項套用到目前場景；頂部「動效字典 144」可選「插入原版套版場景」新增一幕，保留既有作品。全部可調長度、速度、縮放、橫／直／方形比例、完整呈現／裁切填滿、循環模式與自訂標題，並可疊加自己的 Logo、照片、文字及音效；可使用現有 10 種場景轉場匯出 MP4。原示範內部文字與物件保留原設計；需要逐物件編輯時可用下述 20 組圖層配方或修改原始碼。
+
+App 頂部「動效字典 144」提供六類離線原版示範、繁中／英／日搜尋、精確規格與多選用途備註。「複製給 Claude」會產生含固定 ID、來源程式、規格及備註的指令；需一併提供 Skill ZIP。沒有自動發送或背景接收器。
+
+20 組可編輯配方可調文字、長度、強度、錯開間隔與內建 CC0 音效，再插入目前場景後。這些是小工坊重新設計的圖層改編，與原版示範分開預覽。新增場景保留原作，支援復原；JSON 記錄原版 ID 與改編標記。
+
+來源：[Motion Prompt](https://github.com/showheyohtaki/motion-prompt)，作者 Shohei Ohtaki，MIT。收錄快照與雜湊見 web/motion-reference/origin.json 及 SHA256SUMS.json；保留上游授權及第三方聲明。沒有收錄第三方 X 貼文、外部圖片或字型。photo 類是風格提示詞參考；Canvas UI 示意仍需改寫成真正互動元件。
+
+離線查詢：`node .claude/skills/motion-workshop/assets/motion-reference.mjs search 波浪`。打包前若修改快照或配方，執行 `npm run reference:build`。

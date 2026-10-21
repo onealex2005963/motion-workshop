@@ -8,7 +8,7 @@
   let project={version:2,ratio:'16:9',quality:720,fps:30,clips:[defaultClip()]};
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
   let selected=0,playing=!reducedMotion.matches,loop=true,time=0,lastTime=0,filter='全部',saveTimer,toastTimer,exporting=false,cancelled=false,dirty=false;
-  let history=[],historyIndex=-1,favorites=new Set(),favoritesOnly=false,previews=!reducedMotion.matches,hoverPreview=null,previewTick=0,storyID='product-launch',detailTick=0;
+  let history=[],historyIndex=-1,favorites=new Set(),favoritesOnly=false,previews=!reducedMotion.matches,hoverPreview=null,previewTick=0,storyID='product-launch',detailTick=0,tileObserver;
   try{const saved=JSON.parse(localStorage.getItem('motion-workshop-favorites')||'[]');if(Array.isArray(saved))favorites=new Set(saved.filter(id=>E.definitions.some(e=>e.id===id)));}catch{}
   const canvas=$('preview'),ctx=canvas.getContext('2d',{alpha:false});
   const current=()=>project.clips[selected];
@@ -33,7 +33,8 @@
     const [ew,eh]=frameSize(project.quality);$('dimensions').textContent=`${ew} × ${eh}`;$('preview-format').textContent=project.ratio+({'16:9':' 橫式','9:16':' 直式','1:1':' 方形'}[project.ratio]);renderAt(time);
   }
   function renderLibrary(){
-    hoverPreview=null;$('effect-list').replaceChildren();let count=0;
+    hoverPreview=null;tileObserver?.disconnect();$('effect-list').replaceChildren();let count=0;
+    if(window.IntersectionObserver)tileObserver=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){entry.target.drawThumbnail();tileObserver.unobserve(entry.target);}},{root:$('effect-list'),rootMargin:'100px'});
     const effects=[...E.definitions],sort=$('effect-sort').value;
     if(sort==='new')effects.reverse();if(sort==='name')effects.sort((a,b)=>a.name.localeCompare(b.name,'zh-Hant'));
     for(const effect of effects){if(filter!=='全部'&&effect.category!==filter||favoritesOnly&&!favorites.has(effect.id))continue;const search=$('effect-search').value.trim().toLowerCase();if(search&&!`${effect.name} ${effect.id} ${effect.description} ${effect.category} ${Library.metadata(effect.id).tags.join(' ')}`.toLowerCase().includes(search))continue;count++;
@@ -42,14 +43,22 @@
       const thumb=document.createElement('canvas');thumb.width=176;thumb.height=112;const name=document.createElement('span');name.className='card-name';
       const idx=document.createElement('span');idx.className='card-index';idx.textContent=String(E.definitions.indexOf(effect)+1).padStart(2,'0');name.append(idx,document.createTextNode(effect.name));button.append(thumb,name);
       const opt={...defaultClip(effect.id),text:['type','mask-reveal','kinetic-zoom','typewriter','glass-card'].includes(effect.id)?'動起來':'',subtitle:'',size:1,amount:25};
-      E.render(thumb.getContext('2d'),176,112,1.65,opt);
-      button.addEventListener('click',()=>{if(exporting)return;current().effect=effect.id;if(current().base)current().base.visible=true;time=startOf(selected);updateInspector();renderLibrary();renderClips();saveSoon();renderAt(time);});
+      thumb.drawThumbnail=()=>{if(thumb.dataset.drawn)return;E.render(thumb.getContext('2d'),176,112,1.65,opt);thumb.dataset.drawn='true';};
+      if(tileObserver)tileObserver.observe(thumb);else thumb.drawThumbnail();
+      button.addEventListener('click',()=>applyEffect(effect.id));
       const star=document.createElement('button');star.className='favorite-button';const favorite=favorites.has(effect.id);star.textContent=favorite?'★':'☆';star.setAttribute('aria-label',(favorite?'取消收藏':'收藏')+effect.name);star.setAttribute('aria-pressed',String(favorite));star.onclick=()=>{favorite?favorites.delete(effect.id):favorites.add(effect.id);if(bridge)native({type:'savePreferences',favorites:[...favorites]}).catch(()=>notify('收藏暫時無法儲存。'));else try{localStorage.setItem('motion-workshop-favorites',JSON.stringify([...favorites]));}catch{notify('收藏暫時無法儲存。');}renderLibrary();};
-      const startPreview=()=>{hoverPreview={canvas:thumb,options:opt,start:performance.now()};};const stopPreview=()=>{if(hoverPreview?.canvas===thumb)hoverPreview=null;};
+      const startPreview=()=>{thumb.drawThumbnail();hoverPreview={canvas:thumb,options:opt,start:performance.now()};};const stopPreview=()=>{if(hoverPreview?.canvas===thumb)hoverPreview=null;};
       button.addEventListener('mouseenter',startPreview);button.addEventListener('focus',startPreview);button.addEventListener('mouseleave',stopPreview);button.addEventListener('blur',stopPreview);tile.append(button,star);$('effect-list').append(tile);
     }
     $('library-status').textContent=`顯示 ${count} / ${E.definitions.length} 個效果`;
     if(!count){const empty=document.createElement('p');empty.className='library-empty';empty.textContent=favoritesOnly?'這個分類尚無收藏。點效果右上方的 ☆ 即可加入。':'沒有符合的效果，試試其他關鍵字或分類。';$('effect-list').append(empty);}
+  }
+  function applyEffect(id){
+    if(exporting||!E.definitions.some(e=>e.id===id))return false;
+    current().effect=id;if(current().base)current().base.visible=true;
+    if(id.startsWith('mp-'))current().reference={library:'motion-prompt',id:id.slice(3),kind:'original-template',sourceCommit:window.MotionReference.origin.commit};
+    else if(current().reference?.kind==='original-template')delete current().reference;
+    time=startOf(selected);setPlaying(false);updateInspector();renderLibrary();renderClips();saveSoon();renderAt(time);return true;
   }
   function renderClips(){
     $('clips').replaceChildren();project.clips.forEach((clip,i)=>{
@@ -62,6 +71,8 @@
   function updateInspector(){
     document.dispatchEvent(new CustomEvent('workshop-selection'));
     const o=current();$('scene-name').textContent=o.base?.visible===false?'自由構圖':definition(o.effect).name;$('scene-count').textContent=`場景 ${String(selected+1).padStart(2,'0')}`;$('effect-description').textContent=definition(o.effect).description;
+    const reference=o.effect.startsWith('mp-');$('reference-template-controls').hidden=!reference;
+    if(reference){const e=window.MotionReference.entry(o.effect.slice(3));$('reference-template-origin').textContent=`#${e.id} ${e.name.en} · Shohei Ohtaki / MIT · ${e.cycle} 秒原版循環`;$('reference-template-fit').value=o.referenceTemplate?.fit||'contain';$('reference-template-labels').checked=o.referenceTemplate?.labels!==false;$('reference-template-loop').checked=o.referenceTemplate?.loop!==false;}
     for(const [id,key] of [['title-text','text'],['subtitle-text','subtitle'],['primary-color','color'],['secondary-color','secondary'],['background-color','background'],['speed','speed'],['size','size'],['amount','amount'],['duration','duration']])$(id).value=key==='duration'?Number(o[key].toFixed(3)):o[key];
     $('duration').step='any';
     $('speed-value').textContent=o.speed.toFixed(1)+'×';$('size-value').textContent=Math.round(o.size*100)+'%';$('amount-value').textContent=o.amount;
@@ -74,6 +85,7 @@
     const last=selected===project.clips.length-1;$('transition-type').value=o.transition.type;$('transition-duration').value=String(o.transition.duration);$('transition-type').disabled=last;$('transition-duration').disabled=last||o.transition.type==='cut';$('preview-transition').disabled=last;
     $('transition-note').textContent=last?'這是最後一幕。新增下一幕後即可設定轉場。':`兩幕會重疊 ${Number(Engine.timeline(project)[selected].overlap.toFixed(2))} 秒，動畫持續播放。`;
   }
+  for(const [id,key] of [['reference-template-fit','fit'],['reference-template-labels','labels'],['reference-template-loop','loop']])$(id).onchange=()=>{if(exporting||!current().effect.startsWith('mp-'))return;current().referenceTemplate??={fit:'contain',labels:true,loop:true};current().referenceTemplate[key]=key==='fit'?$(id).value:$(id).checked;saveSoon();};
   function updateAll(){$('effect-count').textContent=E.definitions.length;updateInspector();renderLibrary();renderClips();resizePreview();historyUI();}
   function setPlaying(value){playing=value;$('play').textContent=playing?'Ⅱ':'▶';$('play').setAttribute('aria-label',playing?'暫停':'播放');document.dispatchEvent(new CustomEvent('workshop-play'));}
   function animate(timestamp){
@@ -221,7 +233,7 @@
   window.workshopQueueStatus=busy=>{$('export-video').disabled=busy;if(busy)$('export-status').textContent='Claude 正在背景產片，你可以繼續編輯。';else $('export-status').textContent='Claude 影片已處理完成。';};
   window.WorkshopEditor={
     get project(){return project;},get selected(){return selected;},get time(){return time;},get playing(){return playing;},get exporting(){return exporting;},
-    notify, native:bridge?native:null,
+    notify,applyEffect,native:bridge?native:null,
     pause(){setPlaying(false);},seek(t){setPlaying(false);time=Math.max(0,Math.min(total(),t));$('scrubber').value=time;renderAt(time);},
     change(){saveSoon();renderClips();},refresh(){updateInspector();renderAt(time);},
     insert(clip){if(project.clips.length>=24){notify('一個專案最多 24 個場景。');return false;}project.clips.splice(selected+1,0,clip);selected++;time=startOf(selected);setPlaying(false);saveSoon();updateAll();return true;}

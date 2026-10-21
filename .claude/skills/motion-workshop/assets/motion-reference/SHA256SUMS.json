@@ -1,0 +1,14 @@
+{
+  "commit": "36f5bdacb1e012eb00caf30741d2e2223ee514b4",
+  "sha256": {
+    "catalog.json": "90e3c6dd4ee3b3263fb1a7430b5c3354cd4e4dc82043c918cbfd381a3f03923e",
+    "LICENSE.txt": "b687b1f10c8ea46937216c0e2b999b706572e0430d7a8d2934fc10cb96af4f46",
+    "THIRD-PARTY-NOTICES.md": "e540ab5f741b893ec90d4d8e54a38dba750e959f47a01c7c4f6a5dbccfeaa02f",
+    "packs/motion.js": "2f84c8cddf9397247842f5f1eadcaec882b10d153fdb6531ffa4b1aed5f090c2",
+    "packs/camera.js": "b4c5c8fd5d6b57998a40b938f24b096c9ae5a9bc82b7d6ba3205eda6fc392e9c",
+    "packs/ui.js": "b1eca5916d318de1040bb3075beb5bf54fd7e0e7c56886d13f53088e860024f3",
+    "packs/lp.js": "49cc76d59f5f67efe896383f68585e920b74d7adbd4dd6c4d1c4ef435e165f11",
+    "packs/photo.js": "0e6633d1e0eb8ed4eebaf97d6f429f7a053cecc4532314b70888b32f51cfcf59",
+    "packs/motion2.js": "92202d8cac5c2d8c9f73ae9fe28854890a47423b5c72be85b50df0c2a9f54236"
+  }
+}

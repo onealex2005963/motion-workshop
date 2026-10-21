@@ -1,6 +1,6 @@
 # 動畫小工坊：給 Claude 的效果工具包
 
-這個資料夾提供已實作的 40 種效果、10 種轉場、可編輯專案格式及離線繪圖程式。不需要 API 金鑰。請優先重用現有的效果 ID 與 renderer。
+這個資料夾提供已實作的 184 個場景效果（40 個原創效果＋144 個 Motion Prompt 套版）、10 種轉場、可編輯專案格式及離線繪圖程式。不需要 API 金鑰。請優先重用現有的效果 ID 與 renderer。
 
 ## 先讀什麼
 
@@ -44,7 +44,7 @@ open -n "$HOME/Applications/動畫小工坊.app" --args --render /絕對路徑/�
 
 ## 在其他影片專案重用
 
-`runtime/effects.js`、`runtime/effects-extra.js`、`runtime/effects-pro.js`、`runtime/layers.js`、`runtime/audio.js`、`runtime/engine.js` 與 `runtime/library.js` 都是本工具的獨立原始碼。依此順序載入，就能在 Canvas 環境使用：
+依 catalog.json 的 runtimeOrder 載入 9 個腳本：effects.js、effects-extra.js、effects-pro.js、motion-reference.js、reference-templates.js、layers.js、audio.js、engine.js、library.js。motion-reference.js 包含 Shohei Ohtaki 的 MIT 原始動效，其餘檔案為小工坊整合與原創實作；重用時保留各自授權。依此順序載入，就能在 Canvas 環境使用：
 
 ```js
 const project = MotionProject.validate(projectJSON);
@@ -63,4 +63,8 @@ MotionEffects.render(ctx, width, height, seconds, MotionProject.defaultClip('car
 - https://rar.design/posts/pure-code-animation-claude-code-12-effects
 - https://grenade.tw/blog/claude-motion-graphics/
 
-本工具採獨立實作，沒有複製文章中的影片、圖片或原始碼。
+原有 40 個效果採獨立實作，沒有複製上述文章媒體。1.5 另整合 MIT 授權的 Motion Prompt 原始程式（作者 Shohei Ohtaki），保留來源標記與授權；詳見 ../references/motion-prompt.md。
+
+## 144 套版與 20 組可編輯配方
+
+使用 mp-001 至 mp-144 作為 effect，查 catalog 與 previews；可調 referenceTemplate: {fit: "contain" | "cover", labels: true | false, loop: true | false}，以及共用 text/subtitle/speed/size/background。原示範內部的內容不會由 text 自動替換，自訂標題為額外覆蓋。用現有圖層加上 Logo、照片或更多文字。MotionReference 的 template/get/kit/create CLI 詳見 ../references/motion-prompt.md。一般雲端 Claude 需要整份 ZIP，不能只提供本機路徑。

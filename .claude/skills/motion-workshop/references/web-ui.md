@@ -7,7 +7,7 @@
 
 ## 嵌入你的網站
 
-複製 `assets/runtime/`、`assets/examples/website/player.js` 與 MIT 授權到專案的公開資產目錄。依序載入 effects.js、effects-extra.js、effects-pro.js、layers.js、audio.js、engine.js、library.js、player.js。
+複製 `assets/runtime/`、`assets/examples/website/player.js` 與 MIT 授權到專案的公開資產目錄。依序載入 effects.js、effects-extra.js、effects-pro.js、motion-reference.js、reference-templates.js、layers.js、audio.js、engine.js、library.js、player.js。
 
 ```html
 <canvas id="motion" width="1400" height="720" aria-label="產品動畫"></canvas>

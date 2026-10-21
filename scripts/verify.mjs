@@ -10,13 +10,13 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const skill=path.join(root,'.claude/skills/motion-workshop'),assets=path.join(skill,'assets');
 const read=p=>fs.readFile(p,'utf8'), parse=async p=>JSON.parse(await read(p));
 const context=vm.createContext({window:{}});
-for(const file of ["effects.js","effects-extra.js","effects-pro.js","layers.js","audio.js","engine.js","library.js"]){
+for(const file of ["effects.js","effects-extra.js","effects-pro.js","motion-reference.js","reference-templates.js","layers.js","audio.js","engine.js","library.js"]){
   const code=await read(path.join(assets,'runtime',file));
   assert.equal(code,await read(path.join(root,'web',file)),file+' runtime mismatch');
   vm.runInContext(code,context,{filename:file});
 }
 const E=context.window.MotionEffects,P=context.window.MotionProject,catalog=await parse(path.join(assets,'catalog.json'));
-const ids=catalog.effects.map(e=>e.id);assert.equal(ids.length,40);assert.equal(new Set(ids).size,40);
+const ids=catalog.effects.map(e=>e.id);assert.equal(ids.length,184);assert.equal(new Set(ids).size,184);
 assert.deepEqual([...E.definitions.map(e=>e.id)],ids);
 const schema=await parse(path.join(assets,'project.schema.json'));
 assert.deepEqual(schema.properties.clips.items.properties.effect.enum,ids);

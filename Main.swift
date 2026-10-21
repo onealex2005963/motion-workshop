@@ -201,7 +201,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
         if batchProject != nil && !batchCompleted { completeBatch(["ok":false,"error":"使用者已關閉自動輸出視窗，影片匯出取消。"]); }
         encodeQueue.sync { encoder?.cancel(); encoder = nil }; return .terminateNow
     }
-    @objc func showAbout() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:appName,.applicationVersion:Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "1.4.2",.credits:NSAttributedString(string:"40 種動態範本 · 10 種場景交接 · 圖層與關鍵影格 · 16 種 CC0 音效 · 繁體中文\nClaude 效果工具包 · 離線製作\n靈感來源：RAR 設計攻略、Grenade 手榴彈\n本工具為獨立實作。")]) }
+    @objc func showAbout() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:appName,.applicationVersion:Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "1.5.0",.credits:NSAttributedString(string:"184 個場景效果 · 144 項動效字典 · 20 組圖層配方 · 10 種場景交接 · 16 種 CC0 音效 · 繁體中文\nClaude 效果工具包 · 離線製作\n靈感來源：RAR 設計攻略、Grenade 手榴彈\n原創效果與整合由小工坊實作；Motion Prompt 原版作者 Shohei Ohtaki，MIT 授權。")]) }
     func webView(_ webView: WKWebView, decidePolicyFor action: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = action.request.url, url.isFileURL, url.standardizedFileURL.path.hasPrefix(bundledWeb.path + "/") else { decisionHandler(.cancel); return }; decisionHandler(.allow)
     }
@@ -258,7 +258,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
     }
     func checkQueue() {
         if Date().timeIntervalSince(lastHeartbeat)>3 {
-            let heartbeat:[String:Any]=["active":true,"updatedAt":Date().timeIntervalSince1970,"version":Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "1.4.2"]
+            let heartbeat:[String:Any]=["active":true,"updatedAt":Date().timeIntervalSince1970,"version":Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "1.5.0"]
             if let data=try? JSONSerialization.data(withJSONObject:heartbeat){try? data.write(to:jobsURL.appendingPathComponent("heartbeat.json"),options:.atomic)};lastHeartbeat=Date()
         }
         guard queueJob == nil, !exportPanelOpen, encodeQueue.sync(execute:{encoder == nil}), let entries=try? fm.contentsOfDirectory(at:jobsURL,includingPropertiesForKeys:[.isSymbolicLinkKey,.isDirectoryKey]) else { return }
@@ -313,7 +313,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
         case "loadPreferences":
             replyHandler(["favorites":UserDefaults.standard.stringArray(forKey:"MotionWorkshopFavoriteEffects") ?? []],nil)
         case "savePreferences":
-            guard let favorites = body["favorites"] as? [String], favorites.count <= 40, favorites.allSatisfy({ $0.range(of:"^[a-z0-9-]{1,64}$",options:.regularExpression) != nil }) else { replyHandler(nil,"收藏資料無效。"); return }
+            guard let favorites = body["favorites"] as? [String], favorites.count <= 184, favorites.allSatisfy({ $0.range(of:"^[a-z0-9-]{1,64}$",options:.regularExpression) != nil }) else { replyHandler(nil,"收藏資料無效。"); return }
             UserDefaults.standard.set(favorites,forKey:"MotionWorkshopFavoriteEffects");replyHandler(["ok":true],nil)
         case "copyText":
             guard let text = body["text"] as? String, text.utf8.count < 180_000 else { replyHandler(nil,"文字過長。"); return }

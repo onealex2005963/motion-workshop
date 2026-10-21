@@ -10,7 +10,7 @@ for(let i=0;i<args.length;i++){
   if(!flags.has(key)||!args[i+1]||args[i+1].startsWith('--'))throw new Error('Invalid option: '+key);options[key]=args[++i];
 }
 const sandbox=vm.createContext({window:{}});
-for(const file of ['effects.js','effects-extra.js','effects-pro.js','layers.js','audio.js','engine.js','library.js'])vm.runInContext(await readFile(join(root,'runtime',file),'utf8'),sandbox,{filename:file});
+for(const file of ['effects.js','effects-extra.js','effects-pro.js','motion-reference.js','reference-templates.js','layers.js','audio.js','engine.js','library.js'])vm.runInContext(await readFile(join(root,'runtime',file),'utf8'),sandbox,{filename:file});
 const library=sandbox.window.MotionLibrary,engine=sandbox.window.MotionProject;
 if(options['--list']){console.log(JSON.stringify(library.stories,null,2));process.exit();}
 if(!options['--story']||!options['--output']){console.log('Usage: node create-project.mjs --story product-launch --brand 品牌 --headline 主題 --items 重點一,重點二 --duration 15 --ratio 16:9 --output project.motion.json\n       node create-project.mjs --list');process.exit(args.length?1:0);}

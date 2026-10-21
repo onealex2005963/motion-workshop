@@ -1,15 +1,16 @@
 {
   "name": "motion-workshop",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "private": true,
-  "description": "Offline motion editor with 40 effects, editable layers, deterministic keyframes, 16 CC0 sounds, Claude skill and macOS MP4 export.",
+  "description": "Offline motion editor with 184 scene templates (40 original + 144 Motion Prompt), editable layers, deterministic keyframes, 16 CC0 sounds, Claude skill and macOS MP4 export.",
   "license": "MIT",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "test": "node scripts/verify.mjs",
+    "test": "node scripts/verify.mjs && node scripts/verify-reference.mjs",
     "demo": "node scripts/serve.mjs",
-    "pack": "node scripts/pack.mjs"
+    "pack": "node scripts/pack.mjs",
+    "reference:build": "node scripts/build-reference.mjs"
   }
 }

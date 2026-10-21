@@ -31,6 +31,7 @@
     if(itemEffects.includes(id))parameters.push('items');if(valueEffects.includes(id))parameters.push('values');
     if(id==='number-roll')parameters.push('value','suffix');if(id==='beat-sync')parameters.push('bpm');
     if(['particles','reaction','halftone','physics'].includes(id))parameters.push('amount');
+    if(id.startsWith('mp-'))return {...d,parameters:[...parameters,'referenceTemplate'],tags:[d.category,window.MotionReference.entry(id.slice(3)).pack,...window.MotionReference.entry(id.slice(3)).tags],source:'reference-templates.js'};
     const tags=[d.category,...(itemEffects.includes(id)?['可換標籤']:[]),...(valueEffects.includes(id)?['真實數值']:[]),...(id.includes('code')||id==='terminal-run'?['程式展示']:[])];
     return {...d,parameters,tags,source:['line-chart','donut-chart','network-flow','timeline-story','code-window','terminal-run','logo-reveal','split-title','quote-card','gradient-mesh','isometric-stack','notification-stack'].includes(id)?'effects-pro.js':E.definitions.indexOf(d)<12?'effects.js':'effects-extra.js'};
   }
@@ -60,11 +61,12 @@
     const brief=String(options.brief||'請依這份分鏡與效果庫完成作品。').trim().slice(0,2000);
     const lines=[`# 動畫小工坊：${scope}`,'',brief,'','## 隨附資源','請先解壓縮隨附的 motion-workshop-skill.zip，閱讀 SKILL.md、assets/catalog.json，以及相關 references 文件。所有路徑相對於 skill 根目錄。','',`## 製作規格`,`畫面 ${project.ratio}，${project.quality}p，${project.fps} FPS，共 ${P.duration(project).toFixed(2)} 秒。`,'配色：'+[...new Set(project.clips.flatMap(c=>[c.color,c.secondary,c.background]))].join('、'),'','## 分鏡'];
     project.clips.forEach((clip,i)=>{const m=metadata(clip.effect),row=rows[i];lines.push(`${i+1}. ${row.start.toFixed(2)}–${row.end.toFixed(2)} 秒｜${m.name}（${clip.effect}）｜${clip.text.replace(/\n/g,' / ')}\n   實作：assets/runtime/${m.source}。接下一幕：${i===project.clips.length-1?'結束':P.transitionNames[row.transition]+'，重疊 '+row.overlap.toFixed(2)+' 秒'}。`);});
+    for(const [i,c] of project.clips.entries())if(c.reference)lines.push(`場景 ${i+1} 使用 Motion Prompt #${c.reference.id} （${c.reference.kind}）；讀 references/motion-prompt.md 與 assets/runtime/reference-recipes.js，保留原版 ID 並說明改編。`);
     lines.push('','## 實作與驗證');
     if(mode==='website'||mode==='software')lines.push('參考 references/web-ui.md 與 assets/examples/software-ui/。保留主要內容的語意 HTML、鍵盤操作、焦點狀態與 prefers-reduced-motion；真實按鈕與標籤應由使用者操作觸發。Canvas 的手機、游標與程式視窗是示意畫面，不能冒充真實控制項。依現有專案框架改寫並清理動畫與事件監聽。');
     else lines.push('讀 references/video.md。使用 frame / fps 取得每格秒數；以 MotionProject.timeline() 分配時間與重疊。先交付可編輯 .motion.json 並執行 render.mjs --validate。具備 macOS App 與本機執行能力時才匯出 MP4；環境無法執行時，提供專案與必要步驟。1.4 支援圖層、關鍵格、內嵌圖片和 16 個 CC0 音效；先讀 references/layers-and-audio.md。尚未支援外部音樂、旁白、影片匯入或透明影片。');
     lines.push('圖層、關鍵影格與音效設定以專案 JSON 為準，讀 references/layers-and-audio.md。若含內嵌圖片，下方指令省略圖片資料，請同時提供原始 .motion.json，保留其中的 image data URI。');
     lines.push('保留使用者提供的數字與文案；標示並替換示意資料。不要宣稱完成尚未產生的影片。檢查首尾影格、轉場中點與完整播放。','使用下列 JSON 作為可編輯起點：','','```json',JSON.stringify(project,(key,value)=>key==='image'&&value?'':value,2),'```');return lines.join('\n');
   }
-  window.MotionLibrary={version:'1.4.2',stories,palettes,itemEffects,valueEffects,metadata,createStory,createPrompt};
+  window.MotionLibrary={version:'1.5.0',stories,palettes,itemEffects,valueEffects,metadata,createStory,createPrompt};
 })();

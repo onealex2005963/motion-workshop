@@ -1,6 +1,6 @@
 ---
 name: motion-workshop
-description: Reuse Motion Workshop's 40 Canvas/WebGL effects and 10 scene transitions when the user asks for animated websites, software UI motion, motion graphics, editable video scenes, or adaptations of this library. Includes editable text/shape/image layers, keyframe easing, 16 CC0 sounds, visual previews, runnable examples and deterministic frame rendering. 適用於網站動畫、軟體介面動效、影片分鏡、動畫效果選型與改寫。
+description: Reuse Motion Workshop's 184 Canvas/WebGL scene templates and 10 scene transitions when the user asks for animated websites, software UI motion, motion graphics, editable video scenes, or adaptations of this library. Includes a 144-entry offline Motion Prompt dictionary, 20 editable motion recipes, editable text/shape/image layers, keyframe easing, 16 CC0 sounds, visual previews, runnable examples and deterministic frame rendering. 適用於網站動畫、軟體介面動效、影片分鏡、動畫效果選型與改寫。
 license: MIT
 ---
 
@@ -14,7 +14,7 @@ Use the user's language. Prefer existing effects before introducing dependencies
 1. Read `assets/catalog.json`; select by actual ID, description and supported parameters. Open only the relevant `assets/previews/<id>.png` when visual comparison helps.
 2. Read `references/effect-breakdown.md` for the chosen technique. Its code pointers identify the original implementation; examples are patterns to adapt to the user's product, not finished product content.
 3. Choose the appropriate route:
-   - **Website:** `references/web-ui.md` and `assets/examples/website/index.html`. Copy the seven runtime scripts and the player controller; retain a readable HTML text alternative.
+   - **Website:** `references/web-ui.md` and `assets/examples/website/index.html`. Copy the nine runtime scripts and the player controller; retain a readable HTML text alternative.
    - **Interactive software UI:** `assets/examples/software-ui/index.html` and `references/web-ui.md`. Use real DOM controls, focus states and user actions. Canvas phone/cursor/tab templates are illustrative graphics, not functioning application controls.
    - **Video/editing:** `references/video.md`, `assets/project.schema.json` and `assets/examples/三幕轉場.motion.json`. Generate editable scene JSON and render using a supported local environment.
 4. Preserve user-provided labels and numerical values. The built-in numbers, phone and cards are illustrative placeholders. Use only supported parameters, or explicitly implement and test a runtime extension.
@@ -29,9 +29,13 @@ Use assets/create-project.mjs to list or generate them without dependencies. The
 
 For free composition, logos, animation paths or synchronized sound, read [layers-and-audio.md](references/layers-and-audio.md). New 1.4 optional fields extend project v2; older engines discard them. Reuse assets/examples/自由圖層與音效.motion.json and inspect the normalized output.
 
+## Motion names and selected references
+
+For Motion Prompt IDs, Japanese-reference techniques, a motion dictionary or an App-exported selection, read [motion-prompt.md](references/motion-prompt.md). Query the bundled offline CLI for exact specs and shared code. Use original samples or explicitly identified editable adaptations; preserve original IDs and upstream MIT notices.
+
 ## Runtime contract
 
-Load `assets/runtime/effects.js`, `effects-extra.js`, `effects-pro.js`, `layers.js`, `audio.js`, `engine.js`, then `library.js` in a DOM + Canvas browser. Globals are `MotionEffects` and `MotionProject`.
+Load `assets/runtime/effects.js`, `effects-extra.js`, `effects-pro.js`, `motion-reference.js`, `reference-templates.js`, `layers.js`, `audio.js`, `engine.js`, then `library.js` in a DOM + Canvas browser. Globals are `MotionEffects` and `MotionProject`.
 
 ```js
 const project = MotionProject.validate({

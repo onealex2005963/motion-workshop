@@ -1,6 +1,6 @@
 # Motion Workshop
 
-40 original Canvas/WebGL effects, 10 transitions, a portable Claude skill, runnable website and interactive UI examples, and an optional Traditional Chinese macOS editor. Offline, no API keys, CDN or npm dependencies. MIT licensed.
+184 Canvas/WebGL scene templates (40 original + 144 MIT Motion Prompt templates), 10 transitions, a portable Claude skill, runnable website and interactive UI examples, and an optional Traditional Chinese macOS editor. Offline, no API keys, CDN or npm dependencies. MIT licensed.
 
 Version 1.4 adds editable text/shape/image layers, draggable composition, 60 keyframes per layer, 7 easing curves, motion presets, embedded PNG/JPEG/WebP and 16 Kenney CC0 sounds with synchronized AAC export. See [customization API](.claude/skills/motion-workshop/references/layers-and-audio.md) and [sound credits](THIRD_PARTY.md).
 
@@ -24,12 +24,18 @@ Example prompt:
 
 ## Run examples
 
-Open `.claude/skills/motion-workshop/assets/examples/website/index.html` directly, or run `npm run demo` and visit http://127.0.0.1:4173. No `npm install`. The default route opens the full editor; `/examples/website/index.html` opens the standalone player. It includes all 40 effects, scrubbing and PNG export, plus a separate working DOM UI example.
+Open `.claude/skills/motion-workshop/assets/examples/website/index.html` directly, or run `npm run demo` and visit http://127.0.0.1:4173. No `npm install`. The default route opens the full editor; `/examples/website/index.html` opens the standalone player. It includes all 184 effects, scrubbing and PNG export, plus a separate working DOM UI example.
 
 ## Reuse
 
-Load `effects.js`, `effects-extra.js`, `effects-pro.js`, `layers.js`, `audio.js`, `engine.js`, then `library.js` from the skill's `assets/runtime/`. `MotionProject.render(project, frame / fps, canvas)` renders deterministic frames in a browser. Catalog parameters and full examples are in `assets/catalog.json`. See [the gallery](docs/GALLERY.md), [implementation breakdowns](.claude/skills/motion-workshop/references/effect-breakdown.md), [web/UI guide](.claude/skills/motion-workshop/references/web-ui.md) and [video guide](.claude/skills/motion-workshop/references/video.md). Reference guides are primarily in Traditional Chinese; Claude can explain them in your language.
+Load `effects.js`, `effects-extra.js`, `effects-pro.js`, `motion-reference.js`, `reference-templates.js`, `layers.js`, `audio.js`, `engine.js`, then `library.js` from the skill's `assets/runtime/`. `MotionProject.render(project, frame / fps, canvas)` renders deterministic frames in a browser. Catalog parameters and full examples are in `assets/catalog.json`. See [the gallery](docs/GALLERY.md), [implementation breakdowns](.claude/skills/motion-workshop/references/effect-breakdown.md), [web/UI guide](.claude/skills/motion-workshop/references/web-ui.md) and [video guide](.claude/skills/motion-workshop/references/video.md). Reference guides are primarily in Traditional Chinese; Claude can explain them in your language.
 
 The optional native app currently builds for Apple Silicon macOS using Xcode Command Line Tools: `./build.sh`. It exports H.264 with optional built-in AAC sound MP4 and editable project JSON. No external audio/video import, audio analysis, transparent video or editing-application plugin. Web runtime and Node validation are cross-platform; native MP4 export requires a logged-in macOS desktop. Native frameworks need a port of the technique rather than direct browser-script imports.
 
 `npm test` verifies the portable package; `npm run pack` creates ZIP archives. See [verification notes](docs/VERIFICATION.md). Independently implemented with conceptual inspiration from [RAR](https://rar.design/posts/pure-code-animation-claude-code-12-effects) and [Grenade](https://grenade.tw/blog/claude-motion-graphics/); no article media or source code is included.
+
+## Version 1.5: all 144 as usable scene templates
+
+Use the editor’s 144-template filter or insert a scene from the offline dictionary. Every template supports aspect ratio, custom title/subtitle overlays, speed, scale, contain/cover, loop/once, extra layers, transitions and MP4 export. Inner demo content retains its original design; 20 separate layer-based recipes provide full object/keyframe editing. Search in Traditional Chinese, English, Japanese or by ID, and export selected specs with per-effect notes for Claude.
+
+Motion Prompt by [Shohei Ohtaki](https://github.com/showheyohtaki/motion-prompt) is vendored under MIT, with pinned source hashes and original notices. UI/landing-page samples are Canvas illustrations, and photo samples illustrate styles rather than filtering imported photos. See the bundled [reference guide](.claude/skills/motion-workshop/references/motion-prompt.md) for the offline CLI and attribution.

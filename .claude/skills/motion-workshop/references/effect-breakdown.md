@@ -348,3 +348,7 @@ const y = targetY + (1 - progress) * 120;
 新增轉場：slide-up 垂直推移兩幕；diagonal 使用斜角三角形裁切；blur 在交疊中加入正弦模糊半徑；flash 在交疊中加入一次白光脈衝。首尾回到未變形的原始影格。
 
 每種轉場都有對應預覽 `assets/previews/transition-<id>.png`。時間軸先以整數影格分配重疊；詳見 [影片說明](video.md)。
+
+## 另有 144 個 Motion Prompt 套版
+
+mp-001 至 mp-144 的六類原始技法、精確規格、共用 kit 與授權，請讀 [Motion Prompt 指南](motion-prompt.md)。透過 motion-reference.mjs get/kit 取得指定程式，不要把原始示範與 20 個全圖層改編混為一談。
