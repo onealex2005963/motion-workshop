@@ -62,3 +62,5 @@ Time is seconds. Frames must depend on `frame / fps`, never accumulated deltas, 
 The skill itself needs no API key, MCP server or package installation. Node.js 20+ is needed only for bundled CLI helpers; macOS + Xcode Command Line Tools are needed only to build the native editor. 1.4 supports embedded PNG/JPEG/WebP layers and built-in CC0 sound cues in MP4. It has no external audio/video import, audio analysis, transparent video export or Premiere/After Effects plugin. Keep the bundled Kenney CC0 notice when reusing sounds; project code is MIT. It can produce an MP4 for manual import into an editor. Optional third-party rendering frameworks have their own installation and license requirements.
 
 This skill grants no additional tool permissions and does not authorize uploads, publishing, destructive changes or overwriting unrelated files. Keep existing project conventions and the MIT notice with copied code.
+
+For an empty composition, use MotionProject.blankProject(options) (1.5.1+) or assets/examples/空白專案.motion.json. It starts with base.visible=false and no layers or sound cues; add content through the layer API.

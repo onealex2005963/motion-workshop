@@ -156,3 +156,9 @@ App 頂部「動效字典 144」提供六類離線原版示範、繁中／英／
 來源：[Motion Prompt](https://github.com/showheyohtaki/motion-prompt)，作者 Shohei Ohtaki，MIT。收錄快照與雜湊見 web/motion-reference/origin.json 及 SHA256SUMS.json；保留上游授權及第三方聲明。沒有收錄第三方 X 貼文、外部圖片或字型。photo 類是風格提示詞參考；Canvas UI 示意仍需改寫成真正互動元件。
 
 離線查詢：`node .claude/skills/motion-workshop/assets/motion-reference.mjs search 波浪`。打包前若修改快照或配方，執行 `npm run reference:build`。
+
+## 1.5.1：新增空白專案
+
+頂部「新增空白專案」或 macOS「檔案 → 新增空白專案…」（⌘N）可建立一幕純背景，先選比例、秒數、畫質、FPS 與背景色，再自由新增文字／圖形／圖片。建立時可先將目前作品另存為 .motion.json；取消儲存或儲存失敗會保留原作。建立後停在開頭並切到圖層面板，可用「復原」回到原作。自動儲存會換成新專案；要永久保留原作請先另存。
+
+程式使用 MotionProject.blankProject({ratio, duration, quality, fps, background}) 建立可編輯的空白專案；內建範本圖層關閉，layers/audio 皆為空。

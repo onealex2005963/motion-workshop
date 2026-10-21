@@ -18,6 +18,10 @@
         transition:{type:types.includes(c.transition?.type)?c.transition.type:'crossfade',duration:bounded(c.transition?.duration,.1,1.5,.6)},base:{visible:c.base?.visible!==false,...L.transform(c.base||{})},layers:L.normalizeLayers(c.layers,duration,fps),audio:A.normalizeCues(c.audio,duration,fps) };
     })};
   }
+  function blankProject(options={}){
+    const clip={...defaultClip('gradient-mesh'),text:'',subtitle:'',duration:options.duration??5,background:options.background||'#10171c',base:{visible:false,...L.transform()},layers:[],audio:[]};
+    return validate({version:2,ratio:options.ratio,quality:options.quality,fps:options.fps,audio:{enabled:true,volume:.8},clips:[clip]});
+  }
   function timeline(project){
     const fps=project.fps;let start=0;
     return project.clips.map((clip,i)=>{
@@ -56,5 +60,5 @@
       default:c.drawImage(pair[0],0,0);c.globalAlpha=u;c.drawImage(pair[1],0,0);
     }c.restore();return state;
   }
-  window.MotionProject={version:2,transitionNames,transitionTypes:types,defaultClip,validate,timeline,duration,locate,render};
+  window.MotionProject={version:2,transitionNames,transitionTypes:types,defaultClip,blankProject,validate,timeline,duration,locate,render};
 })();

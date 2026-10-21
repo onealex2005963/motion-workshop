@@ -156,7 +156,26 @@
   };
   $('detail-prompt').onclick=()=>{$('detail-dialog').close();$('prompt-scope').value='scene';refreshPrompt();$('prompt-dialog').showModal();};
   function download(data,name,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000);}
-  $('save-project').onclick=async()=>{try{const data=JSON.stringify(project,null,2);if(bridge){const result=await native({type:'save',kind:'json',name:'我的動畫.motion.json',data});if(result.cancelled)return;}else download(data,'我的動畫.motion.json','application/json');notify('專案已儲存，之後可以重新開啟編輯。');}catch(e){notify('儲存失敗：'+e.message);}};
+  async function saveProject(){try{const data=JSON.stringify(project,null,2);if(bridge){const result=await native({type:'save',kind:'json',name:'我的動畫.motion.json',data});if(result.cancelled)return false;}else download(data,'我的動畫.motion.json','application/json');notify('專案已儲存，之後可以重新開啟編輯。');return true;}catch(e){notify('儲存失敗：'+e.message);return false;}}
+  $('save-project').onclick=saveProject;
+  let creatingBlank=false;
+  $('new-project').onclick=()=>{
+    if(exporting||creatingBlank||document.querySelector('dialog[open]'))return;
+    setPlaying(false);document.querySelector('[name="blank-ratio"][value="'+project.ratio+'"]').checked=true;$('blank-quality').value=project.quality;$('blank-fps').value=project.fps;$('blank-duration').value=5;$('blank-background').value='#10171c';$('blank-error').textContent='';$('new-project-dialog').showModal();
+  };
+  async function createBlank(saveFirst){
+    if(exporting||creatingBlank||!$('new-project-dialog').open)return;
+    if(!$('blank-duration').reportValidity())return;
+    const next=Engine.blankProject({ratio:document.querySelector('[name="blank-ratio"]:checked').value,quality:Number($('blank-quality').value),fps:Number($('blank-fps').value),duration:Number($('blank-duration').value),background:$('blank-background').value});
+    creatingBlank=true;for(const id of ['create-blank','save-create-blank','cancel-new-project'])$(id).disabled=true;
+    const dialog=$('new-project-dialog'),preventCancel=e=>e.preventDefault();dialog.addEventListener('cancel',preventCancel);
+    try{
+      if(saveFirst&&!await saveProject()){$('blank-error').textContent='尚未儲存，因此保留目前作品。你可以重新儲存或取消新增。';return;}
+      remember();project=next;selected=0;time=0;setPlaying(false);dialog.close();updateAll();saveSoon();document.querySelector('[data-inspector-tab="layers"]').click();notify('已建立空白專案。可新增圖層、匯入圖片或套用效果；按復原可回到原作品。');
+    }catch(e){$('blank-error').textContent='建立失敗：'+e.message;}
+    finally{creatingBlank=false;dialog.removeEventListener('cancel',preventCancel);for(const id of ['create-blank','save-create-blank','cancel-new-project'])$(id).disabled=false;}
+  }
+  $('create-blank').onclick=()=>createBlank(false);$('save-create-blank').onclick=()=>createBlank(true);$('cancel-new-project').onclick=()=>$('new-project-dialog').close();
   async function loadData(data){const next=validate(JSON.parse(data));await window.MotionLayers.prepare(next);project=next;selected=0;time=0;updateAll();saveSoon();notify('專案已開啟。');}
   $('open-project').onclick=async()=>{try{if(bridge){const result=await native({type:'openProject'});if(!result.cancelled)await loadData(result.data);}else $('project-file').click();}catch(e){notify('開啟失敗：'+e.message);}};
   $('project-file').onchange=async e=>{try{if(e.target.files[0]){if(e.target.files[0].size>=20000000)throw new Error('專案需小於 20 MB。');await loadData(await e.target.files[0].text());}}catch(e){notify(e.message);}finally{e.target.value='';}};
@@ -186,7 +205,7 @@
   };
   $('help').onclick=()=>$('help-dialog').showModal();$('close-help').onclick=()=>$('help-dialog').close();
   $('source-link').onclick=()=>{const url='https://rar.design/posts/pure-code-animation-claude-code-12-effects';if(bridge)native({type:'source'});else window.open(url,'_blank','noopener');};
-  document.addEventListener('keydown',e=>{const editing=/INPUT|TEXTAREA|SELECT/.test(e.target.tagName),dialogOpen=!!document.querySelector('dialog[open]');if(e.code==='Space'&&!editing&&!dialogOpen&&!exporting){e.preventDefault();setPlaying(!playing);}if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'&&!editing&&!dialogOpen){e.preventDefault();restoreHistory(e.shiftKey?1:-1);}if((e.metaKey||e.ctrlKey)&&e.key==='s'&&!dialogOpen){e.preventDefault();if(!exporting)$('save-project').click();}});
+  document.addEventListener('keydown',e=>{const editing=/INPUT|TEXTAREA|SELECT/.test(e.target.tagName),dialogOpen=!!document.querySelector('dialog[open]');if(e.code==='Space'&&!editing&&!dialogOpen&&!exporting){e.preventDefault();setPlaying(!playing);}if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'&&!editing&&!dialogOpen){e.preventDefault();restoreHistory(e.shiftKey?1:-1);}if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='n'&&!dialogOpen){e.preventDefault();$('new-project').click();}if((e.metaKey||e.ctrlKey)&&e.key==='s'&&!dialogOpen){e.preventDefault();if(!exporting)$('save-project').click();}});
   window.addEventListener('resize',resizePreview);
   window.addEventListener('error',e=>{console.error(e.error||e.message);notify('畫面發生錯誤，請重新開啟 App。');});
   async function boot(){try{let saved;if(bridge)saved=(await native({type:'loadAutosave'})).data;else saved=localStorage.getItem('motion-workshop-project');if(saved)project=validate(JSON.parse(saved));}catch(e){notify('先前專案無法載入，已建立新專案。');}if(bridge)try{const prefs=await native({type:'loadPreferences'});if(Array.isArray(prefs.favorites))favorites=new Set(prefs.favorites.filter(id=>E.definitions.some(e=>e.id===id)));}catch{notify('收藏設定暫時無法載入。');}try{await window.MotionLayers.prepare(project);}catch(e){notify(e.message);}remember();updateAll();setPlaying(playing);requestAnimationFrame(animate);}

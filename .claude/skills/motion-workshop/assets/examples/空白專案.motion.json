@@ -1,0 +1,53 @@
+{
+  "version": 2,
+  "ratio": "16:9",
+  "quality": 720,
+  "fps": 30,
+  "audio": {
+    "enabled": true,
+    "volume": 0.8
+  },
+  "clips": [
+    {
+      "effect": "gradient-mesh",
+      "text": "",
+      "subtitle": "",
+      "color": "#d8f36a",
+      "secondary": "#a59bff",
+      "background": "#10171c",
+      "speed": 1,
+      "size": 1,
+      "amount": 50,
+      "duration": 5,
+      "items": [
+        "靈感",
+        "創作",
+        "分享",
+        "可能"
+      ],
+      "values": [
+        35,
+        70,
+        55,
+        90
+      ],
+      "value": 100,
+      "suffix": "",
+      "bpm": 120,
+      "transition": {
+        "type": "crossfade",
+        "duration": 0.6
+      },
+      "base": {
+        "visible": false,
+        "x": 50,
+        "y": 50,
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1
+      },
+      "layers": [],
+      "audio": []
+    }
+  ]
+}

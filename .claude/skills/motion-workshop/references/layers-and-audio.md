@@ -81,3 +81,7 @@ node assets/render-audio.mjs --project project.motion.json --output sound.wav
 ## 驗證
 
 先 `node assets/render.mjs --project project.motion.json --validate`，核對正規化後的圖層、圖片與音效。檢查起點、關鍵格、中間插值、轉場兩側、圖片比例及 MP4 的實際音軌與聲音時間。無法執行時交付專案與必要步驟，勿宣稱完成有聲影片。
+
+## 從空白專案開始（1.5.1）
+
+MotionProject.blankProject({ratio: "9:16", duration: 5, quality: 1080, fps: 30, background: "#10171c"}) 回傳一幕沒有文字、圖層或音效的有效專案；base.visible=false。可在 clips[0].layers 依既有格式加入內容。App 使用「新增空白專案」或 ⌘N，會切到圖層面板並停在開頭；可先儲存原作，或建立後復原。

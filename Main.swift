@@ -175,6 +175,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
         let menu = NSMenu(); let appItem = NSMenuItem(); menu.addItem(appItem)
         let appMenu = NSMenu(); appMenu.addItem(withTitle: "關於\(appName)", action: #selector(showAbout), keyEquivalent: "")
         appMenu.addItem(.separator()); appMenu.addItem(withTitle: "結束\(appName)", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"); appItem.submenu = appMenu
+        let fileItem = NSMenuItem(); menu.addItem(fileItem); let fileMenu = NSMenu(title: "檔案")
+        fileMenu.addItem(withTitle: "新增空白專案…", action: #selector(newBlankProject), keyEquivalent: "n").target = self
+        fileItem.submenu = fileMenu
         let editItem = NSMenuItem(); menu.addItem(editItem); let editMenu = NSMenu(title: "編輯")
         for (title,selector,key) in [("復原","undo:","z"),("重做","redo:","Z"),("剪下","cut:","x"),("複製","copy:","c"),("貼上","paste:","v"),("全選","selectAll:","a")] { editMenu.addItem(withTitle: title, action: Selector(selector), keyEquivalent: key) }; editItem.submenu = editMenu; NSApp.mainMenu = menu
         let config = WKWebViewConfiguration(); config.websiteDataStore = .nonPersistent()
@@ -201,7 +204,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
         if batchProject != nil && !batchCompleted { completeBatch(["ok":false,"error":"使用者已關閉自動輸出視窗，影片匯出取消。"]); }
         encodeQueue.sync { encoder?.cancel(); encoder = nil }; return .terminateNow
     }
-    @objc func showAbout() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:appName,.applicationVersion:Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "1.5.0",.credits:NSAttributedString(string:"184 個場景效果 · 144 項動效字典 · 20 組圖層配方 · 10 種場景交接 · 16 種 CC0 音效 · 繁體中文\nClaude 效果工具包 · 離線製作\n靈感來源：RAR 設計攻略、Grenade 手榴彈\n原創效果與整合由小工坊實作；Motion Prompt 原版作者 Shohei Ohtaki，MIT 授權。")]) }
+    @objc func newBlankProject() { web?.evaluateJavaScript("document.getElementById('new-project')?.click()", completionHandler:nil) }
+    @objc func showAbout() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:appName,.applicationVersion:Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "1.5.1",.credits:NSAttributedString(string:"184 個場景效果 · 144 項動效字典 · 20 組圖層配方 · 10 種場景交接 · 16 種 CC0 音效 · 繁體中文\nClaude 效果工具包 · 離線製作\n靈感來源：RAR 設計攻略、Grenade 手榴彈\n原創效果與整合由小工坊實作；Motion Prompt 原版作者 Shohei Ohtaki，MIT 授權。")]) }
     func webView(_ webView: WKWebView, decidePolicyFor action: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = action.request.url, url.isFileURL, url.standardizedFileURL.path.hasPrefix(bundledWeb.path + "/") else { decisionHandler(.cancel); return }; decisionHandler(.allow)
     }
@@ -258,7 +262,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
     }
     func checkQueue() {
         if Date().timeIntervalSince(lastHeartbeat)>3 {
-            let heartbeat:[String:Any]=["active":true,"updatedAt":Date().timeIntervalSince1970,"version":Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "1.5.0"]
+            let heartbeat:[String:Any]=["active":true,"updatedAt":Date().timeIntervalSince1970,"version":Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "1.5.1"]
             if let data=try? JSONSerialization.data(withJSONObject:heartbeat){try? data.write(to:jobsURL.appendingPathComponent("heartbeat.json"),options:.atomic)};lastHeartbeat=Date()
         }
         guard queueJob == nil, !exportPanelOpen, encodeQueue.sync(execute:{encoder == nil}), let entries=try? fm.contentsOfDirectory(at:jobsURL,includingPropertiesForKeys:[.isSymbolicLinkKey,.isDirectoryKey]) else { return }

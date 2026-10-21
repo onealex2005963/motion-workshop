@@ -16,6 +16,14 @@ for(const file of ["effects.js","effects-extra.js","effects-pro.js","motion-refe
   vm.runInContext(code,context,{filename:file});
 }
 const E=context.window.MotionEffects,P=context.window.MotionProject,catalog=await parse(path.join(assets,'catalog.json'));
+for(const ratio of ['16:9','9:16','1:1'])for(const fps of [30,60])for(const quality of [720,1080]){
+  const blank=P.blankProject({ratio,fps,quality,duration:3.2,background:'#abcdef'}),clip=blank.clips[0];
+  assert.equal(blank.ratio,ratio);assert.equal(blank.fps,fps);assert.equal(blank.quality,quality);assert.equal(blank.clips.length,1);
+  assert.equal(P.duration(blank),3.2);assert.equal(clip.base.visible,false);assert.equal(clip.text,'');assert.equal(clip.subtitle,'');assert.equal(clip.background,'#abcdef');
+  assert.equal(clip.layers.length,0);assert.equal(clip.audio.length,0);assert.equal(P.validate(JSON.parse(JSON.stringify(blank))).clips[0].base.visible,false);
+  blank.clips[0].layers.push(context.window.MotionLayers.defaultLayer('text'));assert.equal(P.validate(blank).clips[0].layers.length,1);
+}
+assert.equal(P.blankProject().clips[0].duration,5);assert.equal(P.blankProject({duration:100}).clips[0].duration,20);
 const ids=catalog.effects.map(e=>e.id);assert.equal(ids.length,184);assert.equal(new Set(ids).size,184);
 assert.deepEqual([...E.definitions.map(e=>e.id)],ids);
 const schema=await parse(path.join(assets,'project.schema.json'));

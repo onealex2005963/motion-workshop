@@ -1,6 +1,6 @@
 {
   "name": "motion-workshop",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "private": true,
   "description": "Offline motion editor with 184 scene templates (40 original + 144 Motion Prompt), editable layers, deterministic keyframes, 16 CC0 sounds, Claude skill and macOS MP4 export.",
   "license": "MIT",
