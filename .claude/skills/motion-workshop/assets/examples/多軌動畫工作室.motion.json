@@ -1,0 +1,351 @@
+{
+  "version": 2,
+  "ratio": "16:9",
+  "quality": 720,
+  "fps": 30,
+  "audio": {
+    "enabled": true,
+    "volume": 0.8
+  },
+  "clips": [
+    {
+      "effect": "gradient-mesh",
+      "text": "",
+      "subtitle": "",
+      "color": "#d8f36a",
+      "secondary": "#a59bff",
+      "background": "#10171c",
+      "speed": 1,
+      "size": 1,
+      "amount": 50,
+      "duration": 6,
+      "items": [
+        "靈感",
+        "創作",
+        "分享",
+        "可能"
+      ],
+      "values": [
+        35,
+        70,
+        55,
+        90
+      ],
+      "value": 100,
+      "suffix": "",
+      "bpm": 120,
+      "transition": {
+        "type": "crossfade",
+        "duration": 0.6
+      },
+      "base": {
+        "visible": false,
+        "x": 50,
+        "y": 50,
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1
+      },
+      "layers": [
+        {
+          "id": "layer-0",
+          "name": "星形標誌",
+          "type": "star",
+          "visible": true,
+          "locked": false,
+          "text": "你的文字",
+          "fill": "#d8f36a",
+          "stroke": "#ffffff",
+          "strokeWidth": 0,
+          "width": 20,
+          "height": 35,
+          "radius": 18,
+          "fontSize": 7,
+          "fontFamily": "sans",
+          "weight": 700,
+          "align": "center",
+          "blend": "source-over",
+          "start": 0,
+          "end": 5.7,
+          "transform": {
+            "x": 28,
+            "y": 48,
+            "scale": 1,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "keyframes": [],
+          "tracks": {
+            "rotation": [
+              {
+                "time": 1,
+                "value": 0,
+                "easing": "ease-in-out"
+              },
+              {
+                "time": 4.7,
+                "value": 180,
+                "easing": "cubic",
+                "curve": [
+                  0.3,
+                  0,
+                  0.2,
+                  1
+                ]
+              }
+            ]
+          },
+          "motions": [
+            {
+              "id": "motion-0",
+              "preset": "pop",
+              "start": 0.2,
+              "duration": 0.7,
+              "strength": 1,
+              "direction": "up",
+              "repeat": 1,
+              "easing": "back",
+              "curve": [
+                0.25,
+                0.1,
+                0.25,
+                1
+              ],
+              "enabled": true
+            },
+            {
+              "id": "motion-1",
+              "preset": "float",
+              "start": 1,
+              "duration": 3.8,
+              "strength": 1,
+              "direction": "up",
+              "repeat": 2,
+              "easing": "ease-out",
+              "curve": [
+                0.25,
+                0.1,
+                0.25,
+                1
+              ],
+              "enabled": true
+            },
+            {
+              "id": "motion-2",
+              "preset": "shrink",
+              "start": 5,
+              "duration": 0.7,
+              "strength": 1,
+              "direction": "up",
+              "repeat": 1,
+              "easing": "ease-out",
+              "curve": [
+                0.25,
+                0.1,
+                0.25,
+                1
+              ],
+              "enabled": true
+            }
+          ],
+          "scaleX": 1,
+          "scaleY": 1,
+          "anchorX": 50,
+          "anchorY": 50,
+          "sides": 5,
+          "innerRadius": 0.45,
+          "fillMode": "linear",
+          "fillSecondary": "#ff805a",
+          "gradientAngle": 35,
+          "dash": 0,
+          "image": ""
+        },
+        {
+          "id": "layer-1",
+          "name": "獨立標題",
+          "type": "text",
+          "visible": true,
+          "locked": false,
+          "text": "自由編排，讓想法動起來",
+          "fill": "#d8f36a",
+          "stroke": "#ffffff",
+          "strokeWidth": 0,
+          "width": 52,
+          "height": 16,
+          "radius": 18,
+          "fontSize": 6,
+          "fontFamily": "sans",
+          "weight": 700,
+          "align": "center",
+          "blend": "source-over",
+          "start": 0,
+          "end": 6,
+          "transform": {
+            "x": 64,
+            "y": 40,
+            "scale": 1,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "keyframes": [],
+          "tracks": {
+            "fill": [
+              {
+                "time": 1.3,
+                "value": "#d8f36a",
+                "easing": "ease-in-out"
+              },
+              {
+                "time": 4.5,
+                "value": "#a59bff",
+                "easing": "linear"
+              }
+            ]
+          },
+          "motions": [
+            {
+              "id": "motion-0",
+              "preset": "slide",
+              "start": 0.5,
+              "duration": 0.8,
+              "strength": 1,
+              "direction": "left",
+              "repeat": 1,
+              "easing": "ease-out",
+              "curve": [
+                0.25,
+                0.1,
+                0.25,
+                1
+              ],
+              "enabled": true
+            },
+            {
+              "id": "motion-1",
+              "preset": "fade-out",
+              "start": 5.2,
+              "duration": 0.8,
+              "strength": 1,
+              "direction": "up",
+              "repeat": 1,
+              "easing": "ease-out",
+              "curve": [
+                0.25,
+                0.1,
+                0.25,
+                1
+              ],
+              "enabled": true
+            }
+          ],
+          "scaleX": 1,
+          "scaleY": 1,
+          "anchorX": 50,
+          "anchorY": 50,
+          "sides": 5,
+          "innerRadius": 0.45,
+          "fillMode": "solid",
+          "fillSecondary": "#a59bff",
+          "gradientAngle": 90,
+          "dash": 0,
+          "image": ""
+        },
+        {
+          "id": "layer-2",
+          "name": "說明小字",
+          "type": "text",
+          "visible": true,
+          "locked": false,
+          "text": "多軌時間軸 × 可組合動作 × 自訂形狀",
+          "fill": "#d8f36a",
+          "stroke": "#ffffff",
+          "strokeWidth": 0,
+          "width": 55,
+          "height": 20,
+          "radius": 18,
+          "fontSize": 2.6,
+          "fontFamily": "sans",
+          "weight": 700,
+          "align": "center",
+          "blend": "source-over",
+          "start": 0,
+          "end": 6,
+          "transform": {
+            "x": 65,
+            "y": 58,
+            "scale": 1,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "keyframes": [],
+          "tracks": {},
+          "motions": [
+            {
+              "id": "motion-0",
+              "preset": "rise",
+              "start": 1,
+              "duration": 0.8,
+              "strength": 1,
+              "direction": "up",
+              "repeat": 1,
+              "easing": "ease-out",
+              "curve": [
+                0.25,
+                0.1,
+                0.25,
+                1
+              ],
+              "enabled": true
+            },
+            {
+              "id": "motion-1",
+              "preset": "fade-out",
+              "start": 5,
+              "duration": 0.8,
+              "strength": 1,
+              "direction": "up",
+              "repeat": 1,
+              "easing": "ease-out",
+              "curve": [
+                0.25,
+                0.1,
+                0.25,
+                1
+              ],
+              "enabled": true
+            }
+          ],
+          "scaleX": 1,
+          "scaleY": 1,
+          "anchorX": 50,
+          "anchorY": 50,
+          "sides": 5,
+          "innerRadius": 0.45,
+          "fillMode": "solid",
+          "fillSecondary": "#a59bff",
+          "gradientAngle": 90,
+          "dash": 0,
+          "image": ""
+        }
+      ],
+      "audio": [
+        {
+          "sound": "expand",
+          "time": 0.2,
+          "volume": 0.6,
+          "rate": 1,
+          "fadeIn": 0,
+          "fadeOut": 0.05
+        },
+        {
+          "sound": "confirm",
+          "time": 1.3,
+          "volume": 0.5,
+          "rate": 1,
+          "fadeIn": 0,
+          "fadeOut": 0.08
+        }
+      ]
+    }
+  ]
+}

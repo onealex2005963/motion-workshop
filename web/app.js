@@ -20,7 +20,7 @@
   const tc=seconds=>`${String(Math.floor(seconds/60)).padStart(2,'0')}:${(seconds%60).toFixed(1).padStart(4,'0')}`;
   function notify(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,3800);}
   function locate(t){return Engine.locate(project,t);}
-  function renderAt(t,target=canvas){const result=Engine.render(project,t,target);if(target===canvas)document.dispatchEvent(new CustomEvent('workshop-frame'));return result;}
+  function renderAt(t,target=canvas){const result=Engine.render(project,t,target);if(target===canvas){$('scrubber').value=t;$('timecode').innerHTML=`${tc(t)} <em>/ ${tc(total())}</em>`;document.dispatchEvent(new CustomEvent('workshop-frame'));}return result;}
   function historyUI(){$('undo').disabled=historyIndex<1;$('redo').disabled=historyIndex>=history.length-1;}
   function remember(){const data=JSON.stringify(project);if(history[historyIndex]===data)return;history=history.slice(0,historyIndex+1);history.push(data);while(history.length>2&&(history.length>80||history.reduce((sum,item)=>sum+item.length,0)>40000000))history.shift();historyIndex=history.length-1;historyUI();}
   function restoreHistory(delta){const next=historyIndex+delta;if(exporting||next<0||next>=history.length)return;historyIndex=next;project=Engine.validate(JSON.parse(history[next]));selected=Math.min(selected,project.clips.length-1);time=Math.min(time,total());setPlaying(false);updateAll();saveSoon(false);historyUI();}

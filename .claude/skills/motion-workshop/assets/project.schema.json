@@ -366,7 +366,7 @@
           },
           "layers": {
             "type": "array",
-            "maxItems": 12,
+            "maxItems": 32,
             "items": {
               "type": "object",
               "additionalProperties": false,
@@ -385,7 +385,11 @@
                     "rect",
                     "ellipse",
                     "line",
-                    "image"
+                    "image",
+                    "triangle",
+                    "polygon",
+                    "star",
+                    "arrow"
                   ]
                 },
                 "visible": {
@@ -508,7 +512,7 @@
                 },
                 "keyframes": {
                   "type": "array",
-                  "maxItems": 60,
+                  "maxItems": 1201,
                   "items": {
                     "type": "object",
                     "additionalProperties": false,
@@ -551,14 +555,725 @@
                           "ease-in-out",
                           "back",
                           "bounce",
-                          "step"
+                          "step",
+                          "cubic"
                         ]
+                      },
+                      "curve": {
+                        "type": "array",
+                        "minItems": 4,
+                        "maxItems": 4,
+                        "items": {
+                          "type": "number",
+                          "minimum": -3,
+                          "maximum": 3
+                        }
                       }
                     },
                     "required": [
                       "time"
                     ]
                   }
+                },
+                "tracks": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "x": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "number",
+                            "minimum": -100,
+                            "maximum": 200
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "y": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "number",
+                            "minimum": -100,
+                            "maximum": 200
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "scale": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 5
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "scaleX": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 5
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "scaleY": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 5
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "rotation": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "number",
+                            "minimum": -10800,
+                            "maximum": 10800
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "opacity": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "width": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "number",
+                            "minimum": 1,
+                            "maximum": 200
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "height": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "number",
+                            "minimum": 1,
+                            "maximum": 200
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "strokeWidth": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 30
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "radius": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "fill": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "string",
+                            "pattern": "^#[a-fA-F0-9]{6}$"
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "motions": {
+                  "type": "array",
+                  "maxItems": 12,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "preset",
+                      "start",
+                      "duration"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "maxLength": 64
+                      },
+                      "preset": {
+                        "enum": [
+                          "rise",
+                          "slide",
+                          "pop",
+                          "spin",
+                          "fade",
+                          "zoom",
+                          "drop",
+                          "float",
+                          "pulse",
+                          "wiggle",
+                          "orbit",
+                          "spin-loop",
+                          "fade-out",
+                          "slide-out",
+                          "shrink",
+                          "spin-out"
+                        ]
+                      },
+                      "start": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 20
+                      },
+                      "duration": {
+                        "type": "number",
+                        "exclusiveMinimum": 0,
+                        "maximum": 20
+                      },
+                      "strength": {
+                        "type": "number",
+                        "minimum": 0.1,
+                        "maximum": 3
+                      },
+                      "direction": {
+                        "enum": [
+                          "up",
+                          "down",
+                          "left",
+                          "right"
+                        ]
+                      },
+                      "repeat": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 20
+                      },
+                      "easing": {
+                        "enum": [
+                          "linear",
+                          "ease-in",
+                          "ease-out",
+                          "ease-in-out",
+                          "back",
+                          "bounce",
+                          "step",
+                          "cubic"
+                        ]
+                      },
+                      "curve": {
+                        "type": "array",
+                        "minItems": 4,
+                        "maxItems": 4,
+                        "items": {
+                          "type": "number",
+                          "minimum": -3,
+                          "maximum": 3
+                        }
+                      },
+                      "enabled": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                "scaleX": {
+                  "type": "number",
+                  "minimum": 0.05,
+                  "maximum": 5
+                },
+                "scaleY": {
+                  "type": "number",
+                  "minimum": 0.05,
+                  "maximum": 5
+                },
+                "anchorX": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "anchorY": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "innerRadius": {
+                  "type": "number",
+                  "minimum": 0.1,
+                  "maximum": 0.9
+                },
+                "gradientAngle": {
+                  "type": "number",
+                  "minimum": -360,
+                  "maximum": 360
+                },
+                "dash": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 40
+                },
+                "sides": {
+                  "type": "integer",
+                  "minimum": 3,
+                  "maximum": 12
+                },
+                "fillMode": {
+                  "enum": [
+                    "solid",
+                    "linear",
+                    "radial"
+                  ]
+                },
+                "fillSecondary": {
+                  "type": "string",
+                  "pattern": "^#[a-fA-F0-9]{6}$"
                 }
               },
               "required": [

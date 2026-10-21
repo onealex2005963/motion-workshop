@@ -1,5 +1,13 @@
 # Motion Workshop
 
+## 2.0 multitrack animation studio
+
+Open Layers / Motion to reveal the scene-local timeline. Insert the multitrack demo to start with editable content. Drag layer intervals, motion segments, keyframes and sound cues; adjust zoom, height and snapping.
+
+Includes 12 independently keyed properties, auto-key, cubic easing, key copy/paste, 16 composable entrance/loop/exit presets, local motion bundles and frame-accurate baking. Up to 32 layers per scene; nine layer types, anchors, nonuniform scale, gradients, dashed strokes, multiple selection, alignment and canvas transform handles. Existing 184 scene templates, 10 transitions and 16 CC0 sounds remain available.
+
+Read [the timeline contract](.claude/skills/motion-workshop/references/timeline-and-motions.md) and use the bundled multitrack project example. Project version remains 2; use the bundled 2.0 runtime to retain new fields. Pen nodes, arbitrary SVG import, custom masks, groups and external audio/video import are future work.
+
 184 Canvas/WebGL scene templates (40 original + 144 MIT Motion Prompt templates), 10 transitions, a portable Claude skill, runnable website and interactive UI examples, and an optional Traditional Chinese macOS editor. Offline, no API keys, CDN or npm dependencies. MIT licensed.
 
 Version 1.4 adds editable text/shape/image layers, draggable composition, 60 keyframes per layer, 7 easing curves, motion presets, embedded PNG/JPEG/WebP and 16 Kenney CC0 sounds with synchronized AAC export. See [customization API](.claude/skills/motion-workshop/references/layers-and-audio.md) and [sound credits](THIRD_PARTY.md).

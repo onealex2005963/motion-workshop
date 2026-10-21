@@ -64,9 +64,9 @@
     for(const [i,c] of project.clips.entries())if(c.reference)lines.push(`場景 ${i+1} 使用 Motion Prompt #${c.reference.id} （${c.reference.kind}）；讀 references/motion-prompt.md 與 assets/runtime/reference-recipes.js，保留原版 ID 並說明改編。`);
     lines.push('','## 實作與驗證');
     if(mode==='website'||mode==='software')lines.push('參考 references/web-ui.md 與 assets/examples/software-ui/。保留主要內容的語意 HTML、鍵盤操作、焦點狀態與 prefers-reduced-motion；真實按鈕與標籤應由使用者操作觸發。Canvas 的手機、游標與程式視窗是示意畫面，不能冒充真實控制項。依現有專案框架改寫並清理動畫與事件監聽。');
-    else lines.push('讀 references/video.md。使用 frame / fps 取得每格秒數；以 MotionProject.timeline() 分配時間與重疊。先交付可編輯 .motion.json 並執行 render.mjs --validate。具備 macOS App 與本機執行能力時才匯出 MP4；環境無法執行時，提供專案與必要步驟。1.4 支援圖層、關鍵格、內嵌圖片和 16 個 CC0 音效；先讀 references/layers-and-audio.md。尚未支援外部音樂、旁白、影片匯入或透明影片。');
-    lines.push('圖層、關鍵影格與音效設定以專案 JSON 為準，讀 references/layers-and-audio.md。若含內嵌圖片，下方指令省略圖片資料，請同時提供原始 .motion.json，保留其中的 image data URI。');
+    else lines.push('讀 references/video.md。使用 frame / fps 取得每格秒數；以 MotionProject.timeline() 分配時間與重疊。先交付可編輯 .motion.json 並執行 render.mjs --validate。具備 macOS App 與本機執行能力時才匯出 MP4；環境無法執行時，提供專案與必要步驟。2.0 支援多軌時間軸、獨立屬性關鍵格、動作片段、9 種圖層與 16 個 CC0 音效；先讀 references/timeline-and-motions.md 與 references/layers-and-audio.md。尚未支援外部音樂、旁白、影片匯入或透明影片。');
+    lines.push('圖層、tracks 獨立關鍵影格、motions 動作片段與音效設定以專案 JSON 為準，讀 references/timeline-and-motions.md 與 references/layers-and-audio.md。動作疊加於手動軌道，請勿用套版覆蓋使用者的調整。若含內嵌圖片，下方指令省略圖片資料，請同時提供原始 .motion.json，保留其中的 image data URI。');
     lines.push('保留使用者提供的數字與文案；標示並替換示意資料。不要宣稱完成尚未產生的影片。檢查首尾影格、轉場中點與完整播放。','使用下列 JSON 作為可編輯起點：','','```json',JSON.stringify(project,(key,value)=>key==='image'&&value?'':value,2),'```');return lines.join('\n');
   }
-  window.MotionLibrary={version:'1.5.1',stories,palettes,itemEffects,valueEffects,metadata,createStory,createPrompt};
+  window.MotionLibrary={version:'2.0.0',stories,palettes,itemEffects,valueEffects,metadata,createStory,createPrompt};
 })();

@@ -68,3 +68,7 @@ MotionEffects.render(ctx, width, height, seconds, MotionProject.defaultClip('car
 ## 144 套版與 20 組可編輯配方
 
 使用 mp-001 至 mp-144 作為 effect，查 catalog 與 previews；可調 referenceTemplate: {fit: "contain" | "cover", labels: true | false, loop: true | false}，以及共用 text/subtitle/speed/size/background。原示範內部的內容不會由 text 自動替換，自訂標題為額外覆蓋。用現有圖層加上 Logo、照片或更多文字。MotionReference 的 template/get/kit/create CLI 詳見 ../references/motion-prompt.md。一般雲端 Claude 需要整份 ZIP，不能只提供本機路徑。
+
+## 2.0 多軌工作室
+
+先讀 ../references/timeline-and-motions.md 與 examples/多軌動畫工作室.motion.json。每幕 32 層，tracks 支援 12 種獨立屬性（含填色），motions 支援 16 種可疊加動作；動作保留手動關鍵格。九種圖層、錨點、非等比縮放、漸層、多邊形與星形參數皆由 JSON 決定。project.version 仍為 2，需使用 2.0 runtime；9 個 runtime 載入順序不變。

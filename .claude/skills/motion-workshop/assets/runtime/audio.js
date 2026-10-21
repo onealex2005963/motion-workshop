@@ -69,5 +69,6 @@
     const ctx=audioContext();await ctx.resume();const samples=await load(sound),buffer=ctx.createBuffer(1,samples.length,rate);buffer.copyToChannel(samples,0);
     if(audition){try{audition.stop();}catch{}audition.disconnect();}audition=ctx.createBufferSource();audition.buffer=buffer;const gain=ctx.createGain();gain.gain.value=.65;audition.connect(gain);gain.connect(ctx.destination);audition.onended=()=>gain.disconnect();audition.start();
   }
-  window.MotionAudio={sounds,sampleRate:rate,normalizeCues,events,mix,renderMix,wav,exportBase64,createPlayer,preview,unlock:()=>audioContext().resume(),setLoader(fn){loader=fn;cache.clear();}};
+  async function waveform(sound,bins=80){const samples=await load(sound),count=Math.max(16,Math.min(512,Math.round(bins))),peaks=[];for(let i=0;i<count;i++){let peak=0;const from=Math.floor(i/count*samples.length),to=Math.max(from+1,Math.floor((i+1)/count*samples.length));for(let j=from;j<to&&j<samples.length;j++)peak=Math.max(peak,Math.abs(samples[j]));peaks.push(peak);}const max=Math.max(.001,...peaks);return{duration:samples.length/rate,peaks:peaks.map(p=>p/max)};}
+  window.MotionAudio={waveform,sounds,sampleRate:rate,normalizeCues,events,mix,renderMix,wav,exportBase64,createPlayer,preview,unlock:()=>audioContext().resume(),setLoader(fn){loader=fn;cache.clear();}};
 })();

@@ -205,7 +205,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
         encodeQueue.sync { encoder?.cancel(); encoder = nil }; return .terminateNow
     }
     @objc func newBlankProject() { web?.evaluateJavaScript("document.getElementById('new-project')?.click()", completionHandler:nil) }
-    @objc func showAbout() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:appName,.applicationVersion:Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "1.5.1",.credits:NSAttributedString(string:"184 個場景效果 · 144 項動效字典 · 20 組圖層配方 · 10 種場景交接 · 16 種 CC0 音效 · 繁體中文\nClaude 效果工具包 · 離線製作\n靈感來源：RAR 設計攻略、Grenade 手榴彈\n原創效果與整合由小工坊實作；Motion Prompt 原版作者 Shohei Ohtaki，MIT 授權。")]) }
+    @objc func showAbout() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:appName,.applicationVersion:Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "2.0.0",.credits:NSAttributedString(string:"184 個場景效果 · 144 項動效字典 · 20 組圖層配方 · 10 種場景交接 · 16 種 CC0 音效 · 繁體中文\nClaude 效果工具包 · 離線製作\n靈感來源：RAR 設計攻略、Grenade 手榴彈\n原創效果與整合由小工坊實作；Motion Prompt 原版作者 Shohei Ohtaki，MIT 授權。")]) }
     func webView(_ webView: WKWebView, decidePolicyFor action: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = action.request.url, url.isFileURL, url.standardizedFileURL.path.hasPrefix(bundledWeb.path + "/") else { decisionHandler(.cancel); return }; decisionHandler(.allow)
     }
@@ -262,7 +262,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
     }
     func checkQueue() {
         if Date().timeIntervalSince(lastHeartbeat)>3 {
-            let heartbeat:[String:Any]=["active":true,"updatedAt":Date().timeIntervalSince1970,"version":Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "1.5.1"]
+            let heartbeat:[String:Any]=["active":true,"updatedAt":Date().timeIntervalSince1970,"version":Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "2.0.0"]
             if let data=try? JSONSerialization.data(withJSONObject:heartbeat){try? data.write(to:jobsURL.appendingPathComponent("heartbeat.json"),options:.atomic)};lastHeartbeat=Date()
         }
         guard queueJob == nil, !exportPanelOpen, encodeQueue.sync(execute:{encoder == nil}), let entries=try? fm.contentsOfDirectory(at:jobsURL,includingPropertiesForKeys:[.isSymbolicLinkKey,.isDirectoryKey]) else { return }
@@ -319,6 +319,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
         case "savePreferences":
             guard let favorites = body["favorites"] as? [String], favorites.count <= 184, favorites.allSatisfy({ $0.range(of:"^[a-z0-9-]{1,64}$",options:.regularExpression) != nil }) else { replyHandler(nil,"收藏資料無效。"); return }
             UserDefaults.standard.set(favorites,forKey:"MotionWorkshopFavoriteEffects");replyHandler(["ok":true],nil)
+        case "loadMotionPresets":
+            replyHandler(["data":UserDefaults.standard.string(forKey:"MotionWorkshopMotionPresetsV2") ?? "[]"],nil)
+        case "saveMotionPresets":
+            guard let raw=body["data"] as? String,let data=raw.data(using:.utf8),data.count<200_000,let presets=(try? JSONSerialization.jsonObject(with:data)) as? [[String:Any]],presets.count<=30 else { replyHandler(nil,"動作組合格式或大小不正確。"); return }
+            UserDefaults.standard.set(raw,forKey:"MotionWorkshopMotionPresetsV2");replyHandler(["ok":true],nil)
         case "copyText":
             guard let text = body["text"] as? String, text.utf8.count < 180_000 else { replyHandler(nil,"文字過長。"); return }
             NSPasteboard.general.clearContents(); NSPasteboard.general.setString(text,forType:.string);replyHandler(["ok":true],nil)
@@ -339,7 +344,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
                 do { try data.write(to:url,options:.atomic); replyHandler(["ok":true],nil) } catch { replyHandler(nil,error.localizedDescription) }
             }
         case "openProject":
-            let panel = NSOpenPanel(); panel.title = "開啟動畫專案"; panel.prompt = "開啟"; panel.allowedContentTypes = [.json]; panel.allowsMultipleSelection = false; panel.canChooseDirectories = false
+            let panel = NSOpenPanel(); panel.title = "開啟動畫專案"; panel.prompt = "開啟"; panel.allowsMultipleSelection = false; panel.canChooseDirectories = false
             panel.beginSheetModal(for:window) { response in
                 guard response == .OK, let url = panel.url else { replyHandler(["cancelled":true],nil); return }
                 do { let attrs = try self.fm.attributesOfItem(atPath:url.path); guard (attrs[.size] as? Int ?? Int.max) < 20_000_000 else { throw WorkshopError.message("專案檔案過大。") }; replyHandler(["data":try String(contentsOf:url,encoding:.utf8)],nil) } catch { replyHandler(nil,error.localizedDescription) }

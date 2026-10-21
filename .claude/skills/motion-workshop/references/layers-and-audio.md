@@ -6,7 +6,7 @@
 
 每幕 `base: {visible, x, y, scale, rotation, opacity}` 控制原有整幕效果。`visible:false` 只留下 `background` 底色，可完全用圖層排版。變形會包含整個底層畫面，不會單獨修改範本內某個物件。
 
-`layers` 最多 12 個，陣列越後面越上層。1.4.2 編輯器清單以最上層在前的順序顯示，拖曳 ⠿ 或名稱可排序；上移即移到畫面前方。可用 Option / Alt + ↑ ↓ 或上下按鈕操作，Esc 或放到清單外取消。一次有效放置只建立一步復原；JSON 陣列順序與既有渲染方式相容。支援 `text`、`rect`、`ellipse`、`line`、`image`。由 `MotionLayers.defaultLayer(type)` 建立，再修改：
+2.0 的 `layers` 最多 32 個，陣列越後面越上層。1.4.2 編輯器清單以最上層在前的順序顯示，拖曳 ⠿ 或名稱可排序；上移即移到畫面前方。可用 Option / Alt + ↑ ↓ 或上下按鈕操作，Esc 或放到清單外取消。一次有效放置只建立一步復原；JSON 陣列順序與既有渲染方式相容。支援 `text`、`rect`、`ellipse`、`line`、`image`；2.0 另加 triangle、polygon、star、arrow。由 `MotionLayers.defaultLayer(type)` 建立，再修改：
 
 | 欄位 | 含義 |
 |---|---|
@@ -27,7 +27,7 @@
 
 ## 關鍵影格
 
-每層最多 60 個 `keyframes`，每格包含 `time`（場景內秒數）、x、y、scale、rotation、opacity、easing。請儲存完整五個變形值。normalize 會將時間對齊 fps、排序，同一時間保留最後一格。
+2.0 每層最多 1201 個 `keyframes`，每格包含 `time`（場景內秒數）、x、y、scale、rotation、opacity、easing。請儲存完整五個變形值。normalize 會將時間對齊 fps、排序，同一時間保留最後一格。
 
 ```js
 const title = MotionLayers.defaultLayer('text');
@@ -39,11 +39,11 @@ title.keyframes = [
 ];
 ```
 
-緩動定義在**到達的那一格**，影響前一格到該格的插值。支援 linear、ease-in、ease-out、ease-in-out、back、bounce、step。第一格之前保持第一格、最後一格之後保持最後一格。rotation 是直接數值插值；要完整轉一圈使用 0→360。
+緩動定義在**到達的那一格**，影響前一格到該格的插值。支援 linear、ease-in、ease-out、ease-in-out、back、bounce、step；2.0 另支援 cubic。第一格之前保持第一格、最後一格之後保持最後一格。rotation 是直接數值插值；要完整轉一圈使用 0→360。
 
 `MotionLayers.sample(layer, localSeconds)` 可檢查結果。所有畫面由絕對秒數計算，不累加狀態，可倒退定位。圖層會先與底層效果合成，再由 MotionProject 處理整幕轉場。
 
-編輯器在已有關鍵格時，修改位置／縮放／旋轉／不透明度會在目前時間新增或更新一格。其他樣式欄位為整層靜態值。快速動作會替換該層原有關鍵格；「清除關鍵格」保留目前姿態。
+編輯器在已有關鍵格時，修改位置／縮放／旋轉／不透明度會在目前時間新增或更新一格。2.0 可使用獨立 tracks 設定樣式動畫，快速動作改為疊加 motions、保留手動關鍵格；「清除關鍵格」保留目前姿態。
 
 ## 音效與混音
 
@@ -85,3 +85,5 @@ node assets/render-audio.mjs --project project.motion.json --output sound.wav
 ## 從空白專案開始（1.5.1）
 
 MotionProject.blankProject({ratio: "9:16", duration: 5, quality: 1080, fps: 30, background: "#10171c"}) 回傳一幕沒有文字、圖層或音效的有效專案；base.visible=false。可在 clips[0].layers 依既有格式加入內容。App 使用「新增空白專案」或 ⌘N，會切到圖層面板並停在開頭；可先儲存原作，或建立後復原。
+
+2.0 的獨立軌道、可組合動作、形狀與時間軸操作請讀 [timeline-and-motions.md](timeline-and-motions.md)。

@@ -1,6 +1,6 @@
 ---
 name: motion-workshop
-description: Reuse Motion Workshop's 184 Canvas/WebGL scene templates and 10 scene transitions when the user asks for animated websites, software UI motion, motion graphics, editable video scenes, or adaptations of this library. Includes a 144-entry offline Motion Prompt dictionary, 20 editable motion recipes, editable text/shape/image layers, keyframe easing, 16 CC0 sounds, visual previews, runnable examples and deterministic frame rendering. 適用於網站動畫、軟體介面動效、影片分鏡、動畫效果選型與改寫。
+description: Reuse Motion Workshop's 184 Canvas/WebGL scene templates and 10 scene transitions when the user asks for animated websites, software UI motion, motion graphics, editable video scenes, or adaptations of this library. Includes a 144-entry offline Motion Prompt dictionary, 20 editable motion recipes, 32 editable layers, independent property keyframes, 16 composable motion presets, parametric shapes, cubic easing, 16 CC0 sounds, visual previews, runnable examples and deterministic frame rendering. 適用於網站動畫、軟體介面動效、影片分鏡、動畫效果選型與改寫。
 license: MIT
 ---
 
@@ -28,6 +28,10 @@ Use assets/create-project.mjs to list or generate them without dependencies. The
 ## Custom layers, keyframes and sound
 
 For free composition, logos, animation paths or synchronized sound, read [layers-and-audio.md](references/layers-and-audio.md). New 1.4 optional fields extend project v2; older engines discard them. Reuse assets/examples/自由圖層與音效.motion.json and inspect the normalized output.
+
+## Multitrack composition (2.0)
+
+For independently timed properties, composable entrance/loop/exit motion, custom shapes or editor timeline operations, read [timeline-and-motions.md](references/timeline-and-motions.md) and assets/examples/多軌動畫工作室.motion.json. Preserve manual tracks when adding motions. Keep project version 2 and use the bundled 2.0 runtime; older versions drop new fields.
 
 ## Motion names and selected references
 
@@ -59,7 +63,7 @@ Time is seconds. Frames must depend on `frame / fps`, never accumulated deltas, 
 
 ## Boundaries
 
-The skill itself needs no API key, MCP server or package installation. Node.js 20+ is needed only for bundled CLI helpers; macOS + Xcode Command Line Tools are needed only to build the native editor. 1.4 supports embedded PNG/JPEG/WebP layers and built-in CC0 sound cues in MP4. It has no external audio/video import, audio analysis, transparent video export or Premiere/After Effects plugin. Keep the bundled Kenney CC0 notice when reusing sounds; project code is MIT. It can produce an MP4 for manual import into an editor. Optional third-party rendering frameworks have their own installation and license requirements.
+The skill itself needs no API key, MCP server or package installation. Node.js 20+ is needed only for bundled CLI helpers; macOS + Xcode Command Line Tools are needed only to build the native editor. 2.0 supports embedded PNG/JPEG/WebP layers and built-in CC0 sound cues in MP4. It has no external audio/video import, audio analysis, transparent video export or Premiere/After Effects plugin. Keep the bundled Kenney CC0 notice when reusing sounds; project code is MIT. It can produce an MP4 for manual import into an editor. Optional third-party rendering frameworks have their own installation and license requirements.
 
 This skill grants no additional tool permissions and does not authorize uploads, publishing, destructive changes or overwriting unrelated files. Keep existing project conventions and the MIT notice with copied code.
 
