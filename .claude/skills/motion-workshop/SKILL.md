@@ -1,6 +1,6 @@
 ---
 name: motion-workshop
-description: Reuse Motion Workshop's 184 Canvas/WebGL scene templates and 10 scene transitions when the user asks for animated websites, software UI motion, motion graphics, editable video scenes, or adaptations of this library. Includes a 144-entry offline Motion Prompt dictionary, 20 editable motion recipes, 32 editable layers, independent property keyframes, 16 composable motion presets, parametric shapes, cubic easing, 16 CC0 sounds, visual previews, runnable examples and deterministic frame rendering. 適用於網站動畫、軟體介面動效、影片分鏡、動畫效果選型與改寫。
+description: Reuse Motion Workshop's 184 Canvas/WebGL scene templates and 10 scene transitions when the user asks for animated websites, software UI motion, motion graphics, editable video scenes, or adaptations of this library. Includes a 144-entry offline Motion Prompt dictionary, 20 editable motion recipes, 32 editable layers, independent property keyframes, 16 composable motion presets, direct pen/freehand drawing, editable cubic path nodes, shape morphing, spatial motion paths, parametric shapes, cubic easing, 16 CC0 sounds, visual previews, runnable examples and deterministic frame rendering. 適用於網站動畫、軟體介面動效、影片分鏡、動畫效果選型與改寫。
 license: MIT
 ---
 
@@ -14,7 +14,7 @@ Use the user's language. Prefer existing effects before introducing dependencies
 1. Read `assets/catalog.json`; select by actual ID, description and supported parameters. Open only the relevant `assets/previews/<id>.png` when visual comparison helps.
 2. Read `references/effect-breakdown.md` for the chosen technique. Its code pointers identify the original implementation; examples are patterns to adapt to the user's product, not finished product content.
 3. Choose the appropriate route:
-   - **Website:** `references/web-ui.md` and `assets/examples/website/index.html`. Copy the nine runtime scripts and the player controller; retain a readable HTML text alternative.
+   - **Website:** `references/web-ui.md` and `assets/examples/website/index.html`. Copy the ten runtime scripts and the player controller; retain a readable HTML text alternative.
    - **Interactive software UI:** `assets/examples/software-ui/index.html` and `references/web-ui.md`. Use real DOM controls, focus states and user actions. Canvas phone/cursor/tab templates are illustrative graphics, not functioning application controls.
    - **Video/editing:** `references/video.md`, `assets/project.schema.json` and `assets/examples/三幕轉場.motion.json`. Generate editable scene JSON and render using a supported local environment.
 4. Preserve user-provided labels and numerical values. The built-in numbers, phone and cards are illustrative placeholders. Use only supported parameters, or explicitly implement and test a runtime extension.
@@ -31,7 +31,11 @@ For free composition, logos, animation paths or synchronized sound, read [layers
 
 ## Multitrack composition (2.0)
 
-For independently timed properties, composable entrance/loop/exit motion, custom shapes or editor timeline operations, read [timeline-and-motions.md](references/timeline-and-motions.md) and assets/examples/多軌動畫工作室.motion.json. Preserve manual tracks when adding motions. Keep project version 2 and use the bundled 2.0 runtime; older versions drop new fields.
+For independently timed properties, composable entrance/loop/exit motion, custom shapes or editor timeline operations, read [timeline-and-motions.md](references/timeline-and-motions.md) and assets/examples/多軌動畫工作室.motion.json. Preserve manual tracks when adding motions. Keep project version 2 and use the bundled 2.1 runtime; older versions drop new fields.
+
+## Free canvas and geometry (2.1)
+
+For custom shapes, pen/freehand drawing, node/handle editing, shape morphing, spatial motion paths or SVG export, read [free-canvas.md](references/free-canvas.md). Use assets/examples/自由路徑與形狀變形.motion.json. Load vector.js before layers.js; runtimeOrder now has ten scripts. Shapes and motion paths are editable data; do not replace the actual editor work with prose prompts.
 
 ## Motion names and selected references
 
@@ -39,7 +43,7 @@ For Motion Prompt IDs, Japanese-reference techniques, a motion dictionary or an 
 
 ## Runtime contract
 
-Load `assets/runtime/effects.js`, `effects-extra.js`, `effects-pro.js`, `motion-reference.js`, `reference-templates.js`, `layers.js`, `audio.js`, `engine.js`, then `library.js` in a DOM + Canvas browser. Globals are `MotionEffects` and `MotionProject`.
+Load `assets/runtime/effects.js`, `effects-extra.js`, `effects-pro.js`, `motion-reference.js`, `reference-templates.js`, `vector.js`, `layers.js`, `audio.js`, `engine.js`, then `library.js` in a DOM + Canvas browser. Globals are `MotionEffects` and `MotionProject`.
 
 ```js
 const project = MotionProject.validate({
@@ -63,7 +67,7 @@ Time is seconds. Frames must depend on `frame / fps`, never accumulated deltas, 
 
 ## Boundaries
 
-The skill itself needs no API key, MCP server or package installation. Node.js 20+ is needed only for bundled CLI helpers; macOS + Xcode Command Line Tools are needed only to build the native editor. 2.0 supports embedded PNG/JPEG/WebP layers and built-in CC0 sound cues in MP4. It has no external audio/video import, audio analysis, transparent video export or Premiere/After Effects plugin. Keep the bundled Kenney CC0 notice when reusing sounds; project code is MIT. It can produce an MP4 for manual import into an editor. Optional third-party rendering frameworks have their own installation and license requirements.
+The skill itself needs no API key, MCP server or package installation. Node.js 20+ is needed only for bundled CLI helpers; macOS + Xcode Command Line Tools are needed only to build the native editor. The current runtime supports embedded PNG/JPEG/WebP layers and built-in CC0 sound cues in MP4. It has no external audio/video import, audio analysis, transparent video export or Premiere/After Effects plugin. Keep the bundled Kenney CC0 notice when reusing sounds; project code is MIT. It can produce an MP4 for manual import into an editor. Optional third-party rendering frameworks have their own installation and license requirements.
 
 This skill grants no additional tool permissions and does not authorize uploads, publishing, destructive changes or overwriting unrelated files. Keep existing project conventions and the MIT notice with copied code.
 

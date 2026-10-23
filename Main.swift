@@ -205,7 +205,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
         encodeQueue.sync { encoder?.cancel(); encoder = nil }; return .terminateNow
     }
     @objc func newBlankProject() { web?.evaluateJavaScript("document.getElementById('new-project')?.click()", completionHandler:nil) }
-    @objc func showAbout() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:appName,.applicationVersion:Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "2.0.0",.credits:NSAttributedString(string:"184 個場景效果 · 144 項動效字典 · 20 組圖層配方 · 10 種場景交接 · 16 種 CC0 音效 · 繁體中文\nClaude 效果工具包 · 離線製作\n靈感來源：RAR 設計攻略、Grenade 手榴彈\n原創效果與整合由小工坊實作；Motion Prompt 原版作者 Shohei Ohtaki，MIT 授權。")]) }
+    @objc func showAbout() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:appName,.applicationVersion:Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "2.1.1",.credits:NSAttributedString(string:"184 個場景效果 · 144 項動效字典 · 20 組圖層配方 · 10 種場景交接 · 16 種 CC0 音效 · 繁體中文\nClaude 效果工具包 · 離線製作\n靈感來源：RAR 設計攻略、Grenade 手榴彈\n原創效果與整合由小工坊實作；Motion Prompt 原版作者 Shohei Ohtaki，MIT 授權。")]) }
     func webView(_ webView: WKWebView, decidePolicyFor action: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = action.request.url, url.isFileURL, url.standardizedFileURL.path.hasPrefix(bundledWeb.path + "/") else { decisionHandler(.cancel); return }; decisionHandler(.allow)
     }
@@ -262,7 +262,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
     }
     func checkQueue() {
         if Date().timeIntervalSince(lastHeartbeat)>3 {
-            let heartbeat:[String:Any]=["active":true,"updatedAt":Date().timeIntervalSince1970,"version":Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "2.0.0"]
+            let heartbeat:[String:Any]=["active":true,"updatedAt":Date().timeIntervalSince1970,"version":Bundle.main.object(forInfoDictionaryKey:"CFBundleShortVersionString") as? String ?? "2.1.1"]
             if let data=try? JSONSerialization.data(withJSONObject:heartbeat){try? data.write(to:jobsURL.appendingPathComponent("heartbeat.json"),options:.atomic)};lastHeartbeat=Date()
         }
         guard queueJob == nil, !exportPanelOpen, encodeQueue.sync(execute:{encoder == nil}), let entries=try? fm.contentsOfDirectory(at:jobsURL,includingPropertiesForKeys:[.isSymbolicLinkKey,.isDirectoryKey]) else { return }
@@ -335,10 +335,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, WKScriptMessageHandler
             }
         case "source": NSWorkspace.shared.open(sourceURL); replyHandler(["ok":true],nil)
         case "save":
-            let kind = body["kind"] as? String ?? ""; guard ["json","png","text"].contains(kind), let raw = body["data"] as? String, raw.count < 32_000_000 else { replyHandler(nil,"檔案內容不正確。"); return }
+            let kind = body["kind"] as? String ?? ""; guard ["json","png","text","svg"].contains(kind), let raw = body["data"] as? String, raw.count < 32_000_000 else { replyHandler(nil,"檔案內容不正確。"); return }
             let data = kind == "png" ? Data(base64Encoded:raw) : raw.data(using:.utf8)
             guard let data else { replyHandler(nil,"無法讀取檔案內容。"); return }
-            let contentType: UTType = kind == "png" ? .png : kind == "text" ? (UTType(filenameExtension:"md") ?? .plainText) : .json
+            let contentType: UTType = kind == "png" ? .png : kind == "svg" ? .svg : kind == "text" ? (UTType(filenameExtension:"md") ?? .plainText) : .json
             savePanel(name: body["name"] as? String ?? "動畫", type: contentType) { url in
                 guard let url else { replyHandler(["cancelled":true],nil); return }
                 do { try data.write(to:url,options:.atomic); replyHandler(["ok":true],nil) } catch { replyHandler(nil,error.localizedDescription) }

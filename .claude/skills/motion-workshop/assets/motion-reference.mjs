@@ -6,7 +6,7 @@ import {fileURLToPath} from 'node:url';
 import vm from 'node:vm';
 const root=dirname(fileURLToPath(import.meta.url)),args=process.argv.slice(2),command=args.shift();
 const ctx=vm.createContext({window:{}});
-for(const file of ['effects','effects-extra','effects-pro','motion-reference','reference-templates','layers','audio','engine','library','reference-recipes'])vm.runInContext(await readFile(join(root,'runtime',file+'.js'),'utf8'),ctx,{filename:file+'.js'});
+for(const file of ['effects','effects-extra','effects-pro','motion-reference','reference-templates','vector','layers','audio','engine','library','reference-recipes'])vm.runInContext(await readFile(join(root,'runtime',file+'.js'),'utf8'),ctx,{filename:file+'.js'});
 const R=ctx.window.MotionReference,P=ctx.window.MotionProject;
 try{
   if(command==='list'||command==='search'){

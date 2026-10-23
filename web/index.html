@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'">
-  <title>動畫小工坊</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="studio.css"><link rel="stylesheet" href="custom.css"><link rel="stylesheet" href="reference.css"><link rel="stylesheet" href="timeline.css">
+  <title>動畫小工坊</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="studio.css"><link rel="stylesheet" href="custom.css"><link rel="stylesheet" href="reference.css"><link rel="stylesheet" href="timeline.css"><link rel="stylesheet" href="vector.css">
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="brand-icon">m<span>✦</span></span><div>動畫小工坊<small>MOTION WORKSHOP</small></div><span class="offline">2.0.0 · 多軌工作室</span></div>
+    <div class="brand"><span class="brand-icon">m<span>✦</span></span><div>動畫小工坊<small>MOTION WORKSHOP</small></div><span class="offline">2.1.1 · 自由畫布</span></div>
     <div class="top-actions"><span id="save-state">自動儲存已開啟</span><button id="motion-reference">動效字典 144</button><button id="story-browser">故事範本</button><button id="prompt-builder">Claude 指令</button><button id="export-skill">匯出 Skill ZIP</button><button id="new-project" title="新增空白專案 ⌘N">新增空白專案</button><button id="open-project">開啟專案</button><button id="save-project">儲存專案</button><button class="icon-button" id="help" aria-label="使用說明">?</button></div>
   </header>
   <main class="workspace">
@@ -94,5 +94,5 @@
     </section></div>
     <div class="reference-selection"><strong id="reference-count">已選 0 項</strong><p id="reference-picked"></p><div class="reference-handoff-controls"><select id="reference-purpose" aria-label="動效用途"><option value="影片與分鏡">影片與分鏡</option><option value="網站動畫">網站動畫</option><option value="軟體介面">軟體介面</option><option value="圖像／影片生成提示詞">生成提示詞</option></select><input id="reference-brief" aria-label="動效製作需求" maxlength="2000" placeholder="希望 Claude 完成什麼？"><button id="reference-clear" class="reference-clear">清除選擇</button><button id="reference-save">儲存指令</button><button id="reference-copy" class="primary-action">複製給 Claude</button></div><details id="reference-output-details"><summary>檢視交接指令與選擇規格</summary><textarea id="reference-output" aria-label="動效交接指令" readonly></textarea></details></div>
   </dialog>
-  <script src="effects.js"></script><script src="effects-extra.js"></script><script src="effects-pro.js"></script><script src="motion-reference.js"></script><script src="reference-templates.js"></script><script src="layers.js"></script><script src="audio.js"></script><script src="engine.js"></script><script src="library.js"></script><script src="reference-recipes.js"></script><script src="app.js"></script><script src="custom.js"></script><script src="studio-editor.js"></script><script src="timeline.js"></script><script src="reference-ui.js"></script>
+  <script src="effects.js"></script><script src="effects-extra.js"></script><script src="effects-pro.js"></script><script src="motion-reference.js"></script><script src="reference-templates.js"></script><script src="vector.js"></script><script src="layers.js"></script><script src="audio.js"></script><script src="engine.js"></script><script src="library.js"></script><script src="reference-recipes.js"></script><script src="app.js"></script><script src="custom.js"></script><script src="studio-editor.js"></script><script src="timeline.js"></script><script src="vector-editor.js"></script><script src="reference-ui.js"></script>
 </body></html>

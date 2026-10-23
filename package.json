@@ -1,6 +1,6 @@
 {
   "name": "motion-workshop",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "private": true,
   "description": "Offline multitrack motion editor: 184 scene templates, 32 layers, independent property keyframes, 16 composable motion presets, CC0 sound, Claude skill and macOS MP4 export.",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "node scripts/verify.mjs && node scripts/verify-reference.mjs && node scripts/verify-studio.mjs",
+    "test": "node scripts/verify.mjs && node scripts/verify-reference.mjs && node scripts/verify-studio.mjs && node scripts/verify-vector.mjs",
     "demo": "node scripts/serve.mjs",
     "pack": "node scripts/pack.mjs",
     "reference:build": "node scripts/build-reference.mjs"

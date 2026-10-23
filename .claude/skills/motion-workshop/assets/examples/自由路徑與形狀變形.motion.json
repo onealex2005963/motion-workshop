@@ -1,0 +1,516 @@
+{
+  "version": 2,
+  "ratio": "16:9",
+  "quality": 720,
+  "fps": 30,
+  "audio": {
+    "enabled": true,
+    "volume": 0.8
+  },
+  "clips": [
+    {
+      "effect": "gradient-mesh",
+      "text": "",
+      "subtitle": "",
+      "color": "#d8f36a",
+      "secondary": "#a59bff",
+      "background": "#10171c",
+      "speed": 1,
+      "size": 1,
+      "amount": 50,
+      "duration": 6,
+      "items": [
+        "靈感",
+        "創作",
+        "分享",
+        "可能"
+      ],
+      "values": [
+        35,
+        70,
+        55,
+        90
+      ],
+      "value": 100,
+      "suffix": "",
+      "bpm": 120,
+      "transition": {
+        "type": "crossfade",
+        "duration": 0.6
+      },
+      "base": {
+        "visible": false,
+        "x": 50,
+        "y": 50,
+        "scale": 1,
+        "rotation": 0,
+        "opacity": 1
+      },
+      "layers": [
+        {
+          "id": "layer-0",
+          "name": "自由形狀 · 可拖曳節點",
+          "type": "path",
+          "visible": true,
+          "locked": false,
+          "text": "你的文字",
+          "fill": "#ff805a",
+          "stroke": "#ffffff",
+          "strokeWidth": 0,
+          "width": 24,
+          "height": 45,
+          "radius": 18,
+          "fontSize": 7,
+          "fontFamily": "sans",
+          "weight": 700,
+          "align": "center",
+          "blend": "source-over",
+          "start": 0,
+          "end": 6,
+          "transform": {
+            "x": 27,
+            "y": 50,
+            "scale": 1,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "keyframes": [],
+          "tracks": {
+            "path": [
+              {
+                "time": 0,
+                "value": {
+                  "closed": true,
+                  "segments": [
+                    {
+                      "x": 50,
+                      "y": 30,
+                      "inX": 30,
+                      "inY": -30,
+                      "outX": -30,
+                      "outY": -30
+                    },
+                    {
+                      "x": 15,
+                      "y": 55,
+                      "inX": -15,
+                      "inY": -25,
+                      "outX": 15,
+                      "outY": 25
+                    },
+                    {
+                      "x": 50,
+                      "y": 95,
+                      "inX": -20,
+                      "inY": -15,
+                      "outX": 20,
+                      "outY": -15
+                    },
+                    {
+                      "x": 85,
+                      "y": 55,
+                      "inX": -15,
+                      "inY": 25,
+                      "outX": 15,
+                      "outY": -25
+                    }
+                  ]
+                },
+                "easing": "ease-in-out"
+              },
+              {
+                "time": 3,
+                "value": {
+                  "closed": true,
+                  "segments": [
+                    {
+                      "x": 50,
+                      "y": 12,
+                      "inX": 30,
+                      "inY": -30,
+                      "outX": -30,
+                      "outY": -30
+                    },
+                    {
+                      "x": 6,
+                      "y": 55,
+                      "inX": -15,
+                      "inY": -25,
+                      "outX": 15,
+                      "outY": 25
+                    },
+                    {
+                      "x": 50,
+                      "y": 95,
+                      "inX": -20,
+                      "inY": -15,
+                      "outX": 20,
+                      "outY": -15
+                    },
+                    {
+                      "x": 94,
+                      "y": 55,
+                      "inX": -15,
+                      "inY": 25,
+                      "outX": 15,
+                      "outY": -25
+                    }
+                  ]
+                },
+                "easing": "ease-in-out"
+              },
+              {
+                "time": 6,
+                "value": {
+                  "closed": true,
+                  "segments": [
+                    {
+                      "x": 50,
+                      "y": 30,
+                      "inX": 30,
+                      "inY": -30,
+                      "outX": -30,
+                      "outY": -30
+                    },
+                    {
+                      "x": 15,
+                      "y": 55,
+                      "inX": -15,
+                      "inY": -25,
+                      "outX": 15,
+                      "outY": 25
+                    },
+                    {
+                      "x": 50,
+                      "y": 95,
+                      "inX": -20,
+                      "inY": -15,
+                      "outX": 20,
+                      "outY": -15
+                    },
+                    {
+                      "x": 85,
+                      "y": 55,
+                      "inX": -15,
+                      "inY": 25,
+                      "outX": 15,
+                      "outY": -25
+                    }
+                  ]
+                },
+                "easing": "ease-in-out"
+              }
+            ]
+          },
+          "motions": [],
+          "scaleX": 1,
+          "scaleY": 1,
+          "anchorX": 50,
+          "anchorY": 50,
+          "sides": 5,
+          "innerRadius": 0.45,
+          "fillMode": "linear",
+          "fillSecondary": "#a59bff",
+          "gradientAngle": 40,
+          "dash": 0,
+          "path": {
+            "closed": true,
+            "segments": [
+              {
+                "x": 50,
+                "y": 30,
+                "inX": 30,
+                "inY": -30,
+                "outX": -30,
+                "outY": -30
+              },
+              {
+                "x": 15,
+                "y": 55,
+                "inX": -15,
+                "inY": -25,
+                "outX": 15,
+                "outY": 25
+              },
+              {
+                "x": 50,
+                "y": 95,
+                "inX": -20,
+                "inY": -15,
+                "outX": 20,
+                "outY": -15
+              },
+              {
+                "x": 85,
+                "y": 55,
+                "inX": -15,
+                "inY": 25,
+                "outX": 15,
+                "outY": -25
+              }
+            ]
+          },
+          "fillEnabled": true,
+          "positionEnabled": true,
+          "orientToPath": false,
+          "image": ""
+        },
+        {
+          "id": "layer-1",
+          "name": "軌跡箭頭 · 可拖曳路徑",
+          "type": "arrow",
+          "visible": true,
+          "locked": false,
+          "text": "你的文字",
+          "fill": "#83d9d0",
+          "stroke": "#ffffff",
+          "strokeWidth": 0,
+          "width": 6,
+          "height": 8,
+          "radius": 18,
+          "fontSize": 7,
+          "fontFamily": "sans",
+          "weight": 700,
+          "align": "center",
+          "blend": "source-over",
+          "start": 0,
+          "end": 6,
+          "transform": {
+            "x": 50,
+            "y": 50,
+            "scale": 1,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "keyframes": [],
+          "tracks": {
+            "position": [
+              {
+                "time": 0,
+                "value": {
+                  "x": 45,
+                  "y": 82,
+                  "inX": 0,
+                  "inY": 0,
+                  "outX": 12,
+                  "outY": -12
+                },
+                "easing": "ease-in-out"
+              },
+              {
+                "time": 3,
+                "value": {
+                  "x": 67,
+                  "y": 80,
+                  "inX": -8,
+                  "inY": -5,
+                  "outX": 8,
+                  "outY": 5
+                },
+                "easing": "ease-in-out"
+              },
+              {
+                "time": 6,
+                "value": {
+                  "x": 88,
+                  "y": 68,
+                  "inX": -8,
+                  "inY": 12,
+                  "outX": 0,
+                  "outY": 0
+                },
+                "easing": "ease-in-out"
+              }
+            ]
+          },
+          "motions": [],
+          "scaleX": 1,
+          "scaleY": 1,
+          "anchorX": 50,
+          "anchorY": 50,
+          "sides": 5,
+          "innerRadius": 0.45,
+          "fillMode": "solid",
+          "fillSecondary": "#a59bff",
+          "gradientAngle": 90,
+          "dash": 0,
+          "path": {
+            "closed": false,
+            "segments": [
+              {
+                "x": 10,
+                "y": 50,
+                "inX": 0,
+                "inY": 0,
+                "outX": 0,
+                "outY": 0
+              },
+              {
+                "x": 90,
+                "y": 50,
+                "inX": 0,
+                "inY": 0,
+                "outX": 0,
+                "outY": 0
+              }
+            ]
+          },
+          "fillEnabled": true,
+          "positionEnabled": true,
+          "orientToPath": true,
+          "image": ""
+        },
+        {
+          "id": "layer-2",
+          "name": "主標題",
+          "type": "text",
+          "visible": true,
+          "locked": false,
+          "text": "一個節點，無限種可能",
+          "fill": "#d8f36a",
+          "stroke": "#ffffff",
+          "strokeWidth": 0,
+          "width": 55,
+          "height": 18,
+          "radius": 18,
+          "fontSize": 4.8,
+          "fontFamily": "sans",
+          "weight": 700,
+          "align": "center",
+          "blend": "source-over",
+          "start": 0,
+          "end": 6,
+          "transform": {
+            "x": 67,
+            "y": 40,
+            "scale": 1,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "keyframes": [],
+          "tracks": {},
+          "motions": [],
+          "scaleX": 1,
+          "scaleY": 1,
+          "anchorX": 50,
+          "anchorY": 50,
+          "sides": 5,
+          "innerRadius": 0.45,
+          "fillMode": "solid",
+          "fillSecondary": "#a59bff",
+          "gradientAngle": 90,
+          "dash": 0,
+          "path": {
+            "closed": false,
+            "segments": [
+              {
+                "x": 10,
+                "y": 50,
+                "inX": 0,
+                "inY": 0,
+                "outX": 0,
+                "outY": 0
+              },
+              {
+                "x": 90,
+                "y": 50,
+                "inX": 0,
+                "inY": 0,
+                "outX": 0,
+                "outY": 0
+              }
+            ]
+          },
+          "fillEnabled": true,
+          "positionEnabled": true,
+          "orientToPath": false,
+          "image": ""
+        },
+        {
+          "id": "layer-3",
+          "name": "操作提示",
+          "type": "text",
+          "visible": true,
+          "locked": false,
+          "text": "拖節點改輪廓，拉把手改路徑",
+          "fill": "#a7b5c5",
+          "stroke": "#ffffff",
+          "strokeWidth": 0,
+          "width": 55,
+          "height": 20,
+          "radius": 18,
+          "fontSize": 2.8,
+          "fontFamily": "sans",
+          "weight": 700,
+          "align": "center",
+          "blend": "source-over",
+          "start": 0,
+          "end": 6,
+          "transform": {
+            "x": 67,
+            "y": 57,
+            "scale": 1,
+            "rotation": 0,
+            "opacity": 1
+          },
+          "keyframes": [],
+          "tracks": {},
+          "motions": [],
+          "scaleX": 1,
+          "scaleY": 1,
+          "anchorX": 50,
+          "anchorY": 50,
+          "sides": 5,
+          "innerRadius": 0.45,
+          "fillMode": "solid",
+          "fillSecondary": "#a59bff",
+          "gradientAngle": 90,
+          "dash": 0,
+          "path": {
+            "closed": false,
+            "segments": [
+              {
+                "x": 10,
+                "y": 50,
+                "inX": 0,
+                "inY": 0,
+                "outX": 0,
+                "outY": 0
+              },
+              {
+                "x": 90,
+                "y": 50,
+                "inX": 0,
+                "inY": 0,
+                "outX": 0,
+                "outY": 0
+              }
+            ]
+          },
+          "fillEnabled": true,
+          "positionEnabled": true,
+          "orientToPath": false,
+          "image": ""
+        }
+      ],
+      "audio": [
+        {
+          "sound": "expand",
+          "time": 0.2,
+          "volume": 0.5,
+          "rate": 1,
+          "fadeIn": 0,
+          "fadeOut": 0.05
+        },
+        {
+          "sound": "confirm",
+          "time": 3,
+          "volume": 0.4,
+          "rate": 1,
+          "fadeIn": 0,
+          "fadeOut": 0.08
+        }
+      ]
+    }
+  ]
+}

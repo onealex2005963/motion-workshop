@@ -4,7 +4,7 @@ import vm from 'node:vm';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),ctx=vm.createContext({window:{}});
-for(const name of ['effects','effects-extra','effects-pro','motion-reference','reference-templates','layers','audio','engine','library'])vm.runInContext(await fs.readFile(path.join(root,'web',name+'.js'),'utf8'),ctx);
+for(const name of ['effects','effects-extra','effects-pro','motion-reference','reference-templates','vector','layers','audio','engine','library'])vm.runInContext(await fs.readFile(path.join(root,'web',name+'.js'),'utf8'),ctx);
 const L=ctx.window.MotionLayers,P=ctx.window.MotionProject,close=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} != ${b}`),copy=v=>JSON.parse(JSON.stringify(v));
 const project=P.blankProject(),layer=L.defaultLayer('star');layer.end=5;layer.transform.x=10;
 L.setKey(layer,'x',0,10,{fps:30});L.setKey(layer,'x',2,90,{fps:30,easing:'linear'});L.setKey(layer,'opacity',1,0,{fps:30});L.setKey(layer,'opacity',3,1,{fps:30,easing:'linear'});

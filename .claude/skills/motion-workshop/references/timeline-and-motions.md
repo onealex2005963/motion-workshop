@@ -56,10 +56,12 @@ MotionLayers.bake(layer, duration, fps) 將動作轉為每個輸出影格的五�
 
 類型：text、rect、ellipse、line、image、triangle、polygon、star、arrow。scaleX/scaleY（0.05–5）可分開調整，anchorX/anchorY（0–100）設定變形錨點；sides（3–12）控制多邊形邊數或星角數，innerRadius（0.1–0.9）控制星形內徑。fillMode 為 solid/linear/radial；fillSecondary、gradientAngle、dash 設定漸層與虛線。描邊需 strokeWidth > 0。
 
-可用參數繪製形狀，尚未提供鋼筆節點、任意 SVG 匯入、形狀路徑變形、圖層群組、父子關係或自訂遮罩。144 個原版套版內部仍依原版設計，不是全部可拆解物件。
+可用參數繪製形狀，尚未提供任意 SVG 匯入、圖層群組、父子關係或自訂遮罩。144 個原版套版內部仍依原版設計，不是全部可拆解物件。
 
 ## Claude 的使用方式
 
-先讀此文件與 assets/project.schema.json，再使用 assets/examples/多軌動畫工作室.motion.json。依 catalog 的 runtimeOrder 載入原有 9 個 runtime；studio-editor.js 和 timeline.js 只供 App 編輯器，不是嵌入式播放的必要依賴。網站／軟體可把動作原理改寫成自身框架，但要保留使用者內容、鍵盤操作與減少動態偏好。
+先讀此文件與 assets/project.schema.json，再使用 assets/examples/多軌動畫工作室.motion.json。依 catalog 的 runtimeOrder 載入原有 10 個 runtime；studio-editor.js 和 timeline.js 只供 App 編輯器，不是嵌入式播放的必要依賴。網站／軟體可把動作原理改寫成自身框架，但要保留使用者內容、鍵盤操作與減少動態偏好。
 
 用 node assets/render.mjs --project 作品.motion.json --validate 檢查正規化結果，再檢查首尾、各屬性關鍵格、動作交界與倒退定位。有原生執行環境才匯出 MP4；雲端聊天不能只憑本機路徑讀檔，必須提供整份 ZIP 與作品 JSON。
+
+2.1 另提供 path 圖層、形狀與移動路徑兩種可動屬性，合計 14 種獨立軌道，詳見 [自由畫布](free-canvas.md)。

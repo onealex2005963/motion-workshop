@@ -389,7 +389,8 @@
                     "triangle",
                     "polygon",
                     "star",
-                    "arrow"
+                    "arrow",
+                    "path"
                   ]
                 },
                 "visible": {
@@ -1129,6 +1130,186 @@
                           }
                         }
                       }
+                    },
+                    "path": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "closed",
+                              "segments"
+                            ],
+                            "properties": {
+                              "closed": {
+                                "type": "boolean"
+                              },
+                              "segments": {
+                                "type": "array",
+                                "minItems": 2,
+                                "maxItems": 64,
+                                "items": {
+                                  "type": "object",
+                                  "additionalProperties": false,
+                                  "required": [
+                                    "x",
+                                    "y"
+                                  ],
+                                  "properties": {
+                                    "x": {
+                                      "type": "number",
+                                      "minimum": -300,
+                                      "maximum": 400
+                                    },
+                                    "y": {
+                                      "type": "number",
+                                      "minimum": -300,
+                                      "maximum": 400
+                                    },
+                                    "inX": {
+                                      "type": "number",
+                                      "minimum": -300,
+                                      "maximum": 300
+                                    },
+                                    "inY": {
+                                      "type": "number",
+                                      "minimum": -300,
+                                      "maximum": 300
+                                    },
+                                    "outX": {
+                                      "type": "number",
+                                      "minimum": -300,
+                                      "maximum": 300
+                                    },
+                                    "outY": {
+                                      "type": "number",
+                                      "minimum": -300,
+                                      "maximum": 300
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "position": {
+                      "type": "array",
+                      "maxItems": 1201,
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "time",
+                          "value"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "time": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 20
+                          },
+                          "value": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "x",
+                              "y"
+                            ],
+                            "properties": {
+                              "x": {
+                                "type": "number",
+                                "minimum": -300,
+                                "maximum": 400
+                              },
+                              "y": {
+                                "type": "number",
+                                "minimum": -300,
+                                "maximum": 400
+                              },
+                              "inX": {
+                                "type": "number",
+                                "minimum": -300,
+                                "maximum": 300
+                              },
+                              "inY": {
+                                "type": "number",
+                                "minimum": -300,
+                                "maximum": 300
+                              },
+                              "outX": {
+                                "type": "number",
+                                "minimum": -300,
+                                "maximum": 300
+                              },
+                              "outY": {
+                                "type": "number",
+                                "minimum": -300,
+                                "maximum": 300
+                              }
+                            }
+                          },
+                          "easing": {
+                            "enum": [
+                              "linear",
+                              "ease-in",
+                              "ease-out",
+                              "ease-in-out",
+                              "back",
+                              "bounce",
+                              "step",
+                              "cubic"
+                            ]
+                          },
+                          "curve": {
+                            "type": "array",
+                            "minItems": 4,
+                            "maxItems": 4,
+                            "items": {
+                              "type": "number",
+                              "minimum": -3,
+                              "maximum": 3
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 },
@@ -1274,6 +1455,73 @@
                 "fillSecondary": {
                   "type": "string",
                   "pattern": "^#[a-fA-F0-9]{6}$"
+                },
+                "path": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "closed",
+                    "segments"
+                  ],
+                  "properties": {
+                    "closed": {
+                      "type": "boolean"
+                    },
+                    "segments": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 64,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "x",
+                          "y"
+                        ],
+                        "properties": {
+                          "x": {
+                            "type": "number",
+                            "minimum": -300,
+                            "maximum": 400
+                          },
+                          "y": {
+                            "type": "number",
+                            "minimum": -300,
+                            "maximum": 400
+                          },
+                          "inX": {
+                            "type": "number",
+                            "minimum": -300,
+                            "maximum": 300
+                          },
+                          "inY": {
+                            "type": "number",
+                            "minimum": -300,
+                            "maximum": 300
+                          },
+                          "outX": {
+                            "type": "number",
+                            "minimum": -300,
+                            "maximum": 300
+                          },
+                          "outY": {
+                            "type": "number",
+                            "minimum": -300,
+                            "maximum": 300
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "fillEnabled": {
+                  "type": "boolean"
+                },
+                "positionEnabled": {
+                  "type": "boolean"
+                },
+                "orientToPath": {
+                  "type": "boolean"
                 }
               },
               "required": [

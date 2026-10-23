@@ -36,7 +36,7 @@ node assets/motion-reference.mjs template 105 --text "我的品牌" --subtitle "
 node assets/render.mjs --project template.motion.json --validate
 ```
 
-專案 effect 為 mp-001 至 mp-144；載入 catalog.runtimeOrder 的 9 個腳本（motion-reference 在 reference-templates 之前，兩者在 layers / engine 之前）。共用 duration、speed、size、text、subtitle、background，並可用 referenceTemplate: {fit: "contain" | "cover", labels: boolean, loop: boolean}。labels 控制自訂標題覆蓋；原版示範內部文字、顏色與幾何保留原設計，不會自動替換。可疊加自己的文字、圖形、圖片與音效；任意內部元件客製需修改程式，或使用下列全圖層配方。
+專案 effect 為 mp-001 至 mp-144；載入 catalog.runtimeOrder 的 10 個腳本（motion-reference 在 reference-templates 之前，兩者在 layers / engine 之前）。共用 duration、speed、size、text、subtitle、background，並可用 referenceTemplate: {fit: "contain" | "cover", labels: boolean, loop: boolean}。labels 控制自訂標題覆蓋；原版示範內部文字、顏色與幾何保留原設計，不會自動替換。可疊加自己的文字、圖形、圖片與音效；任意內部元件客製需修改程式，或使用下列全圖層配方。
 
 可選載入 runtime/reference-recipes.js 後使用 MotionReference.createClip()；原版套版的 MotionReference.createTemplate() 由 reference-templates.js 提供。兩者都回傳可驗證的場景 JSON。
 

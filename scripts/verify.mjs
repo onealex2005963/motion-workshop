@@ -10,7 +10,7 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const skill=path.join(root,'.claude/skills/motion-workshop'),assets=path.join(skill,'assets');
 const read=p=>fs.readFile(p,'utf8'), parse=async p=>JSON.parse(await read(p));
 const context=vm.createContext({window:{}});
-for(const file of ["effects.js","effects-extra.js","effects-pro.js","motion-reference.js","reference-templates.js","layers.js","audio.js","engine.js","library.js"]){
+for(const file of ["effects.js","effects-extra.js","effects-pro.js","motion-reference.js","reference-templates.js","vector.js","layers.js","audio.js","engine.js","library.js"]){
   const code=await read(path.join(assets,'runtime',file));
   assert.equal(code,await read(path.join(root,'web',file)),file+' runtime mismatch');
   vm.runInContext(code,context,{filename:file});

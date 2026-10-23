@@ -1,6 +1,6 @@
 # 自由圖層、關鍵影格與音效（1.4）
 
-使用 `assets/examples/自由圖層與音效.motion.json` 作為起點。這些可選欄位延伸 project v2；需用 1.4 runtime / App，舊版會丟棄新欄位。依序載入 effects.js、effects-extra.js、effects-pro.js、motion-reference.js、reference-templates.js、layers.js、audio.js、engine.js、library.js。
+使用 `assets/examples/自由圖層與音效.motion.json` 作為起點。這些可選欄位延伸 project v2；需用 1.4 runtime / App，舊版會丟棄新欄位。依序載入 effects.js、effects-extra.js、effects-pro.js、motion-reference.js、reference-templates.js、vector.js、layers.js、audio.js、engine.js、library.js。
 
 ## 圖層與構圖
 

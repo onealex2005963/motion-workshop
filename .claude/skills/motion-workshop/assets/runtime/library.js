@@ -68,5 +68,17 @@
     lines.push('圖層、tracks 獨立關鍵影格、motions 動作片段與音效設定以專案 JSON 為準，讀 references/timeline-and-motions.md 與 references/layers-and-audio.md。動作疊加於手動軌道，請勿用套版覆蓋使用者的調整。若含內嵌圖片，下方指令省略圖片資料，請同時提供原始 .motion.json，保留其中的 image data URI。');
     lines.push('保留使用者提供的數字與文案；標示並替換示意資料。不要宣稱完成尚未產生的影片。檢查首尾影格、轉場中點與完整播放。','使用下列 JSON 作為可編輯起點：','','```json',JSON.stringify(project,(key,value)=>key==='image'&&value?'':value,2),'```');return lines.join('\n');
   }
-  window.MotionLibrary={version:'2.0.0',stories,palettes,itemEffects,valueEffects,metadata,createStory,createPrompt};
+  function createVectorDemo(options={}){
+    const V=window.MotionVector,L=window.MotionLayers,p=P.blankProject({ratio:options.ratio||'16:9',fps:options.fps||30,duration:6,background:'#10171c'}),portrait=p.ratio==='9:16',square=p.ratio==='1:1';
+    const heart=L.defaultLayer('path');heart.name='自由形狀 · 可拖曳節點';heart.end=6;heart.width=portrait?44:square?30:24;heart.height=portrait?27:square?34:45;heart.transform.x=portrait?50:square?25:27;heart.transform.y=portrait?34:square?42:50;heart.fill='#ff805a';heart.fillSecondary='#a59bff';heart.fillMode='linear';heart.gradientAngle=40;
+    heart.path={closed:true,segments:[{...V.point(50,30),inX:30,inY:-30,outX:-30,outY:-30},{...V.point(15,55),inX:-15,inY:-25,outX:15,outY:25},{...V.point(50,95),inX:-20,inY:-15,outX:20,outY:-15},{...V.point(85,55),inX:-15,inY:25,outX:15,outY:-25}]};
+    const shape=JSON.parse(JSON.stringify(heart.path));shape.segments[0].y=12;shape.segments[1].x=6;shape.segments[3].x=94;for(const [time,value] of [[0,heart.path],[3,shape],[6,heart.path]])L.setKey(heart,'path',time,value,{fps:p.fps,easing:'ease-in-out'});
+    const title=L.defaultLayer('text');title.name='主標題';title.text='一個節點，無限種可能';title.end=6;title.width=portrait?90:55;title.height=18;title.fontSize=portrait?4.5:square?3.3:4.8;title.transform.x=portrait?50:67;title.transform.y=portrait?62:40;
+    const caption=L.defaultLayer('text');caption.name='操作提示';caption.text='拖節點改輪廓，拉把手改路徑';caption.end=6;caption.fill='#a7b5c5';caption.width=portrait?90:55;caption.fontSize=portrait?2.5:square?2.2:2.8;caption.transform.x=portrait?50:67;caption.transform.y=portrait?75:57;
+    const arrow=L.defaultLayer('arrow');arrow.name='軌跡箭頭 · 可拖曳路徑';arrow.end=6;arrow.width=portrait?9:6;arrow.height=portrait?4:8;arrow.fill='#83d9d0';arrow.orientToPath=true;
+    const points=portrait?[[0,20,86,0,0,15,-5],[3,50,88,-10,0,10,0],[6,80,83,-12,8,0,0]]:[[0,45,82,0,0,12,-12],[3,67,80,-8,-5,8,5],[6,88,68,-8,12,0,0]];
+    for(const [time,x,y,inX,inY,outX,outY] of points)L.setKey(arrow,'position',time,{x,y,inX,inY,outX,outY},{fps:p.fps,easing:'ease-in-out'});
+    p.clips[0].layers=[heart,arrow,title,caption];p.clips[0].audio=[{sound:'expand',time:.2,volume:.5,rate:1,fadeIn:0,fadeOut:.05},{sound:'confirm',time:3,volume:.4,rate:1,fadeIn:0,fadeOut:.08}];return P.validate(p);
+  }
+  window.MotionLibrary={version:'2.1.1',stories,palettes,itemEffects,valueEffects,metadata,createStory,createPrompt,createVectorDemo};
 })();

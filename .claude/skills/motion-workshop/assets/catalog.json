@@ -1,6 +1,6 @@
 {
   "name": "動畫小工坊",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "projectVersion": 2,
   "offline": true,
   "audio": {
@@ -15199,22 +15199,28 @@
     "effects-pro.js",
     "motion-reference.js",
     "reference-templates.js",
+    "vector.js",
     "layers.js",
     "audio.js",
     "engine.js",
     "library.js"
   ],
   "customization": {
-    "reference": "../references/layers-and-audio.md",
+    "reference": "../references/free-canvas.md",
     "layerTypes": [
       "text",
       "rect",
       "ellipse",
       "line",
-      "image"
+      "image",
+      "triangle",
+      "polygon",
+      "star",
+      "arrow",
+      "path"
     ],
-    "maxLayersPerClip": 12,
-    "maxKeyframesPerLayer": 60,
+    "maxLayersPerClip": 32,
+    "maxKeyframesPerLayer": 1201,
     "easings": [
       "linear",
       "ease-in",
@@ -15222,10 +15228,50 @@
       "ease-in-out",
       "back",
       "bounce",
-      "step"
+      "step",
+      "cubic"
     ],
     "coordinates": "percent of canvas width/height; time in scene-local seconds",
-    "example": "examples/自由圖層與音效.motion.json"
+    "example": "examples/自由路徑與形狀變形.motion.json",
+    "timelineReference": "../references/timeline-and-motions.md",
+    "maxKeyframesPerProperty": 1201,
+    "maxMotionsPerLayer": 12,
+    "animatedProperties": [
+      "x",
+      "y",
+      "scale",
+      "scaleX",
+      "scaleY",
+      "rotation",
+      "opacity",
+      "width",
+      "height",
+      "fill",
+      "strokeWidth",
+      "radius",
+      "path",
+      "position"
+    ],
+    "motionPresets": [
+      "rise",
+      "slide",
+      "pop",
+      "spin",
+      "fade",
+      "zoom",
+      "drop",
+      "float",
+      "pulse",
+      "wiggle",
+      "orbit",
+      "spin-loop",
+      "fade-out",
+      "slide-out",
+      "shrink",
+      "spin-out"
+    ],
+    "geometryRuntime": "runtime/vector.js",
+    "maxPathSegments": 64
   },
   "referenceLibrary": {
     "count": 144,

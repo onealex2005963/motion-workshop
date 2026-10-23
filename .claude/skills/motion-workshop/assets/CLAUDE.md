@@ -44,7 +44,7 @@ open -n "$HOME/Applications/動畫小工坊.app" --args --render /絕對路徑/�
 
 ## 在其他影片專案重用
 
-依 catalog.json 的 runtimeOrder 載入 9 個腳本：effects.js、effects-extra.js、effects-pro.js、motion-reference.js、reference-templates.js、layers.js、audio.js、engine.js、library.js。motion-reference.js 包含 Shohei Ohtaki 的 MIT 原始動效，其餘檔案為小工坊整合與原創實作；重用時保留各自授權。依此順序載入，就能在 Canvas 環境使用：
+依 catalog.json 的 runtimeOrder 載入 10 個腳本：effects.js、effects-extra.js、effects-pro.js、motion-reference.js、reference-templates.js、vector.js、layers.js、audio.js、engine.js、library.js。motion-reference.js 包含 Shohei Ohtaki 的 MIT 原始動效，其餘檔案為小工坊整合與原創實作；重用時保留各自授權。依此順序載入，就能在 Canvas 環境使用：
 
 ```js
 const project = MotionProject.validate(projectJSON);
@@ -71,4 +71,8 @@ MotionEffects.render(ctx, width, height, seconds, MotionProject.defaultClip('car
 
 ## 2.0 多軌工作室
 
-先讀 ../references/timeline-and-motions.md 與 examples/多軌動畫工作室.motion.json。每幕 32 層，tracks 支援 12 種獨立屬性（含填色），motions 支援 16 種可疊加動作；動作保留手動關鍵格。九種圖層、錨點、非等比縮放、漸層、多邊形與星形參數皆由 JSON 決定。project.version 仍為 2，需使用 2.0 runtime；9 個 runtime 載入順序不變。
+先讀 ../references/timeline-and-motions.md 與 examples/多軌動畫工作室.motion.json。每幕 32 層，tracks 支援 12 種獨立屬性（含填色），motions 支援 16 種可疊加動作；動作保留手動關鍵格。九種圖層、錨點、非等比縮放、漸層、多邊形與星形參數皆由 JSON 決定。project.version 仍為 2，2.1 保留以上能力；使用目前套件的 10 個 runtime，vector.js 在 layers.js 前。
+
+## 2.1 自由畫布
+
+讀 ../references/free-canvas.md。新增 path 圖層、tracks.path 形狀變形、tracks.position 貝茲移動路徑；另有 fillEnabled、positionEnabled、orientToPath。所有 path 節點、把手和到達時間皆可編輯。使用本包 10 個 runtime，載入 vector.js 後才載入 layers.js。不要用舊 runtime 重新儲存新作品。

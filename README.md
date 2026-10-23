@@ -1,5 +1,12 @@
 # 動畫小工坊 · Motion Workshop
 
+## 2.1.1 自由畫布與手動節點
+
+已加入實際繪圖與節點操作：畫布拖曳畫形狀、鋼筆／手繪、可編輯貝茲把手、形狀關鍵格、可拖曳移動路徑與切線旋轉，並能匯出所選向量的靜態 SVG。「插入自由繪圖示範」提供可直接修改的範例。
+
+使用方式與資料格式：[自由畫布指南](.claude/skills/motion-workshop/references/free-canvas.md)。參考的成熟專案與星數：[研究紀錄](docs/FREE-EDITOR-REFERENCES.md)。使用「新增節點 N」可在線段精準插入或在空白處指定新位置；沒有形狀時逐點建立路徑，Enter 完成、Esc 取消。
+
+
 ## 2.0 多軌動畫工作室
 
 從「圖層／動作」進入多軌時間軸；按「插入多軌動作示範」即可邊試邊改。舊作品保留相容，新增場景或拖曳修改可復原。
@@ -12,7 +19,7 @@
 
 Claude 的欄位與可執行範例：[多軌與動作指南](.claude/skills/motion-workshop/references/timeline-and-motions.md)、[專案範例](.claude/skills/motion-workshop/assets/examples/多軌動畫工作室.motion.json)。ZIP 包含程式、schema、範例與說明，雲端 Claude 請上傳整份工具包。
 
-這一版完成參數形狀與多軌動畫編輯；鋼筆節點、任意 SVG、自訂遮罩、圖層群組、外部音樂／旁白／影片匯入仍待後續版本。
+2.1.1 已提供鋼筆、節點與形狀動畫。任意 SVG 匯入、自訂遮罩、圖層群組、外部音樂／旁白／影片匯入仍待後續版本。
 
 **讓 Claude 在做網站、軟體介面與影片時，直接參考可執行的動畫效果。**
 
@@ -102,7 +109,7 @@ npm run demo
 
 | 用途 | 入口 | 可直接拿來用的內容 |
 |---|---|---|
-| 網站動畫 | [網站整合說明](.claude/skills/motion-workshop/references/web-ui.md) | 七個 runtime script、播放器、HTML / CSS 範例 |
+| 網站動畫 | [網站整合說明](.claude/skills/motion-workshop/references/web-ui.md) | 十個 runtime script、播放器、HTML / CSS 範例 |
 | 真實介面動效 | [DOM 範例](.claude/skills/motion-workshop/assets/examples/software-ui/index.html) | 標籤切換、鍵盤行為、依序進場、點擊回饋 |
 | 影片分鏡／剪輯 | [影片說明](.claude/skills/motion-workshop/references/video.md) | 可編輯 JSON、場景時間軸、同步逐格 API、macOS MP4 CLI |
 
@@ -176,3 +183,5 @@ App 頂部「動效字典 144」提供六類離線原版示範、繁中／英／
 頂部「新增空白專案」或 macOS「檔案 → 新增空白專案…」（⌘N）可建立一幕純背景，先選比例、秒數、畫質、FPS 與背景色，再自由新增文字／圖形／圖片。建立時可先將目前作品另存為 .motion.json；取消儲存或儲存失敗會保留原作。建立後停在開頭並切到圖層面板，可用「復原」回到原作。自動儲存會換成新專案；要永久保留原作請先另存。
 
 程式使用 MotionProject.blankProject({ratio, duration, quality, fps, background}) 建立可編輯的空白專案；內建範本圖層關閉，layers/audio 皆為空。
+
+2.1.1：新增「新增節點 N」工具，支援在畫布指定加點、線段精準插入，以及從空白逐點建立路徑。各形狀關鍵格同步節點，單次復原。完整工具包可從 GitHub Releases 取得。

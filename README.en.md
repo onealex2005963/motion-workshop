@@ -1,5 +1,10 @@
 # Motion Workshop
 
+## 2.1 free canvas · local review build
+
+Direct shape drawing, pen/freehand paths, editable Bézier nodes and handles, shape morph keyframes, spatial motion paths, tangent orientation and static selected-layer SVG export. Insert the free-canvas demo to edit actual geometry. Read [the geometry contract](.claude/skills/motion-workshop/references/free-canvas.md) and [reference research](docs/FREE-EDITOR-REFERENCES.md). This iteration is for local review; publish only after the user explicitly confirms no further changes.
+
+
 ## 2.0 multitrack animation studio
 
 Open Layers / Motion to reveal the scene-local timeline. Insert the multitrack demo to start with editable content. Drag layer intervals, motion segments, keyframes and sound cues; adjust zoom, height and snapping.
@@ -36,7 +41,7 @@ Open `.claude/skills/motion-workshop/assets/examples/website/index.html` directl
 
 ## Reuse
 
-Load `effects.js`, `effects-extra.js`, `effects-pro.js`, `motion-reference.js`, `reference-templates.js`, `layers.js`, `audio.js`, `engine.js`, then `library.js` from the skill's `assets/runtime/`. `MotionProject.render(project, frame / fps, canvas)` renders deterministic frames in a browser. Catalog parameters and full examples are in `assets/catalog.json`. See [the gallery](docs/GALLERY.md), [implementation breakdowns](.claude/skills/motion-workshop/references/effect-breakdown.md), [web/UI guide](.claude/skills/motion-workshop/references/web-ui.md) and [video guide](.claude/skills/motion-workshop/references/video.md). Reference guides are primarily in Traditional Chinese; Claude can explain them in your language.
+Load `effects.js`, `effects-extra.js`, `effects-pro.js`, `motion-reference.js`, `reference-templates.js`, `vector.js`, `layers.js`, `audio.js`, `engine.js`, then `library.js` from the skill's `assets/runtime/`. `MotionProject.render(project, frame / fps, canvas)` renders deterministic frames in a browser. Catalog parameters and full examples are in `assets/catalog.json`. See [the gallery](docs/GALLERY.md), [implementation breakdowns](.claude/skills/motion-workshop/references/effect-breakdown.md), [web/UI guide](.claude/skills/motion-workshop/references/web-ui.md) and [video guide](.claude/skills/motion-workshop/references/video.md). Reference guides are primarily in Traditional Chinese; Claude can explain them in your language.
 
 The optional native app currently builds for Apple Silicon macOS using Xcode Command Line Tools: `./build.sh`. It exports H.264 with optional built-in AAC sound MP4 and editable project JSON. No external audio/video import, audio analysis, transparent video or editing-application plugin. Web runtime and Node validation are cross-platform; native MP4 export requires a logged-in macOS desktop. Native frameworks need a port of the technique rather than direct browser-script imports.
 
@@ -49,3 +54,10 @@ Use the editor’s 144-template filter or insert a scene from the offline dictio
 Motion Prompt by [Shohei Ohtaki](https://github.com/showheyohtaki/motion-prompt) is vendored under MIT, with pinned source hashes and original notices. UI/landing-page samples are Canvas illustrations, and photo samples illustrate styles rather than filtering imported photos. See the bundled [reference guide](.claude/skills/motion-workshop/references/motion-prompt.md) for the offline CLI and attribution.
 
 Version 1.5.1 adds a blank-project dialog with ratio, duration, resolution, FPS and background controls, save-before-create/cancel options, and undo recovery. Native shortcut: Cmd+N. Use MotionProject.blankProject(options) for the equivalent project JSON.
+
+
+## 2.1.1 Free canvas and manual nodes
+
+Draw shapes directly, use the pen/freehand tools, edit cubic handles, animate shape keys and spatial motion paths, or export the selected vector as a static SVG. The **Add Node (N)** tool inserts on a curve or places a new point after the selected node. With no shape selected, click points to start a path, then Enter to finish or Esc to cancel. Topology edits update every shape key and support undo.
+
+Use the ten bundled runtime scripts in catalog.runtimeOrder, with vector.js before layers.js. See the [free canvas guide](.claude/skills/motion-workshop/references/free-canvas.md) for data and API examples. The macOS app is optional; the skill bundle and examples can be downloaded independently from GitHub Releases.

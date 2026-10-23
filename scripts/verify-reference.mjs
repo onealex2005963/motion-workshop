@@ -8,7 +8,7 @@ import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),assets=path.join(root,'.claude/skills/motion-workshop/assets'),ctx=vm.createContext({window:{}});
-for(const name of ['effects','effects-extra','effects-pro','motion-reference','reference-templates','layers','audio','engine','library','reference-recipes']){
+for(const name of ['effects','effects-extra','effects-pro','motion-reference','reference-templates','vector','layers','audio','engine','library','reference-recipes']){
   const code=await fs.readFile(path.join(root,'web',name+'.js'),'utf8');assert.equal(code,await fs.readFile(path.join(assets,'runtime',name+'.js'),'utf8'));vm.runInContext(code,ctx);
 }
 const {MotionReference:R,MotionProject:P,MotionLayers:L,MotionLibrary:Library}=ctx.window;
